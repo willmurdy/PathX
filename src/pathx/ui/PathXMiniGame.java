@@ -6,8 +6,16 @@
 
 package pathx.ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Iterator;
+import javax.swing.JFrame;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
@@ -64,8 +72,24 @@ public class PathXMiniGame extends MiniGame{
        guiDecor.get(BACKGROUND_TYPE).setState(HOME_SCREEN_STATE);
        
        guiButtons.get(PLAY_GAME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(VISIBLE_STATE);
        
        currentScreenState = HOME_SCREEN_STATE;
+    }
+    
+    public void switchToLevelSelectScreen(){
+        
+        
+        
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
+       currentScreenState = LEVEL_SELECT_SCREEN_STATE;
+        
     }
 
     @Override
@@ -267,7 +291,64 @@ public class PathXMiniGame extends MiniGame{
 
     @Override
     public void initGUIHandlers() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // WE'LL RELAY UI EVENTS TO THIS OBJECT FOR HANDLING
+        eventHandler = new PathXEventHandler(this);
+                
+        // WE'LL HAVE A CUSTOM RESPONSE FOR WHEN THE USER CLOSES THE WINDOW
+        window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        window.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent we) 
+            { eventHandler.respondToExitRequest(); }
+        });
+
+//        // SEND ALL LEVEL SELECTION HANDLING OFF TO THE EVENT HANDLER
+//        PropertiesManager props = PropertiesManager.getPropertiesManager();
+//        ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
+//        for (String levelFile : levels)
+//        {
+//            Sprite levelButton = guiButtons.get(levelFile);
+//            levelButton.setActionCommand(PATH_DATA + levelFile);
+//            levelButton.setActionListener(new ActionListener(){
+//                Sprite s;
+//                public ActionListener init(Sprite initS) 
+//                {   s = initS; 
+//                    return this;    }
+//                public void actionPerformed(ActionEvent ae)
+//                {   eventHandler.respondToSelectLevelRequest(s.getActionCommand());    }
+//            }.init(levelButton));
+//        }   
+
+        // NEW GAME EVENT HANDLER
+        guiButtons.get(PLAY_GAME_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToPlayGameRequest();     }
+        });
+        
+        guiButtons.get(RESET_GAME_BUTTON_TYPE).setActionListener(new ActionListener() {   //ADDED
+            public void actionPerformed(ActionEvent ae){
+                eventHandler.respondToResetGameRequest();
+            }
+        });
+//
+//        // STATS BUTTON EVENT HANDLER
+//        guiButtons.get(STATS_BUTTON_TYPE).setActionListener(new ActionListener(){
+//            public void actionPerformed(ActionEvent ae)
+//            {   eventHandler.respondToDisplayStatsRequest();    }
+//        });
+//        
+//        // undo BUTTON EVENT HANDLER
+//        guiButtons.get(UNDO_BUTTON_TYPE).setActionListener(new ActionListener(){   //ADDED
+//            public void actionPerformed(ActionEvent ae)
+//            {   eventHandler.respondToUndoRequest();    }
+//        });
+//        
+//        // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
+//        this.setKeyListener(new KeyAdapter(){
+//            public void keyPressed(KeyEvent ke)
+//            {   
+//                eventHandler.respondToKeyPress(ke.getKeyCode());    
+//            }
+//        });    
     }
 
     @Override
