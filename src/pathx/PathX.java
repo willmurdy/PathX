@@ -36,11 +36,11 @@ public class PathX {
             props.loadProperties(UI_PROPERTIES_FILE_NAME, PROPERTIES_SCHEMA_FILE_NAME);
             
             // THEN WE'LL LOAD THE GAME FLAVOR AS SPECIFIED BY THE PROPERTIES FILE
-            String gameFlavorFile = props.getProperty(PathXPropertyType.GAME_FLAVOR_FILE_NAME);
+            String gameFlavorFile = props.getProperty(PathXPropertyType.FILE_GAME_PROPERTIES);
             props.loadProperties(gameFlavorFile, PROPERTIES_SCHEMA_FILE_NAME);
 
             // NOW WE CAN LOAD THE UI, WHICH WILL USE ALL THE FLAVORED CONTENT
-            String appTitle = props.getProperty(PathXPropertyType.GAME_TITLE_TEXT);
+            String appTitle = props.getProperty(PathXPropertyType.TEXT_TITLE_BAR_GAME);
             miniGame.initMiniGame(appTitle, FPS, WINDOW_WIDTH, WINDOW_HEIGHT);
             
             // GET THE PROPER WINDOW DIMENSIONS
@@ -58,43 +58,43 @@ public class PathX {
     
     public enum PathXPropertyType
     {
+        // LOADED FROM properties.xml
+        
         /* SETUP FILE NAMES */
-        UI_PROPERTIES_FILE_NAME,
-        PROPERTIES_SCHEMA_FILE_NAME,
-        GAME_FLAVOR_FILE_NAME,
-        RECORD_FILE_NAME,
+        FILE_GAME_PROPERTIES,
+        FILE_PLAYER_RECORD,
 
-        /* DIRECTORIES FOR FILE LOADING */
-        AUDIO_PATH,
-        DATA_PATH,
-        IMG_PATH,
-        LEVEL_PATH,
+        /* DIRECTORY PATHS FOR FILE LOADING */
+        PATH_AUDIO,
+        PATH_IMG,
         
-        /* WINDOW DIMENSIONS & FRAME RATE */
-        WINDOW_WIDTH,
-        WINDOW_HEIGHT,
-        FPS,
-        GAME_WIDTH,
-        GAME_HEIGHT,
-        GAME_LEFT_OFFSET,
-        GAME_TOP_OFFSET,
-        
-        /* GAME TEXT */
-        GAME_TITLE_TEXT,
-        EXIT_REQUEST_TEXT,
-        INVALID_XML_FILE_ERROR_TEXT,
-        ERROR_DIALOG_TITLE_TEXT,
-        
-        /* ERROR TYPES */
-        AUDIO_FILE_ERROR,
-        LOAD_LEVEL_ERROR,
-        RECORD_SAVE_ERROR,
-
+        // LOADED FROM THE GAME FLAVOR PROPERTIES XML FILE
+            // sorting_hat_properties.xml
+                
         /* IMAGE FILE NAMES */
-        WINDOW_ICON,
+        IMAGE_BACKGROUND_GAME,
+        IMAGE_BACKGROUND_MENU,
+        IMAGE_BUTTON_NEW,
+        IMAGE_BUTTON_NEW_MOUSE_OVER,
+        IMAGE_BUTTON_BACK,              //Added for the back button
+        IMAGE_BUTTON_BACK_MOUSE_OVER,   //Added for the Back Button
+        IMAGE_BUTTON_UNDO,              //Added for the undo button
+        IMAGE_BUTTON_UNDO_MOUSE_OVER,   //Added for the undo Button
+        IMAGE_BUTTON_STATS,
+        IMAGE_BUTTON_STATS_MOUSE_OVER,
+        IMAGE_BUTTON_TEMP_TILE,
+        IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER,
+        IMAGE_CURSOR_WAND,
+        IMAGE_DECOR_TIME,      
+        IMAGE_DECOR_MISCASTS,
+        IMAGE_DIALOG_STATS,
+        IMAGE_DIALOG_WIN,
+        IMAGE_SPRITE_SHEET_CHARACTER_TILES,        
+        IMAGE_TILE_BACKGROUND,
+        IMAGE_TILE_BACKGROUND_SELECTED,
+        IMAGE_TILE_BACKGROUND_MOUSE_OVER,
+        IMAGE_WINDOW_ICON,
         
-        //background image names
-        HOME_SCREEN_IMAGE_NAME,
         LEVEL_SELECT_SCREEN_IMAGE_NAME,
         GAMEPLAY_SCREEN_IMAGE_NAME,
         
@@ -111,52 +111,36 @@ public class PathX {
         VIEW_SETTINGS_BUTTON_TYPE,
         QUIT_GAME_BUTTON_TYPE,
         
-        FIRST_LEVEL_BACKGROUND_IMAGE_NAME,
-        SECOND_LEVEL_BACKGROUND_IMAGE_NAME,
-        LEVEL_SELECT_IMAGE_NAME,
-//        BLANK_TILE_IMAGE_NAME,
-//        BLANK_TILE_SELECTED_IMAGE_NAME,
-//        BLOCKED_TILE_SELECTED_IMAGE_NAME,
-        EXIT_BUTTON_IMAGE_NAME,
-        EXIT_BUTTON_MOUSE_OVER_IMAGE_NAME,
-        LEFT_BUTTON_IMAGE_NAME,
-        LEFT_BUTTON_MOUSE_OVER_IMAGE_NAME,
-        RIGHT_BUTTON_IMAGE_NAME,
-        RIGHT_BUTTON_MOUSE_OVER_IMAGE_NAME,
-        PLAY_GAME_IMAGE_NAME,
-        PLAY_GAME_MOUSE_OVER_IMAGE_NAME,
-        TILE_COUNT_IMAGE_NAME,
-        TIME_IMAGE_NAME,
-        UNDO_BUTTON_IMAGE_NAME,
-        UNDO_BUTTON_MOUSE_OVER_IMAGE_NAME,
-        STATS_BUTTON_IMAGE_NAME,
-        STATS_BUTTON_MOUSE_OVER_IMAGE_NAME,
-        TILE_STACK_IMAGE_NAME,
+        /* GAME TEXT */
+        TEXT_ERROR_LOADING_AUDIO,
+        TEXT_ERROR_LOADING_LEVEL,
+        TEXT_ERROR_LOADING_RECORD,
+        TEXT_ERROR_LOADING_XML_FILE,
+        TEXT_ERROR_SAVING_RECORD,
+        TEXT_LABEL_STATS_ALGORITHM,
+        TEXT_LABEL_STATS_GAMES,
+        TEXT_LABEL_STATS_WINS,
+        TEXT_LABEL_STATS_PERFECT_WINS,
+        TEXT_LABEL_STATS_FASTEST_PERFECT_WIN,
+        TEXT_PROMPT_EXIT,
+        TEXT_TITLE_BAR_GAME,
+        TEXT_TITLE_BAR_ERROR,
         
-        // AND THE DIALOGS
-        STATS_DIALOG_IMAGE_NAME,
-        WIN_DIALOG_IMAGE_NAME,
-        LOSS_DIALOG_IMAGE_NAME,
+        /* AUDIO CUES */
+        AUDIO_CUE_BAD_MOVE,
+        AUDIO_CUE_CHEAT,
+        AUDIO_CUE_DESELECT_TILE,
+        AUDIO_CUE_GOOD_MOVE,
+        AUDIO_CUE_SELECT_TILE,
+        AUDIO_CUE_UNDO,
+        AUDIO_CUE_WIN,
+        SONG_CUE_GAME_SCREEN,
+        SONG_CUE_MENU_SCREEN,
         
         /* TILE LOADING STUFF */
         LEVEL_OPTIONS,
         LEVEL_IMAGE_OPTIONS,
-        LEVEL_MOUSE_OVER_IMAGE_OPTIONS,
-        LEVEL_FILE_NAMES,
-        SPLASH_SCREEN_IMAGE_OPTIONS,
-        SPLASH_SCREEN_MOUSE_OVER_IMAGE_OPTIONS,
-        REGULAR_TILE_TYPES,
-        
-        /* AUDIO CUES */
-        SELECT_AUDIO_CUE,
-        MATCH_AUDIO_CUE,
-        NO_MATCH_AUDIO_CUE,
-        BLOCKED_TILE_AUDIO_CUE,
-        UNDO_AUDIO_CUE,
-        WIN_AUDIO_CUE,
-        SPLASH_SCREEN_SONG_CUE,
-        GAMEPLAY_SONG_CUE,
-        LOSS_AUDIO_CUE
+        LEVEL_MOUSE_OVER_IMAGE_OPTIONS        
     }
     
 }

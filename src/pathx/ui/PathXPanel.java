@@ -128,35 +128,35 @@ public class PathXPanel extends JPanel {
             renderBackground(g);
 
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
-            if (!data.notStarted())
-            {
-                // RENDER THE SNAKE
-//                if (!data.won())
-//                    renderSnake(g);
-                
-                // AND THE TILES
-                renderTiles(g);
-                
-                // AND THE DIALOGS, IF THERE ARE ANY
-                renderDialogs(g);
-                                
-                // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
-                // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
-                renderGrid(g);
-                
-                // RENDER THE ALGORITHM NAME
-                renderHeader(g);
-               
-            }
+//            if (!data.notStarted())
+//            {
+//                // RENDER THE SNAKE
+////                if (!data.won())
+////                    renderSnake(g);
+//                
+//                // AND THE TILES
+//                renderTiles(g);
+//                
+//                // AND THE DIALOGS, IF THERE ARE ANY
+//                renderDialogs(g);
+//                                
+//                // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
+//                // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
+//                renderGrid(g);
+//                
+//                // RENDER THE ALGORITHM NAME
+//                renderHeader(g);
+//               
+//            }
 
             // AND THE BUTTONS AND DECOR
             renderGUIControls(g);
-            
-            if (!data.notStarted())
-            {
-                // AND THE TIME AND TILES STATS
-                renderStats(g);
-            }
+         
+//            if (!data.notStarted())
+//            {
+//                // AND THE TIME AND TILES STATS
+//                renderStats(g);
+//            }
         
             // AND FINALLY, TEXT FOR DEBUGGING
             renderDebuggingText(g);
@@ -214,7 +214,7 @@ public class PathXPanel extends JPanel {
     
     public void renderHeader(Graphics g)
     {
-      //  g.setColor(COLOR_ALGORITHM_HEADER);
+        //g.setColor(COLOR_ALGORITHM_HEADER);
         
     }
     

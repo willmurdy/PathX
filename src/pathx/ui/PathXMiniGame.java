@@ -8,6 +8,7 @@ package pathx.ui;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
@@ -89,7 +90,7 @@ public class PathXMiniGame extends MiniGame{
         
         // LOAD THE BACKGROUNDS, WHICH ARE GUI DECOR
         currentScreenState = HOME_SCREEN_STATE;
-        img = loadImage(imgPath + props.getProperty(PathXPropertyType.HOME_SCREEN_IMAGE_NAME));
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_MENU));
         sT = new SpriteType(BACKGROUND_TYPE);
         sT.addState(HOME_SCREEN_STATE, img);
 //        
@@ -102,18 +103,17 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, 0, 0, 0, 0, HOME_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
         
-        guiDecor.get(BACKGROUND_TYPE).setState(HOME_SCREEN_STATE);
       
         
         // ADD A BUTTON FOR EACH LEVEL AVAILABLE
-        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
-        ArrayList<String> levelImageNames = props.getPropertyOptionsList(PathXPropertyType.LEVEL_IMAGE_OPTIONS);
-        ArrayList<String> levelMouseOverImageNames = props.getPropertyOptionsList(PathXPropertyType.LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
-        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
-        Viewport viewport = data.getViewport();
-        x = (viewport.getScreenWidth() - totalWidth)/2.0f;
-        for (int i = 0; i < levels.size(); i++)
-        {
+//        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
+//        ArrayList<String> levelImageNames = props.getPropertyOptionsList(PathXPropertyType.LEVEL_IMAGE_OPTIONS);
+//        ArrayList<String> levelMouseOverImageNames = props.getPropertyOptionsList(PathXPropertyType.LEVEL_MOUSE_OVER_IMAGE_OPTIONS);
+//        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
+//        Viewport viewport = data.getViewport();
+//        x = (viewport.getScreenWidth() - totalWidth)/2.0f;
+//        for (int i = 0; i < levels.size(); i++)
+//        {
 //            sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
 //            img = loadImageWithColorKey(imgPath + levelImageNames.get(i), COLOR_KEY);
 //            sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
@@ -122,7 +122,7 @@ public class PathXMiniGame extends MiniGame{
 //            s = new Sprite(sT, x, LEVEL_BUTTON_Y, 0, 0, SortingHatTileState.VISIBLE_STATE.toString());
 //            guiButtons.put(levels.get(i), s);
 //            x += LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN;
-        }
+//        }
         
         //Add the Buttons for the Home screen
         String newButton = props.getProperty(PathXPropertyType.PLAY_GAME_BUTTON_IMAGE_NAME);
@@ -132,9 +132,10 @@ public class PathXMiniGame extends MiniGame{
         String newMouseOverButton = props.getProperty(PathXPropertyType.PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME);
         img = loadImage(imgPath + newMouseOverButton);
         sT.addState(MOUSE_OVER_STATE, img);
-        s = new Sprite(sT, PLAY_BUTTON_X, PLAY_BUTTON_Y, 0, 0, VISIBLE_STATE);
+        s = new Sprite(sT, 0, 0, 0, 0, VISIBLE_STATE);
         guiButtons.put(PLAY_GAME_BUTTON_TYPE, s);
         
+       
        
         
         // ADD THE CONTROLS ALONG THE NORTH OF THE GAME SCREEN
@@ -240,12 +241,34 @@ public class PathXMiniGame extends MiniGame{
 
     @Override
     public void reset() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void updateGUI() {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         // GO THROUGH THE VISIBLE BUTTONS TO TRIGGER MOUSE OVERS
+        Iterator<Sprite> buttonsIt = guiButtons.values().iterator();
+        while (buttonsIt.hasNext())
+        {
+            Sprite button = buttonsIt.next();
+            
+            // ARE WE ENTERING A BUTTON?
+            if (button.getState().equals(VISIBLE_STATE))
+            {
+                if (button.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+                {
+                    button.setState(MOUSE_OVER_STATE);
+                }
+            }
+            // ARE WE EXITING A BUTTON?
+            else if (button.getState().equals(MOUSE_OVER_STATE))
+            {
+                 if (!button.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+                {
+                    button.setState(VISIBLE_STATE);
+                }
+            }
+        }
     }
     
 }
