@@ -8,30 +8,18 @@ package pathx.ui;
 
 import pathx.data.PathXDataModel;
 import pathx.PathXConstants.*;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import javax.swing.JPanel;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
-import mini_game.Viewport;
+import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.BACKGROUND_TYPE;
-import static pathx.PathXConstants.GAME_SCREEN_STATE;
-import static pathx.PathXConstants.STATS_DIALOG_TYPE;
-import static pathx.PathXConstants.TILE_COUNT_OFFSET;
-import static pathx.PathXConstants.TILE_COUNT_X;
-import static pathx.PathXConstants.TILE_COUNT_Y;
-import static pathx.PathXConstants.TILE_TEXT_OFFSET;
-import static pathx.PathXConstants.TIME_OFFSET;
-import static pathx.PathXConstants.TIME_TEXT_OFFSET;
-import static pathx.PathXConstants.TIME_X;
-import static pathx.PathXConstants.TIME_Y;
+import static pathx.PathXConstants.INVISIBLE_STATE;
 import properties_manager.PropertiesManager;
 
 /**
@@ -126,6 +114,7 @@ public class PathXPanel extends JPanel {
         
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g);
+            
 
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
 //            if (!data.notStarted())
@@ -187,6 +176,7 @@ public class PathXPanel extends JPanel {
         // THERE IS ONLY ONE CURRENTLY SET
         Sprite bg = game.getGUIDecor().get(BACKGROUND_TYPE);
         renderSprite(g, bg);
+                
     }
 
     /**
@@ -405,13 +395,13 @@ public class PathXPanel extends JPanel {
      */
     public void renderSprite(Graphics g, Sprite s)
     {
-//        // ONLY RENDER THE VISIBLE ONES
-//        if (!s.getState().equals(SortingHatTileState.INVISIBLE_STATE.toString()))
-//        {
-//            SpriteType bgST = s.getSpriteType();
-//            Image img = bgST.getStateImage(s.getState());
-//            g.drawImage(img, (int)s.getX(), (int)s.getY(), bgST.getWidth(), bgST.getHeight(), null); 
-//        }
+        // ONLY RENDER THE VISIBLE ONES
+        if (!s.getState().equals(INVISIBLE_STATE))
+        {
+            SpriteType bgST = s.getSpriteType();
+            Image img = bgST.getStateImage(s.getState());
+            g.drawImage(img, (int)s.getX(), (int)s.getY(), bgST.getWidth(), bgST.getHeight(), null); 
+        }
     }
 
     /**

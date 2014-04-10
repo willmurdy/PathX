@@ -37,15 +37,18 @@ public class PathXConstants {
     // this represents the buttons on the home screen
     public static final String HOME_SCREEN_BUTTON_TYPE = "HOME_SCREEN_BUTTON_TYPE";
     public static final String PLAY_GAME_BUTTON_TYPE = "PLAY_GAME_BUTTON_TYPE";
+    public static final String RESET_GAME_BUTTON_TYPE = "RESET_GAME_BUTTON_TYPE";
+    public static final String VIEW_SETTINGS_BUTTON_TYPE = "VIEW_SETTINGS_BUTTON_TYPE";
+    public static final String VIEW_HELP_BUTTON_TYPE = "VIEW_HELP_BUTTON_TYPE";
 
     // IN-GAME UI CONTROL TYPES
-    public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
-    public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
-    public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
-    public static final String TIME_TYPE = "TIME_TYPE"; 
-    public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
-    public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
-    public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
+//    public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
+//    public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
+//    public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
+//    public static final String TIME_TYPE = "TIME_TYPE"; 
+//    public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
+//    public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
+//    public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
 
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";
@@ -85,8 +88,16 @@ public class PathXConstants {
     // UI CONTROLS POSITIONS IN THE GAME SCREEN
     public static final int NORTH_PANEL_HEIGHT = 130;
     public static final int CONTROLS_MARGIN = 0;
-    public static final int PLAY_BUTTON_X = 0;          //changed
-    public static final int PLAY_BUTTON_Y = 0;          //changed
+    
+    public static final int PLAY_BUTTON_X = 75;          //changed
+    public static final int PLAY_BUTTON_Y = 500;          //changed
+    public static final int RESET_BUTTON_X = PLAY_BUTTON_X + 150;          //changed
+    public static final int RESET_BUTTON_Y = 500;          //changed
+    public static final int SETTINGS_BUTTON_X = RESET_BUTTON_X + 150;          //changed
+    public static final int SETTINGS_BUTTON_Y = 500; 
+    public static final int HELP_BUTTON_X = SETTINGS_BUTTON_X + 150;          //changed
+    public static final int HELP_BUTTON_Y = 500;  
+    
     public static final int BACK_BUTTON_X = 130;
     public static final int BACK_BUTTON_Y = 0;
     public static final int TILE_COUNT_X = 260 + CONTROLS_MARGIN;  //Miscasts

@@ -12,9 +12,13 @@
         
         <property name="PLAY_GAME_BUTTON_IMAGE_NAME"        value="./default/ButtonPlayGame.png"></property>
         <property name="PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPlayGameMouseOver.png"></property>
-        <property name="RESET_GAME_BUTTON_IMAGE_NAME"       value="./default/ButtonNewGameMouseOver.png"></property>
-        <property name="VIEW_SETTINGS_BUTTON_IMAGE_NAME"    value="./default/ButtonNewGame.png"></property>
-        <property name="QUIT_GAME_BUTTON_IMAGE_NAME"        value="./default/ButtonNewGameMouseOver.png"></property>
+        <property name="RESET_GAME_BUTTON_IMAGE_NAME"       value="./default/ButtonResetGame.png"></property>
+        <property name="RESET_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonResetGameMouseOver.png"></property>
+        <property name="VIEW_SETTINGS_BUTTON_IMAGE_NAME"    value="./default/ButtonViewSettings.png"></property>
+        <property name="VIEW_SETTINGS_MOUSE_OVER_BUTTON_IMAGE_NAME"    value="./default/ButtonViewSettingsMouseOver.png"></property>
+        <property name="VIEW_HELP_BUTTON_IMAGE_NAME"        value="./default/ButtonViewHelp.png"></property>
+    	<property name="VIEW_HELP_MOUSE_OVER_BUTTON_IMAGE_NAME"    value="./default/ButtonViewHelpMouseOver.png"></property>
+
         
         
         <!-- Added for the back button image -->

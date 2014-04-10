@@ -7,12 +7,10 @@
 package pathx.ui;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Iterator;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
-import mini_game.Viewport;
 import properties_manager.PropertiesManager;
 import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.*;
@@ -125,15 +123,48 @@ public class PathXMiniGame extends MiniGame{
 //        }
         
         //Add the Buttons for the Home screen
-        String newButton = props.getProperty(PathXPropertyType.PLAY_GAME_BUTTON_IMAGE_NAME);
+        String playButton = props.getProperty(PathXPropertyType.PLAY_GAME_BUTTON_IMAGE_NAME);
         sT = new SpriteType(PLAY_GAME_BUTTON_TYPE);
-	img = loadImage(imgPath + newButton);
+	img = loadImage(imgPath + playButton);
         sT.addState(VISIBLE_STATE, img);
-        String newMouseOverButton = props.getProperty(PathXPropertyType.PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME);
-        img = loadImage(imgPath + newMouseOverButton);
+        String playMouseOverButton = props.getProperty(PathXPropertyType.PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + playMouseOverButton);
         sT.addState(MOUSE_OVER_STATE, img);
-        s = new Sprite(sT, 0, 0, 0, 0, VISIBLE_STATE);
+        s = new Sprite(sT, PLAY_BUTTON_X, PLAY_BUTTON_Y, 0, 0, VISIBLE_STATE);
         guiButtons.put(PLAY_GAME_BUTTON_TYPE, s);
+        
+        //add the reset button to the home screen
+        String resetButton = props.getProperty(PathXPropertyType.RESET_GAME_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(RESET_GAME_BUTTON_TYPE);
+	img = loadImage(imgPath + resetButton);
+        sT.addState(VISIBLE_STATE, img);
+        String resetMouseOverButton = props.getProperty(PathXPropertyType.RESET_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + resetMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, RESET_BUTTON_X, RESET_BUTTON_Y, 0, 0, VISIBLE_STATE);
+        guiButtons.put(RESET_GAME_BUTTON_TYPE, s);
+        
+        //add the SETTINGS button to the home screen
+        String settingButton = props.getProperty(PathXPropertyType.VIEW_SETTINGS_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(VIEW_SETTINGS_BUTTON_TYPE);
+	img = loadImage(imgPath + settingButton);
+        sT.addState(VISIBLE_STATE, img);
+        String settingMouseOverButton = props.getProperty(PathXPropertyType.VIEW_SETTINGS_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + settingMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, SETTINGS_BUTTON_X, SETTINGS_BUTTON_Y, 0, 0, VISIBLE_STATE);
+        guiButtons.put(VIEW_SETTINGS_BUTTON_TYPE, s);
+        
+        //add the HELP button to the home screen
+        String helpButton = props.getProperty(PathXPropertyType.VIEW_HELP_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(VIEW_HELP_BUTTON_TYPE);
+	img = loadImage(imgPath + helpButton);
+        sT.addState(VISIBLE_STATE, img);
+        String helpMouseOverButton = props.getProperty(PathXPropertyType.VIEW_HELP_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + helpMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, HELP_BUTTON_X, HELP_BUTTON_Y, 0, 0, VISIBLE_STATE);
+        guiButtons.put(VIEW_HELP_BUTTON_TYPE, s);
         
        
        
@@ -141,12 +172,12 @@ public class PathXMiniGame extends MiniGame{
         // ADD THE CONTROLS ALONG THE NORTH OF THE GAME SCREEN
                 
          // THEN THE NEW BUTTON
-//        String newButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW);
+//        String playButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW);
 //        sT = new SpriteType(NEW_GAME_BUTTON_TYPE);
-//	img = loadImage(imgPath + newButton);
+//	img = loadImage(imgPath + playButton);
 //        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
-//        String newMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW_MOUSE_OVER);
-//        img = loadImage(imgPath + newMouseOverButton);
+//        String playMouseOverButton = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_NEW_MOUSE_OVER);
+//        img = loadImage(imgPath + playMouseOverButton);
 //        sT.addState(SortingHatTileState.MOUSE_OVER_STATE.toString(), img);
 //        s = new Sprite(sT, NEW_BUTTON_X, NEW_BUTTON_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
 //        guiButtons.put(NEW_GAME_BUTTON_TYPE, s);
