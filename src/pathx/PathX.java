@@ -75,6 +75,7 @@ public class PathX {
         IMAGE_BACKGROUND_GAME,
         IMAGE_BACKGROUND_LEVEL,
         IMAGE_BACKGROUND_MENU,
+        IMAGE_BACKGROUND_MAP,
         IMAGE_BUTTON_NEW,
         IMAGE_BUTTON_NEW_MOUSE_OVER,
         IMAGE_BUTTON_BACK,              //Added for the back button

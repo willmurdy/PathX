@@ -8,17 +8,15 @@ package pathx.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
+import mini_game.Viewport;
 import properties_manager.PropertiesManager;
 import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.*;
@@ -46,6 +44,8 @@ public class PathXMiniGame extends MiniGame{
     
     // THE SCREEN CURRENTLY BEING PLAYED
     private String currentScreenState;
+    
+    private Viewport map;
 
     @Override
     public void initAudioContent() {
@@ -65,6 +65,8 @@ public class PathXMiniGame extends MiniGame{
         
         // INIT OUR DATA MANAGER
         data = new PathXDataModel(this);
+        
+        
     }
     
     public void switchToHomeScreen(){
@@ -128,6 +130,11 @@ public class PathXMiniGame extends MiniGame{
         
         s = new Sprite(sT, 0, 0, 0, 0, HOME_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
+        
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_MAP));
+        sT = new SpriteType(MAP_TYPE);
+        sT.addState(VISIBLE_STATE, img);
+        
         
       
         

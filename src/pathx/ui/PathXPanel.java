@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
+import mini_game.Viewport;
 import static pathx.PathXConstants.*;
 
 /**
@@ -43,6 +44,8 @@ public class PathXPanel extends JPanel {
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
     private BufferedImage blankTileMouseOverImage;
     
+    private Viewport map;
+    
     /**
      * This constructor stores the game and data references,
      * which we'll need for rendering.
@@ -56,6 +59,7 @@ public class PathXPanel extends JPanel {
     {
         game = initGame;
         data = initData;
+        map = data.getViewport();
         numberFormatter = NumberFormat.getNumberInstance();
         numberFormatter.setMinimumFractionDigits(3);
         numberFormatter.setMaximumFractionDigits(3);
@@ -111,6 +115,9 @@ public class PathXPanel extends JPanel {
         
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g);
+            
+            if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE))
+                    renderViewport(g);
             
 
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
@@ -172,6 +179,15 @@ public class PathXPanel extends JPanel {
         Sprite bg = game.getGUIDecor().get(BACKGROUND_TYPE);
         renderSprite(g, bg);
                 
+    }
+    
+    public void renderViewport(Graphics g){
+        
+        map.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
+        map.initViewportMargins();
+        
+       // g.drawImage(blankTileImage, FPS, FPS, this)
+        
     }
 
     /**

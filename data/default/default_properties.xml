@@ -10,6 +10,7 @@
         <property name="GAMEPLAY_BACKGROUND_IMAGE_NAME"     value="./default/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_MENU"             value="./default/BackgroundMenu.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL"             value="./default/BackgroundLevel.png"></property>
+        <property name="IMAGE_BACKGROUND_MAP"             value="./default/BackgroundMap.png"></property>
         
         <property name="PLAY_GAME_BUTTON_IMAGE_NAME"        value="./default/ButtonPlayGame.png"></property>
         <property name="PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPlayGameMouseOver.png"></property>

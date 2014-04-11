@@ -25,6 +25,7 @@ public class PathXConstants {
     
     // EACH SCREEN HAS ITS OWN BACKGROUND TYPE
     public static final String BACKGROUND_TYPE = "BACKGROUND_TYPE";
+    public static final String MAP_TYPE = "MAP_TYPE";
     
     // THIS REPRESENTS THE BUTTONS ON THE MENU SCREEN FOR LEVEL SELECTION
     public static final String LEVEL_SELECT_BUTTON_TYPE = "LEVEL_SELECT_BUTTON_TYPE";
@@ -87,7 +88,7 @@ public class PathXConstants {
     public static final int MAX_TILE_VELOCITY = 20;
     
     // UI CONTROLS POSITIONS IN THE GAME SCREEN
-    public static final int NORTH_PANEL_HEIGHT = 130;
+    public static final int NORTH_PANEL_HEIGHT = 350;
     public static final int CONTROLS_MARGIN = 0;
     
     public static final int PLAY_BUTTON_X = 75;          //changed
