@@ -8,6 +8,8 @@ package pathx.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -72,6 +74,7 @@ public class PathXMiniGame extends MiniGame{
     public void switchToHomeScreen(){
         
        guiDecor.get(BACKGROUND_TYPE).setState(HOME_SCREEN_STATE);
+       guiDecor.get(MAP_TYPE).setState(INVISIBLE_STATE);
        
        guiButtons.get(PLAY_GAME_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(VISIBLE_STATE);
@@ -86,6 +89,7 @@ public class PathXMiniGame extends MiniGame{
     public void switchToLevelSelectScreen(){
         
         guiDecor.get(BACKGROUND_TYPE).setState(LEVEL_SELECT_SCREEN_STATE);
+        guiDecor.get(MAP_TYPE).setState(LEVEL_SELECT_SCREEN_STATE);
         
        guiButtons.get(PLAY_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
@@ -124,6 +128,8 @@ public class PathXMiniGame extends MiniGame{
         
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_LEVEL));
         sT.addState(LEVEL_SELECT_SCREEN_STATE, img);
+        
+        ((PathXDataModel)data).initViewport();
 //        
 //        img = loadImage(imgPath + props.getProperty(PathXPropertyType.GAMEPLAY_SCREEN_IMAGE_NAME));
 //        sT.addState(GAMEPLAY_SCREEN_STATE, img);
@@ -131,9 +137,13 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, 0, 0, 0, 0, HOME_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
         
+        //viewport
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_MAP));
         sT = new SpriteType(MAP_TYPE);
-        sT.addState(VISIBLE_STATE, img);
+        sT.addState(LEVEL_SCREEN_STATE, img);
+        sT.addState(INVISIBLE_STATE, null);
+        s = new Sprite(sT, data.getViewport().getViewportMarginRight(), data.getViewport().getViewportMarginTop(), 0, 0, INVISIBLE_STATE);
+        guiDecor.put(MAP_TYPE, s);
         
         
       
@@ -380,13 +390,13 @@ public class PathXMiniGame extends MiniGame{
 //            {   eventHandler.respondToUndoRequest();    }
 //        });
 //        
-//        // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
-//        this.setKeyListener(new KeyAdapter(){
-//            public void keyPressed(KeyEvent ke)
-//            {   
-//                eventHandler.respondToKeyPress(ke.getKeyCode());    
-//            }
-//        });    
+        // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
+        this.setKeyListener(new KeyAdapter(){
+            public void keyPressed(KeyEvent ke)
+            {   
+                eventHandler.respondToKeyPress(ke.getKeyCode());    
+            }
+        });    
     }
     
         public boolean isCurrentScreenState(String testScreenState)

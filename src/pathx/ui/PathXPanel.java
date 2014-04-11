@@ -6,6 +6,7 @@
 
 package pathx.ui;
 
+import java.awt.Color;
 import pathx.data.PathXDataModel;
 import pathx.PathXConstants.*;
 import java.awt.Graphics;
@@ -18,6 +19,7 @@ import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
 import mini_game.Viewport;
+import pathx.PathX;
 import static pathx.PathXConstants.*;
 
 /**
@@ -113,12 +115,14 @@ public class PathXPanel extends JPanel {
             // CLEAR THE PANEL
             super.paintComponent(g);
         
+            
+            
+        
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g);
             
             if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE))
                     renderViewport(g);
-            
 
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
             if (!data.notStarted())
@@ -183,10 +187,19 @@ public class PathXPanel extends JPanel {
     
     public void renderViewport(Graphics g){
         
-        map.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
-        map.initViewportMargins();
+        Viewport vp = data.getViewport();
+        Sprite bg = game.getGUIDecor().get(MAP_TYPE);
+        SpriteType bgST = bg.getSpriteType();
+        Image img = game.loadImage("./img/Default/BackgroundMap.png");
         
-       // g.drawImage(blankTileImage, FPS, FPS, this)
+        
+        g.drawImage(img, VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
+                WINDOW_WIDTH - VIEWPORT_MARGIN_RIGHT, WINDOW_HEIGHT - VIEWPORT_MARGIN_BOTTOM, 
+                vp.getViewportX(), vp.getViewportY(), vp.getViewportWidth(), vp.getViewportHeight(), this);
+        //g.setColor(Color.BLACK);
+       g.drawRect(VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
+                vp.getViewportWidth(), vp.getViewportHeight());
+        
         
     }
 

@@ -33,7 +33,10 @@ public class PathXConstants {
     //used for switching between the background states
     public static final String HOME_SCREEN_STATE = "HOME_SCREEN_STATE";
     public static final String LEVEL_SELECT_SCREEN_STATE = "LEVEL_SELECT_SCREEN_STATE";
-    public static final String GAMEPLAY_SCREEN_STATE = "GAMEPLAY_SCREEN_STATE";  
+    public static final String GAMEPLAY_SCREEN_STATE = "GAMEPLAY_SCREEN_STATE"; 
+    
+    //used for switching viewport states
+    public static final String LEVEL_SCREEN_STATE = "LEVEL_SCREEN_STATE";
     
     // this represents the buttons on the home screen
     public static final String HOME_SCREEN_BUTTON_TYPE = "HOME_SCREEN_BUTTON_TYPE";
@@ -66,14 +69,19 @@ public class PathXConstants {
     // UI CONTROL SIZE AND POSITION SETTINGS
     public static final int WINDOW_WIDTH = 750;
     public static final int WINDOW_HEIGHT = 650;
+    
     public static final int VIEWPORT_MARGIN_LEFT = 20;
     public static final int VIEWPORT_MARGIN_RIGHT = 20;
     public static final int VIEWPORT_MARGIN_TOP = 20;
-    public static final int VIEWPORT_MARGIN_BOTTOM = 20;
+    public static final int VIEWPORT_MARGIN_BOTTOM = 30;
+    
     public static final int LEVEL_BUTTON_WIDTH = 200;
     public static final int LEVEL_BUTTON_MARGIN = 5;
     public static final int LEVEL_BUTTON_Y = 570;
     public static final int VIEWPORT_INC = 5;
+    
+    public static final int MAP_WIDTH = 1499;
+    public static final int MAP_HEIGHT = 1129;
         
     // FOR TILE RENDERING
     public static final int NUM_TILES = 30;
@@ -88,7 +96,7 @@ public class PathXConstants {
     public static final int MAX_TILE_VELOCITY = 20;
     
     // UI CONTROLS POSITIONS IN THE GAME SCREEN
-    public static final int NORTH_PANEL_HEIGHT = 350;
+    public static final int NORTH_PANEL_HEIGHT = 100;
     public static final int CONTROLS_MARGIN = 0;
     
     public static final int PLAY_BUTTON_X = 75;          //changed

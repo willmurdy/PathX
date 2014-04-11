@@ -7,6 +7,7 @@
 package pathx.ui;
 
 import java.awt.event.KeyEvent;
+import pathx.data.PathXDataModel;
 
 /**
  *
@@ -77,7 +78,11 @@ public class PathXEventHandler {
      * Called when the user presses a key on the keyboard.
      */    
     public void respondToKeyPress(int keyCode)
-    {
+    { 
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+          if(keyCode == KeyEvent.VK_DOWN){
+            data.getViewport().scroll(-5, 0);
+        }
 
     }
 }

@@ -6,11 +6,11 @@
 
 package pathx.data;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Stack;
 import mini_game.MiniGame;
 import mini_game.MiniGameDataModel;
+import static pathx.PathXConstants.*;
 
 /**
  *
@@ -93,6 +93,17 @@ public class PathXDataModel extends MiniGameDataModel{
         return true;
     }
     
+    public void initViewport(){
+        
+        viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
+        viewport.setViewportSize(WINDOW_WIDTH -VIEWPORT_MARGIN_LEFT - VIEWPORT_MARGIN_RIGHT, WINDOW_HEIGHT - VIEWPORT_MARGIN_BOTTOM - NORTH_PANEL_HEIGHT);
+        viewport.setGameWorldSize(MAP_WIDTH, MAP_HEIGHT);
+        //viewport.setScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        //viewport.initViewportMargins();
+        //viewport.updateViewportBoundaries();
+        
+    }
+    
     public int getBalance(){
         return balance;
     }
@@ -114,6 +125,7 @@ public class PathXDataModel extends MiniGameDataModel{
 
     @Override
     public void updateDebugText(MiniGame game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }
