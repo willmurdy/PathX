@@ -73,6 +73,7 @@ public class PathX {
                 
         /* IMAGE FILE NAMES */
         IMAGE_BACKGROUND_GAME,
+        IMAGE_BACKGROUND_LEVEL,
         IMAGE_BACKGROUND_MENU,
         IMAGE_BUTTON_NEW,
         IMAGE_BUTTON_NEW_MOUSE_OVER,
@@ -109,6 +110,8 @@ public class PathX {
         VIEW_HELP_MOUSE_OVER_BUTTON_IMAGE_NAME,
         QUIT_GAME_BUTTON_IMAGE_NAME,
         QUIT_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME,
+        HOME_BUTTON_IMAGE_NAME,
+        HOME_MOUSE_OVER_BUTTON_IMAGE_NAME,
         
         //Home screen button types
 //        PLAY_GAME_BUTTON_TYPE,

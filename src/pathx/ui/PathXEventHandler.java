@@ -52,9 +52,9 @@ public class PathXEventHandler {
      
     }
     
-    public void respondToUndoRequest()
+    public void respondToHomeRequest()
     {
-      
+      game.switchToHomeScreen();
     }
 
     /**

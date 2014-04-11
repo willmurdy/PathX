@@ -68,6 +68,8 @@ public class PathXDataModel extends MiniGameDataModel{
     
     private Stack prevMoves;
     
+    private int balance;
+    
     public PathXDataModel(MiniGame initMiniGame)
     {
         // KEEP THE GAME FOR LATER
@@ -83,10 +85,16 @@ public class PathXDataModel extends MiniGameDataModel{
 //        selectedTileIndex = -1;
 //        tempTile = null;
         prevMoves = new Stack();
+        
+        balance = 1000;     
     }
     
     public boolean notStarted(){
         return true;
+    }
+    
+    public int getBalance(){
+        return balance;
     }
 
     @Override

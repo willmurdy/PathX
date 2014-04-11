@@ -40,7 +40,8 @@ public class PathXConstants {
     public static final String RESET_GAME_BUTTON_TYPE = "RESET_GAME_BUTTON_TYPE";
     public static final String VIEW_SETTINGS_BUTTON_TYPE = "VIEW_SETTINGS_BUTTON_TYPE";
     public static final String VIEW_HELP_BUTTON_TYPE = "VIEW_HELP_BUTTON_TYPE";
-
+    public static final String QUIT_GAME_BUTTON_TYPE = "QUIT_GAME_BUTTON_TYPE";
+    public static final String HOME_BUTTON_TYPE = "HOME_BUTTON_TYPE";
     // IN-GAME UI CONTROL TYPES
 //    public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
 //    public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
@@ -97,6 +98,14 @@ public class PathXConstants {
     public static final int SETTINGS_BUTTON_Y = 500; 
     public static final int HELP_BUTTON_X = SETTINGS_BUTTON_X + 150;          //changed
     public static final int HELP_BUTTON_Y = 500;  
+    public static final int QUIT_BUTTON_X = 700;          //changed
+    public static final int QUIT_BUTTON_Y = 0;  
+    public static final int HOME_BUTTON_X = 650;          //changed
+    public static final int HOME_BUTTON_Y = 0;    
+    public static final int BALANCE_X = 300;          //changed
+    public static final int BALANCE_Y = 60; 
+    public static final int GOAL_X = 300;          //changed
+    public static final int GOAL_Y = 90; 
     
     public static final int BACK_BUTTON_X = 130;
     public static final int BACK_BUTTON_Y = 0;
@@ -154,7 +163,7 @@ public class PathXConstants {
     public static final Font FONT_TEXT_DISPLAY = new Font(Font.SANS_SERIF, Font.BOLD, 40);
     public static final Font FONT_DEBUG_TEXT = new Font(Font.MONOSPACED, Font.BOLD, 14);
     public static final Font FONT_STATS = new Font(Font.MONOSPACED, Font.BOLD, 20);
-    public static final Font FONT_ALGORITHM = new Font(Font.SANS_SERIF, Font.PLAIN, 25);
+    public static final Font FONT_BALANCE = new Font(Font.MONOSPACED, Font.BOLD, 30);
     
     //added
     public static final String VISIBLE_STATE = "VISIBLE_STATE";

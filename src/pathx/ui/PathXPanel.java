@@ -17,10 +17,7 @@ import javax.swing.JPanel;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
-import pathx.PathX.PathXPropertyType;
-import static pathx.PathXConstants.BACKGROUND_TYPE;
-import static pathx.PathXConstants.INVISIBLE_STATE;
-import properties_manager.PropertiesManager;
+import static pathx.PathXConstants.*;
 
 /**
  *
@@ -117,35 +114,33 @@ public class PathXPanel extends JPanel {
             
 
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
-//            if (!data.notStarted())
-//            {
-//                // RENDER THE SNAKE
-////                if (!data.won())
-////                    renderSnake(g);
-//                
-//                // AND THE TILES
-//                renderTiles(g);
-//                
-//                // AND THE DIALOGS, IF THERE ARE ANY
-//                renderDialogs(g);
-//                                
-//                // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
-//                // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
-//                renderGrid(g);
-//                
-//                // RENDER THE ALGORITHM NAME
-//                renderHeader(g);
-//               
-//            }
+            if (!data.notStarted())
+            {
+                // RENDER THE SNAKE
+//                if (!data.won())
+//                    renderSnake(g);
+                
+                // AND THE TILES
+                renderTiles(g);
+                
+                // AND THE DIALOGS, IF THERE ARE ANY
+                renderDialogs(g);
+                                
+                // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
+                // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
+                renderGrid(g);
+                
+                // RENDER THE ALGORITHM NAME
+                renderHeader(g);
+               
+            }
 
             // AND THE BUTTONS AND DECOR
             renderGUIControls(g);
-         
-//            if (!data.notStarted())
-//            {
-//                // AND THE TIME AND TILES STATS
-//                renderStats(g);
-//            }
+
+            // AND THE TIME AND TILES STATS
+            renderStats(g);
+
         
             // AND FINALLY, TEXT FOR DEBUGGING
             renderDebuggingText(g);
@@ -241,12 +236,20 @@ public class PathXPanel extends JPanel {
 //            // RENDER THE TILES LEFT
 //            g.setFont(FONT_TEXT_DISPLAY);
 //            g.setColor(Color.BLACK);
-//
-//            // RENDER THE TIME
-//            String time = data.gameTimeToText();
-//            int x = TIME_X + TIME_OFFSET;
-//            int y = TIME_Y + TIME_TEXT_OFFSET;
-//            g.drawString(time, x, y);
+        
+        if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE)){
+            String balance = "Balance: $" + data.getBalance();
+            int x = BALANCE_X;
+            int y = BALANCE_Y;
+            g.setFont(FONT_BALANCE);
+            g.drawString(balance, x, y);
+            
+            String goal = "Goal: $100,000";
+            x = GOAL_X;
+            y = GOAL_Y;
+            g.setFont(FONT_BALANCE);
+            g.drawString(goal, x, y);
+        }
 //            
 //            //Render miscasts
 //            String miscasts = Integer.toString(data.getBadSpellsCounter());

@@ -76,17 +76,21 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(VISIBLE_STATE);
        
+       guiButtons.get(HOME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
        currentScreenState = HOME_SCREEN_STATE;
     }
     
     public void switchToLevelSelectScreen(){
         
-        
+        guiDecor.get(BACKGROUND_TYPE).setState(LEVEL_SELECT_SCREEN_STATE);
         
        guiButtons.get(PLAY_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
+       guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
        
        currentScreenState = LEVEL_SELECT_SCREEN_STATE;
         
@@ -115,9 +119,9 @@ public class PathXMiniGame extends MiniGame{
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_MENU));
         sT = new SpriteType(BACKGROUND_TYPE);
         sT.addState(HOME_SCREEN_STATE, img);
-//        
-//        img = loadImage(imgPath + props.getProperty(PathXPropertyType.LEVEL_SELECT_SCREEN_IMAGE_NAME));
-//        sT.addState(LEVEL_SELECT_SCREEN_STATE, img);
+        
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_LEVEL));
+        sT.addState(LEVEL_SELECT_SCREEN_STATE, img);
 //        
 //        img = loadImage(imgPath + props.getProperty(PathXPropertyType.GAMEPLAY_SCREEN_IMAGE_NAME));
 //        sT.addState(GAMEPLAY_SCREEN_STATE, img);
@@ -190,7 +194,28 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, HELP_BUTTON_X, HELP_BUTTON_Y, 0, 0, VISIBLE_STATE);
         guiButtons.put(VIEW_HELP_BUTTON_TYPE, s);
         
-       
+        //add the HOME button to the home screen
+        String quitButton = props.getProperty(PathXPropertyType.QUIT_GAME_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(QUIT_GAME_BUTTON_TYPE);
+	img = loadImage(imgPath + quitButton);
+        sT.addState(VISIBLE_STATE, img);
+        String quitMouseOverButton = props.getProperty(PathXPropertyType.QUIT_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + quitMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, QUIT_BUTTON_X, QUIT_BUTTON_Y, 0, 0, VISIBLE_STATE);
+        guiButtons.put(QUIT_GAME_BUTTON_TYPE, s);
+        
+        //add the HOME button to the home screen
+        String homeButton = props.getProperty(PathXPropertyType.HOME_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(HOME_BUTTON_TYPE);
+	img = loadImage(imgPath + homeButton);
+        sT.addState(VISIBLE_STATE, img);
+        String homeMouseOverButton = props.getProperty(PathXPropertyType.HOME_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + homeMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, HOME_BUTTON_X, HOME_BUTTON_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(HOME_BUTTON_TYPE, s);
+         
        
         
         // ADD THE CONTROLS ALONG THE NORTH OF THE GAME SCREEN
@@ -329,13 +354,19 @@ public class PathXMiniGame extends MiniGame{
                 eventHandler.respondToResetGameRequest();
             }
         });
-//
-//        // STATS BUTTON EVENT HANDLER
-//        guiButtons.get(STATS_BUTTON_TYPE).setActionListener(new ActionListener(){
-//            public void actionPerformed(ActionEvent ae)
-//            {   eventHandler.respondToDisplayStatsRequest();    }
-//        });
-//        
+
+        // QUIT BUTTON EVENT HANDLER
+        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToExitRequest();    }
+        });
+        
+        // Home BUTTON EVENT HANDLER
+        guiButtons.get(HOME_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToHomeRequest();    }
+        });
+        
 //        // undo BUTTON EVENT HANDLER
 //        guiButtons.get(UNDO_BUTTON_TYPE).setActionListener(new ActionListener(){   //ADDED
 //            public void actionPerformed(ActionEvent ae)
@@ -349,6 +380,11 @@ public class PathXMiniGame extends MiniGame{
 //                eventHandler.respondToKeyPress(ke.getKeyCode());    
 //            }
 //        });    
+    }
+    
+        public boolean isCurrentScreenState(String testScreenState)
+    {
+        return testScreenState.equals(currentScreenState);
     }
 
     @Override
