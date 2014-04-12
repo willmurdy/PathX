@@ -33,6 +33,8 @@ public class PathXConstants {
     //used for switching between the background states
     public static final String HOME_SCREEN_STATE = "HOME_SCREEN_STATE";
     public static final String LEVEL_SELECT_SCREEN_STATE = "LEVEL_SELECT_SCREEN_STATE";
+    public static final String SETTINGS_SCREEN_STATE = "SETTINGS_SCREEN_STATE";
+    public static final String HELP_SCREEN_STATE = "HELP_SCREEN_STATE";
     public static final String GAMEPLAY_SCREEN_STATE = "GAMEPLAY_SCREEN_STATE"; 
     
     //used for switching viewport states
@@ -45,7 +47,12 @@ public class PathXConstants {
     public static final String VIEW_SETTINGS_BUTTON_TYPE = "VIEW_SETTINGS_BUTTON_TYPE";
     public static final String VIEW_HELP_BUTTON_TYPE = "VIEW_HELP_BUTTON_TYPE";
     public static final String QUIT_GAME_BUTTON_TYPE = "QUIT_GAME_BUTTON_TYPE";
+    
     public static final String HOME_BUTTON_TYPE = "HOME_BUTTON_TYPE";
+    public static final String RIGHT_BUTTON_TYPE = "RIGHT_BUTTON_TYPE";
+    public static final String LEFT_BUTTON_TYPE = "LEFT_BUTTON_TYPE";
+    public static final String UP_BUTTON_TYPE = "UP_BUTTON_TYPE";
+    public static final String DOWN_BUTTON_TYPE = "DOWN_BUTTON_TYPE";
     // IN-GAME UI CONTROL TYPES
 //    public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
 //    public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
@@ -78,7 +85,7 @@ public class PathXConstants {
     public static final int LEVEL_BUTTON_WIDTH = 200;
     public static final int LEVEL_BUTTON_MARGIN = 5;
     public static final int LEVEL_BUTTON_Y = 570;
-    public static final int VIEWPORT_INC = 5;
+    public static final int VIEWPORT_INC = 10;
     
     public static final int MAP_WIDTH = 1499;
     public static final int MAP_HEIGHT = 1129;
@@ -90,7 +97,7 @@ public class PathXConstants {
     public static final int TILE_IMAGE_OFFSET_X = 45;
     public static final int TILE_IMAGE_OFFSET_Y = 30;
     public static final String TILE_SPRITE_TYPE_PREFIX = "TILE_";
-    public static final int COLOR_INC = 10;
+    public static final int COLOR_INC = 25;
     
     // FOR MOVING TILES AROUND
     public static final int MAX_TILE_VELOCITY = 20;
@@ -115,6 +122,14 @@ public class PathXConstants {
     public static final int BALANCE_Y = 60; 
     public static final int GOAL_X = 300;          //changed
     public static final int GOAL_Y = 90; 
+    public static final int RIGHT_BUTTON_X = 70;          //changed
+    public static final int RIGHT_BUTTON_Y = 550;
+    public static final int LEFT_BUTTON_X = 20;          //changed
+    public static final int LEFT_BUTTON_Y = 550;
+    public static final int UP_BUTTON_X = 45;          //changed
+    public static final int UP_BUTTON_Y = 525;
+    public static final int DOWN_BUTTON_X = 45;          //changed
+    public static final int DOWN_BUTTON_Y = 575;
     
     public static final int BACK_BUTTON_X = 130;
     public static final int BACK_BUTTON_Y = 0;

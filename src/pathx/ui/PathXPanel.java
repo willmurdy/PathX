@@ -195,10 +195,10 @@ public class PathXPanel extends JPanel {
         
         g.drawImage(img, VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
                 WINDOW_WIDTH - VIEWPORT_MARGIN_RIGHT, WINDOW_HEIGHT - VIEWPORT_MARGIN_BOTTOM, 
-                vp.getViewportX(), vp.getViewportY(), vp.getViewportWidth(), vp.getViewportHeight(), this);
+                vp.getViewportX(), vp.getViewportY(), vp.getViewportWidth() + vp.getViewportX(), vp.getViewportHeight() + vp.getViewportY(), this);
         //g.setColor(Color.BLACK);
        g.drawRect(VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
-                vp.getViewportWidth(), vp.getViewportHeight());
+                710, 500);
         
         
     }

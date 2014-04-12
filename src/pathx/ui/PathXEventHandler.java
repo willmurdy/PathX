@@ -7,6 +7,7 @@
 package pathx.ui;
 
 import java.awt.event.KeyEvent;
+import static pathx.PathXConstants.VIEWPORT_INC;
 import pathx.data.PathXDataModel;
 
 /**
@@ -50,12 +51,17 @@ public class PathXEventHandler {
     
     public void respondToResetGameRequest()
     {
-     
+        game.getDataModel().reset(game);
     }
     
     public void respondToHomeRequest()
     {
       game.switchToHomeScreen();
+    }
+    
+        public void respondToHelpRequest()
+    {
+      game.switchToHelpScreen();
     }
 
     /**
@@ -74,14 +80,40 @@ public class PathXEventHandler {
           
     }
 
+        /**
+     * Called when the user clicks the scroll button.
+     */
+    public void respondToScrollRequest(int incX, int incY)
+    {
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.getViewport().scroll(incX, incY);
+    }
+    
+            /**
+     * Called when the user clicks the scroll button.
+     */
+    public void respondToSettingsRequest()
+    {
+        game.switchToSettingsScreen();
+    }
+    
     /**
      * Called when the user presses a key on the keyboard.
      */    
     public void respondToKeyPress(int keyCode)
     { 
         PathXDataModel data = (PathXDataModel)game.getDataModel();
-          if(keyCode == KeyEvent.VK_DOWN){
-            data.getViewport().scroll(-5, 0);
+        if(keyCode == KeyEvent.VK_DOWN){
+            data.getViewport().scroll(0, VIEWPORT_INC);
+        }
+        if(keyCode == KeyEvent.VK_UP){
+            data.getViewport().scroll(0, -VIEWPORT_INC);
+        }
+        if(keyCode == KeyEvent.VK_LEFT){
+            data.getViewport().scroll(-VIEWPORT_INC, 0);
+        }
+        if(keyCode == KeyEvent.VK_RIGHT){
+            data.getViewport().scroll(VIEWPORT_INC, 0);
         }
 
     }

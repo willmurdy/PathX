@@ -98,9 +98,10 @@ public class PathXDataModel extends MiniGameDataModel{
         viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
         viewport.setViewportSize(WINDOW_WIDTH -VIEWPORT_MARGIN_LEFT - VIEWPORT_MARGIN_RIGHT, WINDOW_HEIGHT - VIEWPORT_MARGIN_BOTTOM - NORTH_PANEL_HEIGHT);
         viewport.setGameWorldSize(MAP_WIDTH, MAP_HEIGHT);
-        //viewport.setScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        viewport.setScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         //viewport.initViewportMargins();
-        //viewport.updateViewportBoundaries();
+        viewport.updateViewportBoundaries();
+        viewport.scroll(150, 150);
         
     }
     
@@ -115,7 +116,7 @@ public class PathXDataModel extends MiniGameDataModel{
 
     @Override
     public void reset(MiniGame game) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

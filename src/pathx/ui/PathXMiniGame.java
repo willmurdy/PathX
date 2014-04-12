@@ -82,6 +82,10 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(VISIBLE_STATE);
        
        guiButtons.get(HOME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(RIGHT_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(LEFT_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(UP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(DOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
        
        currentScreenState = HOME_SCREEN_STATE;
     }
@@ -97,8 +101,42 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
        
        guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(RIGHT_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(LEFT_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(UP_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(DOWN_BUTTON_TYPE).setState(VISIBLE_STATE);
        
        currentScreenState = LEVEL_SELECT_SCREEN_STATE;
+        
+    }
+    
+    public void switchToSettingsScreen(){
+        
+        guiDecor.get(BACKGROUND_TYPE).setState(SETTINGS_SCREEN_STATE);
+        
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
+       guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       
+       currentScreenState = SETTINGS_SCREEN_STATE;
+        
+    }
+    
+    public void switchToHelpScreen(){
+        
+       guiDecor.get(BACKGROUND_TYPE).setState(HELP_SCREEN_STATE);
+        
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
+       guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       
+       currentScreenState = HELP_SCREEN_STATE;
         
     }
 
@@ -129,13 +167,16 @@ public class PathXMiniGame extends MiniGame{
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_LEVEL));
         sT.addState(LEVEL_SELECT_SCREEN_STATE, img);
         
-        ((PathXDataModel)data).initViewport();
-//        
-//        img = loadImage(imgPath + props.getProperty(PathXPropertyType.GAMEPLAY_SCREEN_IMAGE_NAME));
-//        sT.addState(GAMEPLAY_SCREEN_STATE, img);
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_HELP));
+        sT.addState(HELP_SCREEN_STATE, img);
+        
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_SETTINGS));
+        sT.addState(SETTINGS_SCREEN_STATE, img);
         
         s = new Sprite(sT, 0, 0, 0, 0, HOME_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
+        
+        
         
         //viewport
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_MAP));
@@ -145,7 +186,7 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, data.getViewport().getViewportMarginRight(), data.getViewport().getViewportMarginTop(), 0, 0, INVISIBLE_STATE);
         guiDecor.put(MAP_TYPE, s);
         
-        
+        ((PathXDataModel)data).initViewport();  
       
         
         // ADD A BUTTON FOR EACH LEVEL AVAILABLE
@@ -232,7 +273,50 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, HOME_BUTTON_X, HOME_BUTTON_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(HOME_BUTTON_TYPE, s);
+        
+        //add the right scroll button for the viewport
+        String rightButton = props.getProperty(PathXPropertyType.RIGHT_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(RIGHT_BUTTON_TYPE);
+	img = loadImage(imgPath + rightButton);
+        sT.addState(VISIBLE_STATE, img);
+        String rightMouseOverButton = props.getProperty(PathXPropertyType.RIGHT_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + rightMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, RIGHT_BUTTON_X, RIGHT_BUTTON_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(RIGHT_BUTTON_TYPE, s);
+        
+        //add the left scroll button for the viewport
+        String leftButton = props.getProperty(PathXPropertyType.LEFT_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(LEFT_BUTTON_TYPE);
+	img = loadImage(imgPath + leftButton);
+        sT.addState(VISIBLE_STATE, img);
+        String leftMouseOverButton = props.getProperty(PathXPropertyType.LEFT_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + leftMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, LEFT_BUTTON_X, LEFT_BUTTON_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(LEFT_BUTTON_TYPE, s);
          
+        //add the up scroll button for the viewport
+        String upButton = props.getProperty(PathXPropertyType.UP_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(UP_BUTTON_TYPE);
+	img = loadImage(imgPath + upButton);
+        sT.addState(VISIBLE_STATE, img);
+        String upMouseOverButton = props.getProperty(PathXPropertyType.UP_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + upMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, UP_BUTTON_X, UP_BUTTON_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(UP_BUTTON_TYPE, s);
+        
+        //add the down scroll button for the viewport
+        String downButton = props.getProperty(PathXPropertyType.DOWN_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(DOWN_BUTTON_TYPE);
+	img = loadImage(imgPath + downButton);
+        sT.addState(VISIBLE_STATE, img);
+        String downMouseOverButton = props.getProperty(PathXPropertyType.DOWN_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + downMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, DOWN_BUTTON_X, DOWN_BUTTON_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(DOWN_BUTTON_TYPE, s);
        
         
         // ADD THE CONTROLS ALONG THE NORTH OF THE GAME SCREEN
@@ -308,7 +392,6 @@ public class PathXMiniGame extends MiniGame{
         // NOW ADD THE DIALOGS
         
         // AND THE STATS DISPLAY
-//        String statsDialog = props.getProperty(SortingHatPropertyType.IMAGE_DIALOG_STATS);
 //        sT = new SpriteType(STATS_DIALOG_TYPE);
 //        img = loadImageWithColorKey(imgPath + statsDialog, COLOR_KEY);
 //        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
@@ -383,6 +466,42 @@ public class PathXMiniGame extends MiniGame{
             public void actionPerformed(ActionEvent ae)
             {   eventHandler.respondToHomeRequest();    }
         });
+        
+                // Home BUTTON EVENT HANDLER
+        guiButtons.get(RIGHT_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToScrollRequest(VIEWPORT_INC, 0);    }
+        });
+        
+                // Home BUTTON EVENT HANDLER
+        guiButtons.get(LEFT_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToScrollRequest(-VIEWPORT_INC, 0);    }
+        });
+        
+                // Home BUTTON EVENT HANDLER
+        guiButtons.get(UP_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToScrollRequest(0, -VIEWPORT_INC);    }
+        });
+        
+                // Home BUTTON EVENT HANDLER
+        guiButtons.get(DOWN_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToScrollRequest(0, VIEWPORT_INC);    }
+        });  
+        
+                      // Home BUTTON EVENT HANDLER
+        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToSettingsRequest();    }
+        }); 
+        
+                      // Home BUTTON EVENT HANDLER
+        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToHelpRequest();    }
+        }); 
         
 //        // undo BUTTON EVENT HANDLER
 //        guiButtons.get(UNDO_BUTTON_TYPE).setActionListener(new ActionListener(){   //ADDED

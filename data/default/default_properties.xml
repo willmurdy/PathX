@@ -11,6 +11,8 @@
         <property name="IMAGE_BACKGROUND_MENU"             value="./default/BackgroundMenu.png"></property>
         <property name="IMAGE_BACKGROUND_LEVEL"             value="./default/BackgroundLevel.png"></property>
         <property name="IMAGE_BACKGROUND_MAP"             value="./default/BackgroundMap.png"></property>
+        <property name="IMAGE_BACKGROUND_SETTINGS"             value="./default/BackgroundSettings.png"></property>
+        <property name="IMAGE_BACKGROUND_HELP"             value="./default/BackgroundHelp.png"></property>
         
         <property name="PLAY_GAME_BUTTON_IMAGE_NAME"        value="./default/ButtonPlayGame.png"></property>
         <property name="PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPlayGameMouseOver.png"></property>
@@ -24,6 +26,14 @@
         <property name="QUIT_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonQuitGameMouseOver.png"></property>
 		<property name="HOME_BUTTON_IMAGE_NAME"       value="./default/ButtonHome.png"></property>
         <property name="HOME_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonHomeMouseOver.png"></property>        
+        <property name="RIGHT_BUTTON_IMAGE_NAME"       value="./default/ButtonRight.png"></property>
+        <property name="RIGHT_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonRightMouseOver.png"></property>
+        <property name="LEFT_BUTTON_IMAGE_NAME"       value="./default/ButtonLeft.png"></property>
+        <property name="LEFT_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonLeftMouseOver.png"></property>
+        <property name="UP_BUTTON_IMAGE_NAME"       value="./default/ButtonUp.png"></property>
+        <property name="UP_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonUpMouseOver.png"></property>
+        <property name="DOWN_BUTTON_IMAGE_NAME"       value="./default/ButtonDown.png"></property>
+        <property name="DOWN_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonDownMouseOver.png"></property>
         
         <!-- Added for the back button image -->
         <property name="IMAGE_BUTTON_BACK"                   value="./default/ButtonBack.png"></property>
