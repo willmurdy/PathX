@@ -8,6 +8,9 @@ package pathx.data;
 
 import java.awt.image.BufferedImage;
 import mini_game.Viewport;
+import static pathx.PathXConstants.NORTH_PANEL_HEIGHT;
+import static pathx.PathXConstants.VIEWPORT_MARGIN_LEFT;
+import static pathx.PathXConstants.VIEWPORT_MARGIN_TOP;
 
 /**
  *
@@ -38,23 +41,30 @@ public class PathXLevel {
     
     private Viewport vp;
     
-    public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name){
+    public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
+                            int reward){
         
         vp = gameViewport;
-        x = xPos + vp.getViewportMarginLeft() - vp.getViewportX();
-        y = yPos + vp.getViewportMarginTop() - vp.getViewportY(); 
+        x = xPos + 20 - vp.getViewportX();
+        y = yPos + 120 - vp.getViewportY(); 
         
-        renderx = x + vp.getViewportMarginLeft() - vp.getViewportX();
-        rendery = y + vp.getViewportMarginTop() - vp.getViewportY();
+        renderx = x + 20 - vp.getViewportX();
+        rendery = y + 120 - vp.getViewportY();
         
         levelName = name;
         
         currentState = state;
         
+        money = reward;
+        
     }
     
     public void setSpriteID(int id){
         spriteID = id;
+    }
+    
+    public int getReward(){
+        return money;
     }
     
     public String getLevelName(){
@@ -79,11 +89,11 @@ public class PathXLevel {
     
     public void updateLocation(int xInc, int yInc){
         
-//        x += xInc;
-//        y += yInc;
+        //renderx += -xInc;
+        //rendery += -yInc;
         
-        renderx = x + vp.getViewportMarginLeft() - vp.getViewportX();
-        rendery = y + vp.getViewportMarginTop() - vp.getViewportY();
+        renderx = x + VIEWPORT_MARGIN_LEFT - vp.getViewportX();
+        rendery = y + VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT - vp.getViewportY();
 
     }
     

@@ -86,8 +86,8 @@ public class PathXEventHandler {
     public void respondToScrollRequest(int incX, int incY)
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
-        data.getViewport().scroll(incX, incY);
-        ((PathXDataModel)data).updateLevelLocations(-incX, -incY);
+        //data.getViewport().scroll(incX, incY);
+        data.scrollViewPort(incX, incY);
     }
     
             /**

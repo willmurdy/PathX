@@ -92,6 +92,12 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(UP_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(DOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
        
+       for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
+       {
+           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setState(INVISIBLE_STATE);
+       }
+       
+       
        currentScreenState = HOME_SCREEN_STATE;
     }
     
@@ -206,39 +212,39 @@ public class PathXMiniGame extends MiniGame{
 //        window.setCursor(wandCursor);
         
         // ADD A BUTTON FOR EACH LEVEL AVAILABLE
-        ((PathXDataModel)data).initLevels();
-//        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
-//        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
-//        Viewport viewport = data.getViewport();
-//        x = (viewport.getScreenWidth() - totalWidth)/2.0f;
-        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
-        {
-            sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
-            if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.AVAILABLE_STATE.toString())){
-                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE));
-                sT.addState(VISIBLE_STATE, img);
-                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE_MOUSE_OVER));
-                sT.addState(MOUSE_OVER_STATE, img);
-
-            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.COMPLETED_STATE.toString())){
-                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
-                sT.addState(VISIBLE_STATE, img);
-                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE_MOUSE_OVER));
-                sT.addState(MOUSE_OVER_STATE, img);
-
-            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.LOCKED_STATE.toString())){
-                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED));
-                sT.addState(VISIBLE_STATE, img);
-                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED_MOUSE_OVER));
-                sT.addState(MOUSE_OVER_STATE, img);
-
-            }
-            sT.addState(INVISIBLE_STATE, null);
-            s = new Sprite(sT, ((PathXDataModel)data).getLevel(i).getX(), ((PathXDataModel)data).getLevel(i).getY(),
-                    0, 0, INVISIBLE_STATE);
-            guiButtons.put(((PathXDataModel)data).getLevel(i).toString(), s);
-            ((PathXDataModel)data).getLevel(i).setSpriteID(s.getID());
-        }
+//        ((PathXDataModel)data).initLevels();
+////        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
+////        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
+////        Viewport viewport = data.getViewport();
+////        x = (viewport.getScreenWidth() - totalWidth)/2.0f;
+//        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
+//        {
+//            sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
+//            if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.AVAILABLE_STATE.toString())){
+//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE));
+//                sT.addState(VISIBLE_STATE, img);
+//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE_MOUSE_OVER));
+//                sT.addState(MOUSE_OVER_STATE, img);
+//
+//            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.COMPLETED_STATE.toString())){
+//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
+//                sT.addState(VISIBLE_STATE, img);
+//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE_MOUSE_OVER));
+//                sT.addState(MOUSE_OVER_STATE, img);
+//
+//            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.LOCKED_STATE.toString())){
+//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED));
+//                sT.addState(VISIBLE_STATE, img);
+//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED_MOUSE_OVER));
+//                sT.addState(MOUSE_OVER_STATE, img);
+//
+//            }
+//            sT.addState(INVISIBLE_STATE, null);
+//            s = new Sprite(sT, ((PathXDataModel)data).getLevel(i).getX(), ((PathXDataModel)data).getLevel(i).getY(),
+//                    0, 0, INVISIBLE_STATE);
+//            guiButtons.put(((PathXDataModel)data).getLevel(i).toString(), s);
+//            ((PathXDataModel)data).getLevel(i).setSpriteID(s.getID());
+//        }
         
         //Add the Buttons for the Home screen
         String playButton = props.getProperty(PathXPropertyType.PLAY_GAME_BUTTON_IMAGE_NAME);
@@ -349,6 +355,40 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, DOWN_BUTTON_X, DOWN_BUTTON_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(DOWN_BUTTON_TYPE, s);
+        
+        ((PathXDataModel)data).initLevels();
+//        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
+//        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
+//        Viewport viewport = data.getViewport();
+//        x = (viewport.getScreenWidth() - totalWidth)/2.0f;
+        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
+        {
+            sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
+            if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.AVAILABLE_STATE.toString())){
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE));
+                sT.addState(VISIBLE_STATE, img);
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE_MOUSE_OVER));
+                sT.addState(MOUSE_OVER_STATE, img);
+
+            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.COMPLETED_STATE.toString())){
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
+                sT.addState(VISIBLE_STATE, img);
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE_MOUSE_OVER));
+                sT.addState(MOUSE_OVER_STATE, img);
+
+            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.LOCKED_STATE.toString())){
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED));
+                sT.addState(VISIBLE_STATE, img);
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED_MOUSE_OVER));
+                sT.addState(MOUSE_OVER_STATE, img);
+
+            }
+            sT.addState(INVISIBLE_STATE, null);
+            s = new Sprite(sT, ((PathXDataModel)data).getLevel(i).getX(), ((PathXDataModel)data).getLevel(i).getY(),
+                    0, 0, INVISIBLE_STATE);
+            guiButtons.put(((PathXDataModel)data).getLevel(i).toString(), s);
+            ((PathXDataModel)data).getLevel(i).setSpriteID(s.getID());
+        }
         
         //add the down scroll button for the viewport
 //        String levelButton = props.getProperty(PathXPropertyType.DOWN_BUTTON_IMAGE_NAME);

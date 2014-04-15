@@ -99,14 +99,14 @@ public class PathXDataModel extends MiniGameDataModel{
     
     public void initViewport(){
         
-        viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
-        viewport.setViewportSize(WINDOW_WIDTH -VIEWPORT_MARGIN_LEFT - VIEWPORT_MARGIN_RIGHT, WINDOW_HEIGHT - VIEWPORT_MARGIN_BOTTOM - NORTH_PANEL_HEIGHT);
+        viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT + 10);
+        viewport.setViewportSize(WINDOW_WIDTH -40, WINDOW_HEIGHT - 20 - 100);
         viewport.setGameWorldSize(MAP_WIDTH, MAP_HEIGHT);
         viewport.setScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-        //viewport.initViewportMargins();
+//        viewport.initViewportMargins();
         viewport.updateViewportBoundaries();
         viewport.scroll(150, 150);
-        
+
     }
     
     public void initLevels(){
@@ -115,9 +115,9 @@ public class PathXDataModel extends MiniGameDataModel{
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathX.PathXPropertyType.LEVEL_OPTIONS);
         
         
-        PathXLevel level = new PathXLevel(208, 532, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "San Fransisco");
+        PathXLevel level = new PathXLevel(205, 520, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "Level One", 10);
         levels.add(level);
-        level = new PathXLevel(457, 478, viewport, PathXLevelState.LOCKED_STATE.toString(), "Salt lake city");
+        level = new PathXLevel(1400, 350, viewport, PathXLevelState.LOCKED_STATE.toString(), "Level Two", 20);
         levels.add(level);
     }
     
@@ -132,9 +132,15 @@ public class PathXDataModel extends MiniGameDataModel{
         return null;
     }
     
-    public void updateLevelLocations(int x, int y){
+    public void scrollViewPort(int incX, int incY){
+        
+        if((viewport.getViewportX() + incX >= 0 && viewport.getViewportX() + incX <= viewport.getMaxViewportX())
+                && (viewport.getViewportY() + incY >= 0 && viewport.getViewportY() + incY <= viewport.getMaxViewportY()))
+            viewport.scroll(incX, incY);
+        
+        
         for(int i = 0; i < levels.size(); i++){
-            levels.get(i).updateLocation(x, y);
+            levels.get(i).updateLocation(incX, incY);
         }
     }
     

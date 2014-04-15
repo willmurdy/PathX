@@ -157,6 +157,7 @@ public class PathXPanel extends JPanel {
         
             // AND FINALLY, TEXT FOR DEBUGGING
             renderDebuggingText(g);
+
         }
         finally
         {
@@ -216,6 +217,7 @@ public class PathXPanel extends JPanel {
                 WINDOW_WIDTH - VIEWPORT_MARGIN_RIGHT, WINDOW_HEIGHT - VIEWPORT_MARGIN_BOTTOM, 
                 vp.getViewportX(), vp.getViewportY(), vp.getViewportWidth() + vp.getViewportX(), vp.getViewportHeight() + vp.getViewportY(), this);
         //g.setColor(Color.BLACK);
+       
        g.drawRect(VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
                 710, 500);
         
@@ -228,17 +230,19 @@ public class PathXPanel extends JPanel {
         int y = data.getLevelSprite(s.getID()).getY();
         s.setX(x);
         s.setY(y);  
-        
-//        if(!(s.getX() < viewport.getViewportX() || s.getX() > (viewport.getViewportX() + viewport.getViewportWidth())) 
-//                && !(s.getY() < viewport.getViewportY() || s.getY() > (viewport.getViewportY() + viewport.getViewportHeight())))
+//        !(s.getX() < viewport.getViewportX() || s.getX() > (viewport.getViewportX() + viewport.getViewportWidth())) 
+//                && !(s.getY() < viewport.getViewportY() || s.getY() > (viewport.getViewportY() + viewport.getViewportHeight()))
+        if((x > VIEWPORT_MARGIN_LEFT - 10 && x < VIEWPORT_MARGIN_LEFT + 710 - 40) && 
+                (y > NORTH_PANEL_HEIGHT + 10) && y < VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT + 460){
             renderSprite(g, s);
-       if(s.getState().equals(MOUSE_OVER_STATE)){
-            String goal = data.getLevelSprite(s.getID()).getLevelName();
-            x = LEVEL_NAME_X;
-            y = LEVEL_NAME_Y;
-            g.setFont(FONT_BALANCE);
-            g.drawString(goal, x, y);
-       }
+            if(s.getState().equals(MOUSE_OVER_STATE)){
+                 String levelInfo = data.getLevelSprite(s.getID()).getLevelName() + " - $" + data.getLevelSprite(s.getID()).getReward();
+                 x = 750 - levelInfo.length() * 20;
+                 y = LEVEL_NAME_Y;
+                 g.setFont(FONT_BALANCE);
+                 g.drawString(levelInfo, x, y);
+            }
+        }
            
         
     }
