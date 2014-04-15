@@ -115,7 +115,7 @@ public class PathXDataModel extends MiniGameDataModel{
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathX.PathXPropertyType.LEVEL_OPTIONS);
         
         
-        PathXLevel level = new PathXLevel(205, 520, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "Level One", 10);
+        PathXLevel level = new PathXLevel(305, 420, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "Level One", 10);
         levels.add(level);
         level = new PathXLevel(1400, 350, viewport, PathXLevelState.LOCKED_STATE.toString(), "Level Two", 20);
         levels.add(level);

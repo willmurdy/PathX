@@ -137,7 +137,7 @@ public class PathXPanel extends JPanel {
                 renderTiles(g);
                 
                 // AND THE DIALOGS, IF THERE ARE ANY
-                renderDialogs(g);
+                
                                 
                 // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
                 // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
@@ -153,6 +153,8 @@ public class PathXPanel extends JPanel {
 
             // AND THE TIME AND TILES STATS
             renderStats(g);
+            
+            renderDialogs(g);
 
         
             // AND FINALLY, TEXT FOR DEBUGGING
@@ -325,6 +327,13 @@ public class PathXPanel extends JPanel {
             y = GOAL_Y;
             g.setFont(FONT_BALANCE);
             g.drawString(goal, x, y);
+        }
+        
+        if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
+            g.drawRect(180, 20, 550, 610);
+            g.drawRect(20, 500, 160, 130);
+            g.drawRect(20, 200, 160, 200);
+            
         }
 //            
 //            //Render miscasts

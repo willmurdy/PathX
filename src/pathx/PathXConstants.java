@@ -65,6 +65,7 @@ public class PathXConstants {
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";
     public static final String STATS_DIALOG_TYPE = "STATS_DIALOG_TYPE";
+    public static final String LEVEL_DIALOG_TYPE = "LEVEL_DIALOG_TYPE";
     
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";
@@ -117,7 +118,11 @@ public class PathXConstants {
     public static final int QUIT_BUTTON_X = 700;          //changed
     public static final int QUIT_BUTTON_Y = 0;  
     public static final int HOME_BUTTON_X = 650;          //changed
-    public static final int HOME_BUTTON_Y = 0;    
+    public static final int HOME_BUTTON_Y = 0;  
+    public static final int GAMEPLAY_HOME_BUTTON_X = 20;          //changed
+    public static final int GAMEPLAY_HOME_BUTTON_Y = 100; 
+    public static final int GAMEPLAY_QUIT_BUTTON_X = 100;          //changed
+    public static final int GAMEPLAY_QUIT_BUTTON_Y = 100;
     public static final int BALANCE_X = 300;          //changed
     public static final int BALANCE_Y = 60; 
     public static final int GOAL_X = 300;          //changed
@@ -130,6 +135,8 @@ public class PathXConstants {
     public static final int UP_BUTTON_Y = 510;
     public static final int DOWN_BUTTON_X = 50;          //changed
     public static final int DOWN_BUTTON_Y = 585;
+    public static final int LEVEL_DIALOG_X = 100;          //changed
+    public static final int LEVEL_DIALOG_Y = 40;
     
     public static final int LEVEL_NAME_X = 600;          //changed
     public static final int LEVEL_NAME_Y = 600;

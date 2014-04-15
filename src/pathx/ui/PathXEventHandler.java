@@ -9,6 +9,7 @@ package pathx.ui;
 import java.awt.event.KeyEvent;
 import static pathx.PathXConstants.VIEWPORT_INC;
 import pathx.data.PathXDataModel;
+import pathx.data.PathXLevel;
 
 /**
  *
@@ -96,6 +97,11 @@ public class PathXEventHandler {
     public void respondToSettingsRequest()
     {
         game.switchToSettingsScreen();
+    }
+    
+        public void respondToLevelSelectRequest()
+    {
+        game.switchToGamePlayScreen();
     }
     
     /**
