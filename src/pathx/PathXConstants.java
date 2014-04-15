@@ -122,14 +122,17 @@ public class PathXConstants {
     public static final int BALANCE_Y = 60; 
     public static final int GOAL_X = 300;          //changed
     public static final int GOAL_Y = 90; 
-    public static final int RIGHT_BUTTON_X = 70;          //changed
+    public static final int RIGHT_BUTTON_X = 90;          //changed
     public static final int RIGHT_BUTTON_Y = 550;
     public static final int LEFT_BUTTON_X = 20;          //changed
     public static final int LEFT_BUTTON_Y = 550;
-    public static final int UP_BUTTON_X = 45;          //changed
-    public static final int UP_BUTTON_Y = 525;
-    public static final int DOWN_BUTTON_X = 45;          //changed
-    public static final int DOWN_BUTTON_Y = 575;
+    public static final int UP_BUTTON_X = 50;          //changed
+    public static final int UP_BUTTON_Y = 520;
+    public static final int DOWN_BUTTON_X = 50;          //changed
+    public static final int DOWN_BUTTON_Y = 590;
+    
+    public static final int LEVEL_NAME_X = 600;          //changed
+    public static final int LEVEL_NAME_Y = 600;
     
     public static final int BACK_BUTTON_X = 130;
     public static final int BACK_BUTTON_Y = 0;

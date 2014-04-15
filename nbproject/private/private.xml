@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="4">
+        <file>
+            <url>src/pathx/ui/PathXPanel.java</url>
+            <bookmark id="3">
+                <name/>
+                <line>211</line>
+                <key/>
+            </bookmark>
+        </file>
         <file>
             <url>src/pathx/data/PathXDataModel.java</url>
             <bookmark id="1">
                 <name/>
-                <line>88</line>
+                <line>92</line>
                 <key/>
             </bookmark>
             <bookmark id="2">
                 <name/>
-                <line>92</line>
+                <line>96</line>
+                <key/>
+            </bookmark>
+            <bookmark id="4">
+                <name/>
+                <line>117</line>
                 <key/>
             </bookmark>
         </file>
@@ -24,6 +37,8 @@
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/ui/PathXEventHandler.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/ui/PathXErrorHandler.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/PathX.java</file>
+            <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXLevelState.java</file>
+            <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXLevel.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/ui/PathXMiniGame.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXRecord.java</file>
         </group>

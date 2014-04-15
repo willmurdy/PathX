@@ -7,13 +7,23 @@
 <properties>
     <property_list>
         <!-- ALL THE IMAGES TO BE USED IN THE GAME -->
-        <property name="GAMEPLAY_BACKGROUND_IMAGE_NAME"     value="./default/BackgroundGame.png"></property>
+        <!-- Background images -->
+        <property name="GAMEPLAY_BACKGROUND_IMAGE_NAME"    value="./default/BackgroundGame.png"></property>
         <property name="IMAGE_BACKGROUND_MENU"             value="./default/BackgroundMenu.png"></property>
-        <property name="IMAGE_BACKGROUND_LEVEL"             value="./default/BackgroundLevel.png"></property>
-        <property name="IMAGE_BACKGROUND_MAP"             value="./default/BackgroundMap.png"></property>
-        <property name="IMAGE_BACKGROUND_SETTINGS"             value="./default/BackgroundSettings.png"></property>
+        <property name="IMAGE_BACKGROUND_LEVEL"            value="./default/BackgroundLevel.png"></property>
+        <property name="IMAGE_BACKGROUND_MAP"              value="./default/BackgroundMap.png"></property>
+        <property name="IMAGE_BACKGROUND_SETTINGS"         value="./default/BackgroundSettings.png"></property>
         <property name="IMAGE_BACKGROUND_HELP"             value="./default/BackgroundHelp.png"></property>
         
+        <!-- Level state images-->
+        <property name="IMAGE_LEVEL_AVAILABLE"             value="./default/LevelAvailable.png"></property>
+        <property name="IMAGE_LEVEL_AVAILABLE_MOUSE_OVER"  value="./default/LevelAvailableMouseOver.png"></property>
+        <property name="IMAGE_LEVEL_COMPLETE"              value="./default/LevelComplete.png"></property>
+        <property name="IMAGE_LEVEL_COMPLETE_MOUSE_OVER"   value="./default/LevelCompleteMouseOver.png"></property>
+        <property name="IMAGE_LEVEL_LOCKED"                value="./default/LevelLocked.png"></property>
+        <property name="IMAGE_LEVEL_LOCKED_MOUSE_OVER"     value="./default/LevelLockedMouseOver.png"></property>
+        
+        <!-- Button images -->
         <property name="PLAY_GAME_BUTTON_IMAGE_NAME"        value="./default/ButtonPlayGame.png"></property>
         <property name="PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPlayGameMouseOver.png"></property>
         <property name="RESET_GAME_BUTTON_IMAGE_NAME"       value="./default/ButtonResetGame.png"></property>
@@ -34,20 +44,11 @@
         <property name="UP_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonUpMouseOver.png"></property>
         <property name="DOWN_BUTTON_IMAGE_NAME"       value="./default/ButtonDown.png"></property>
         <property name="DOWN_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonDownMouseOver.png"></property>
-        
-        <!-- Added for the back button image -->
-        <property name="IMAGE_BUTTON_BACK"                   value="./default/ButtonBack.png"></property>
-        <property name="IMAGE_BUTTON_BACK_MOUSE_OVER"        value="./default/ButtonBackMouseOver.png"></property>
-        
-        <property name="IMAGE_BUTTON_STATS"                 value="./default/ButtonStats.png"></property>
-        <property name="IMAGE_BUTTON_STATS_MOUSE_OVER"      value="./default/ButtonStatsMouseOver.png"></property>
-        <!-- ADDED FOR THE UNDO BUTTON -->
-        <property name="IMAGE_BUTTON_UNDO"                 value="./default/ButtonUndo.png"></property>
-        <property name="IMAGE_BUTTON_UNDO_MOUSE_OVER"      value="./default/ButtonUndoMouseOver.png"></property>
+
         
         <property name="IMAGE_BUTTON_TEMP_TILE"             value="./default/ButtonTempTile.png"></property>
         <property name="IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER"  value="./default/ButtonTempTileMouseOver.png"></property>
-        <property name="IMAGE_CURSOR_WAND"                  value="./default/CursorWand.png"></property>
+        <property name="IMAGE_CURSOR_ARROW"                  value="./default/CursorArrow.png"></property>
         <property name="IMAGE_DECOR_TIME"                   value="./default/DecorTime.png"></property>
         <property name="IMAGE_DECOR_MISCASTS"               value="./default/DecorMiscasts.png"></property>
         <property name="IMAGE_DIALOG_STATS"                 value="./default/DialogStats.png"></property>
@@ -71,7 +72,12 @@
         <property name="TEXT_LABEL_STATS_FASTEST_PERFECT_WIN"   value="Fastest Perfect Win: "></property>
         <property name="TEXT_PROMPT_EXIT"                       value="Are you sure you wish to exit?"></property>
         <property name="TEXT_TITLE_BAR_GAME"                    value="PathX"></property>
-        <property name="TEXT_TITLE_BAR_ERROR"                   value="An error has occurred"></property>                
+        <property name="TEXT_TITLE_BAR_ERROR"                   value="An error has occurred"></property> 
+        <property name="TEXT_HELP"                   			
+        	value="An error has occurred An error has occurred An error has occurred An error has occurred
+        	An error has occurred An error has occurred An error has occurred An error has occurred
+        	An error has occurred An error has occurred An error has occurred An error has occurred 
+        	An error has occurred"></property>                
         
         <!-- AUDIO FILES -->
         <property name="AUDIO_CUE_BAD_MOVE"                 value="./default/BadMove.wav"></property>
@@ -87,23 +93,9 @@
     
     <!-- PLAYABLE LEVELS CREATED WITH THE LEVEL EDITOR -->
     <property_options_list>
-        <property_options name="LEVEL_OPTIONS">
-            <option>./sorting_hat/BubbleSortCoil.sort</option>
-            <option>./sorting_hat/BubbleSortO.sort</option>
-            <option>./sorting_hat/SelectionSortPlus.sort</option>
-            <option>./sorting_hat/SelectionSortV.sort</option>
-        </property_options>
-        <property_options name="LEVEL_IMAGE_OPTIONS">
-            <option>./sorting_hat/ButtonBubbleSortCoil.png</option>
-            <option>./sorting_hat/ButtonBubbleSortO.png</option>
-            <option>./sorting_hat/ButtonSelectionSortPlus.png</option>
-            <option>./sorting_hat/ButtonSelectionSortV.png</option>
-        </property_options>
-        <property_options name="LEVEL_MOUSE_OVER_IMAGE_OPTIONS">
-            <option>./sorting_hat/ButtonBubbleSortCoilMouseOver.png</option>
-            <option>./sorting_hat/ButtonBubbleSortOMouseOver.png</option>
-            <option>./sorting_hat/ButtonSelectionSortPlusMouseOver.png</option>
-            <option>./sorting_hat/ButtonSelectionSortVMouseOver.png</option>
+        <property_options name="LEVELS">
+            <option>1</option>
+            <option>2</option>
         </property_options>
     </property_options_list>
 </properties>

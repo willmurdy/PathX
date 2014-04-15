@@ -79,6 +79,13 @@ public class PathX {
         IMAGE_BACKGROUND_SETTINGS,
         IMAGE_BACKGROUND_HELP,
         
+        IMAGE_LEVEL_AVAILABLE,
+        IMAGE_LEVEL_AVAILABLE_MOUSE_OVER,
+        IMAGE_LEVEL_COMPLETE,
+        IMAGE_LEVEL_COMPLETE_MOUSE_OVER,
+        IMAGE_LEVEL_LOCKED,
+        IMAGE_LEVEL_LOCKED_MOUSE_OVER,
+        
         IMAGE_BUTTON_NEW,
         IMAGE_BUTTON_NEW_MOUSE_OVER,
         IMAGE_BUTTON_BACK,              //Added for the back button
@@ -89,7 +96,7 @@ public class PathX {
         IMAGE_BUTTON_STATS_MOUSE_OVER,
         IMAGE_BUTTON_TEMP_TILE,
         IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER,
-        IMAGE_CURSOR_WAND,
+        IMAGE_CURSOR_ARROW,
         IMAGE_DECOR_TIME,      
         IMAGE_DECOR_MISCASTS,
         IMAGE_DIALOG_STATS,
@@ -145,6 +152,7 @@ public class PathX {
         TEXT_PROMPT_EXIT,
         TEXT_TITLE_BAR_GAME,
         TEXT_TITLE_BAR_ERROR,
+        TEXT_HELP,
         
         /* AUDIO CUES */
         AUDIO_CUE_BAD_MOVE,

@@ -87,6 +87,7 @@ public class PathXEventHandler {
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.getViewport().scroll(incX, incY);
+        ((PathXDataModel)data).updateLevelLocations(-incX, -incY);
     }
     
             /**
@@ -104,16 +105,16 @@ public class PathXEventHandler {
     { 
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         if(keyCode == KeyEvent.VK_DOWN){
-            data.getViewport().scroll(0, VIEWPORT_INC);
+            respondToScrollRequest(0, VIEWPORT_INC);
         }
         if(keyCode == KeyEvent.VK_UP){
-            data.getViewport().scroll(0, -VIEWPORT_INC);
+            respondToScrollRequest(0, -VIEWPORT_INC);
         }
         if(keyCode == KeyEvent.VK_LEFT){
-            data.getViewport().scroll(-VIEWPORT_INC, 0);
+            respondToScrollRequest(-VIEWPORT_INC, 0);
         }
         if(keyCode == KeyEvent.VK_RIGHT){
-            data.getViewport().scroll(VIEWPORT_INC, 0);
+            respondToScrollRequest(VIEWPORT_INC, 0);
         }
 
     }

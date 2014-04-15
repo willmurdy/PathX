@@ -6,7 +6,6 @@
 
 package pathx.ui;
 
-import java.awt.Color;
 import pathx.data.PathXDataModel;
 import pathx.PathXConstants.*;
 import java.awt.Graphics;
@@ -19,8 +18,9 @@ import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
 import mini_game.Viewport;
-import pathx.PathX;
+import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.*;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -44,9 +44,9 @@ public class PathXPanel extends JPanel {
     private BufferedImage blankTileSelectedImage;
     
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
-    private BufferedImage blankTileMouseOverImage;
+    private BufferedImage blankTileMouseOverImage; 
     
-    private Viewport map;
+    private Viewport viewport;
     
     /**
      * This constructor stores the game and data references,
@@ -61,7 +61,7 @@ public class PathXPanel extends JPanel {
     {
         game = initGame;
         data = initData;
-        map = data.getViewport();
+        viewport = data.getViewport();
         numberFormatter = NumberFormat.getNumberInstance();
         numberFormatter.setMinimumFractionDigits(3);
         numberFormatter.setMaximumFractionDigits(3);
@@ -124,6 +124,8 @@ public class PathXPanel extends JPanel {
             if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE))
                     renderViewport(g);
 
+            if(((PathXMiniGame)game).isCurrentScreenState(HELP_SCREEN_STATE))
+                    renderHelp(g);
             // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
             if (!data.notStarted())
             {
@@ -185,6 +187,23 @@ public class PathXPanel extends JPanel {
                 
     }
     
+        public void renderHelp(Graphics g)
+    {
+        // THERE IS ONLY ONE CURRENTLY SET
+//        JEditorPane hp = new JEditorPane();
+//        hp.setBounds(100, 150, 550, 400);
+//        
+        PropertiesManager props = PropertiesManager.getPropertiesManager();            
+        String helpText = props.getProperty(PathXPropertyType.TEXT_HELP);
+//            
+//        hp.setText(helpText);
+//        
+//        hp.setEditable(false);
+//        hp.setEnabled(true);
+
+                
+    }
+    
     public void renderViewport(Graphics g){
         
         Viewport vp = data.getViewport();
@@ -200,6 +219,27 @@ public class PathXPanel extends JPanel {
        g.drawRect(VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
                 710, 500);
         
+        
+    }
+    
+    public void renderLevels(Sprite s, Graphics g){
+        
+        int x = data.getLevelSprite(s.getID()).getX();
+        int y = data.getLevelSprite(s.getID()).getY();
+        s.setX(x);
+        s.setY(y);  
+        
+//        if(!(s.getX() < viewport.getViewportX() || s.getX() > (viewport.getViewportX() + viewport.getViewportWidth())) 
+//                && !(s.getY() < viewport.getViewportY() || s.getY() > (viewport.getViewportY() + viewport.getViewportHeight())))
+            renderSprite(g, s);
+       if(s.getState().equals(MOUSE_OVER_STATE)){
+            String goal = data.getLevelSprite(s.getID()).getLevelName();
+            x = LEVEL_NAME_X;
+            y = LEVEL_NAME_Y;
+            g.setFont(FONT_BALANCE);
+            g.drawString(goal, x, y);
+       }
+           
         
     }
 
@@ -222,7 +262,10 @@ public class PathXPanel extends JPanel {
         Collection<Sprite> buttonSprites = game.getGUIButtons().values();
         for (Sprite s : buttonSprites)
         {
-            renderSprite(g, s);
+            if(s.getSpriteType().getSpriteTypeID().equals(LEVEL_SELECT_BUTTON_TYPE))
+                renderLevels(s, g);
+            else 
+                renderSprite(g, s);
         }
     }
     

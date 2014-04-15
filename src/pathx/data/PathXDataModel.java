@@ -6,6 +6,7 @@
 
 package pathx.data;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Stack;
 import mini_game.MiniGame;
@@ -48,6 +49,9 @@ public class PathXDataModel extends MiniGameDataModel{
 
     // THIS IS THE TEMP TILE
 //    private SortingHatTile tempTile;
+    
+    //Levels
+    private ArrayList<PathXLevel> levels;
 
     // KEEPS TRACK OF HOW MANY BAD SPELLS WERE CAST
     private int badSpellsCounter;
@@ -85,7 +89,7 @@ public class PathXDataModel extends MiniGameDataModel{
 //        selectedTileIndex = -1;
 //        tempTile = null;
         prevMoves = new Stack();
-        
+        levels = new ArrayList<PathXLevel>();
         balance = 1000;     
     }
     
@@ -103,6 +107,39 @@ public class PathXDataModel extends MiniGameDataModel{
         viewport.updateViewportBoundaries();
         viewport.scroll(150, 150);
         
+    }
+    
+    public void initLevels(){
+                
+//        PropertiesManager props = PropertiesManager.getPropertiesManager();
+//        ArrayList<String> levels = props.getPropertyOptionsList(PathX.PathXPropertyType.LEVEL_OPTIONS);
+        
+        
+        PathXLevel level = new PathXLevel(208, 532, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "San Fransisco");
+        levels.add(level);
+        level = new PathXLevel(457, 478, viewport, PathXLevelState.LOCKED_STATE.toString(), "Salt lake city");
+        levels.add(level);
+    }
+    
+    public PathXLevel getLevel(int levelNum){
+        return levels.get(levelNum);
+    }
+    
+    public PathXLevel getLevelSprite(int spriteID){
+        for(int i = 0; i < levels.size(); i++)
+            if(levels.get(i).getSpriteID() == spriteID)
+                return levels.get(i);
+        return null;
+    }
+    
+    public void updateLevelLocations(int x, int y){
+        for(int i = 0; i < levels.size(); i++){
+            levels.get(i).updateLocation(x, y);
+        }
+    }
+    
+    public int getNumLevels(){
+        return levels.size();
     }
     
     public int getBalance(){
