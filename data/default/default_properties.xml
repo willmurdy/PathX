@@ -47,7 +47,10 @@
         <property name="UP_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonUpMouseOver.png"></property>
         <property name="DOWN_BUTTON_IMAGE_NAME"       value="./default/ButtonDown.png"></property>
         <property name="DOWN_MOUSE_OVER_BUTTON_IMAGE_NAME"       value="./default/ButtonDownMouseOver.png"></property>
-
+		<property name="CLOSE_BUTTON_IMAGE_NAME"        value="./default/ButtonClose.png"></property>
+        <property name="CLOSE_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonCloseMouseOver.png"></property>
+        <property name="BACK_BUTTON_IMAGE_NAME"        value="./default/ButtonBack.png"></property>
+        <property name="BACK_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonBackMouseOver.png"></property>
         
         <property name="IMAGE_BUTTON_TEMP_TILE"             value="./default/ButtonTempTile.png"></property>
         <property name="IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER"  value="./default/ButtonTempTileMouseOver.png"></property>

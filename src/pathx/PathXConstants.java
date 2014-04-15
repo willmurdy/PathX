@@ -47,6 +47,7 @@ public class PathXConstants {
     public static final String VIEW_SETTINGS_BUTTON_TYPE = "VIEW_SETTINGS_BUTTON_TYPE";
     public static final String VIEW_HELP_BUTTON_TYPE = "VIEW_HELP_BUTTON_TYPE";
     public static final String QUIT_GAME_BUTTON_TYPE = "QUIT_GAME_BUTTON_TYPE";
+    public static final String CLOSE_BUTTON_TYPE = "CLOSE_BUTTON_TYPE";
     
     public static final String HOME_BUTTON_TYPE = "HOME_BUTTON_TYPE";
     public static final String RIGHT_BUTTON_TYPE = "RIGHT_BUTTON_TYPE";
@@ -55,7 +56,7 @@ public class PathXConstants {
     public static final String DOWN_BUTTON_TYPE = "DOWN_BUTTON_TYPE";
     // IN-GAME UI CONTROL TYPES
 //    public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
-//    public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
+    public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
 //    public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
 //    public static final String TIME_TYPE = "TIME_TYPE"; 
 //    public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
@@ -119,8 +120,8 @@ public class PathXConstants {
     public static final int QUIT_BUTTON_Y = 0;  
     public static final int HOME_BUTTON_X = 650;          //changed
     public static final int HOME_BUTTON_Y = 0;  
-    public static final int GAMEPLAY_HOME_BUTTON_X = 20;          //changed
-    public static final int GAMEPLAY_HOME_BUTTON_Y = 100; 
+    public static final int BACK_BUTTON_X = 20;          //changed
+    public static final int BACK_BUTTON_Y = 100; 
     public static final int GAMEPLAY_QUIT_BUTTON_X = 100;          //changed
     public static final int GAMEPLAY_QUIT_BUTTON_Y = 100;
     public static final int BALANCE_X = 300;          //changed
@@ -135,14 +136,15 @@ public class PathXConstants {
     public static final int UP_BUTTON_Y = 510;
     public static final int DOWN_BUTTON_X = 50;          //changed
     public static final int DOWN_BUTTON_Y = 585;
-    public static final int LEVEL_DIALOG_X = 100;          //changed
+    
+    public static final int LEVEL_DIALOG_X = 150;          //changed
     public static final int LEVEL_DIALOG_Y = 40;
+    public static final int CLOSE_BUTTON_X = LEVEL_DIALOG_X + 150;          //changed
+    public static final int CLOSE_BUTTON_Y = LEVEL_DIALOG_Y + 375;
     
     public static final int LEVEL_NAME_X = 600;          //changed
     public static final int LEVEL_NAME_Y = 600;
-    
-    public static final int BACK_BUTTON_X = 130;
-    public static final int BACK_BUTTON_Y = 0;
+
     public static final int TILE_COUNT_X = 260 + CONTROLS_MARGIN;  //Miscasts
     public static final int TILE_COUNT_Y = 0;                                               //Miscasts
     public static final int TILE_COUNT_OFFSET = 145;

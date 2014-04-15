@@ -147,14 +147,18 @@ public class PathXPanel extends JPanel {
                 renderHeader(g);
                
             }
-
+            
+            renderStats(g);
+            
+            renderDialogs(g);
+            
             // AND THE BUTTONS AND DECOR
             renderGUIControls(g);
 
             // AND THE TIME AND TILES STATS
-            renderStats(g);
             
-            renderDialogs(g);
+            
+            
 
         
             // AND FINALLY, TEXT FOR DEBUGGING
@@ -332,7 +336,7 @@ public class PathXPanel extends JPanel {
         if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
             g.drawRect(180, 20, 550, 610);
             g.drawRect(20, 500, 160, 130);
-            g.drawRect(20, 200, 160, 200);
+            //g.drawRect(20, 200, 160, 200);
             
         }
 //            

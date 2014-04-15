@@ -7,9 +7,11 @@
 package pathx.ui;
 
 import java.awt.event.KeyEvent;
+import static pathx.PathXConstants.CLOSE_BUTTON_TYPE;
+import static pathx.PathXConstants.INVISIBLE_STATE;
+import static pathx.PathXConstants.LEVEL_DIALOG_TYPE;
 import static pathx.PathXConstants.VIEWPORT_INC;
 import pathx.data.PathXDataModel;
-import pathx.data.PathXLevel;
 
 /**
  *
@@ -99,9 +101,20 @@ public class PathXEventHandler {
         game.switchToSettingsScreen();
     }
     
-        public void respondToLevelSelectRequest()
+    public void respondToLevelSelectRequest()
     {
         game.switchToGamePlayScreen();
+    }
+        
+    public void respondToCloseRequest()
+    {
+        game.getGUIButtons().get(CLOSE_BUTTON_TYPE).setState(INVISIBLE_STATE);
+        game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).setState(INVISIBLE_STATE);
+    }
+    
+    public void respondToBackRequest()
+    {
+        game.switchToLevelSelectScreen();
     }
     
     /**
