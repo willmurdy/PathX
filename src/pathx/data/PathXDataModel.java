@@ -62,6 +62,8 @@ public class PathXDataModel extends MiniGameDataModel{
 
     // LEVEL
     private String currentLevel;
+    
+    int currentLevelint;
 
     // THE SORTING ALGORITHM WHICH GENERATES THE PROPER TRANSACTIONS
 //    private SortingHatAlgorithm sortingAlgorithm;
@@ -115,9 +117,9 @@ public class PathXDataModel extends MiniGameDataModel{
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathX.PathXPropertyType.LEVEL_OPTIONS);
         
         
-        PathXLevel level = new PathXLevel(305, 420, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "Level One", 10);
+        PathXLevel level = new PathXLevel(305, 420, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "Level One","This is a test description for level one that i want to make a bit long", 10);
         levels.add(level);
-        level = new PathXLevel(1400, 350, viewport, PathXLevelState.LOCKED_STATE.toString(), "Level Two", 20);
+        level = new PathXLevel(1400, 350, viewport, PathXLevelState.LOCKED_STATE.toString(), "Level Two","Level two needs a description as well", 20);
         levels.add(level);
     }
     
@@ -134,10 +136,15 @@ public class PathXDataModel extends MiniGameDataModel{
     
     public void setCurrentLevel(int level){
         currentLevel = levels.get(level).getLevelName();
+        currentLevelint = level;
     }
     
     public String getCurrentLevel(){
         return currentLevel;
+    }
+    
+    public String getCurrentLevelDescription(){
+        return levels.get(currentLevelint).getLevelDescription();
     }
     
     public void scrollViewPort(int incX, int incY){

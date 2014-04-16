@@ -42,7 +42,7 @@ public class PathXLevel {
     private Viewport vp;
     
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
-                            int reward){
+                            String description, int reward){
         
         vp = gameViewport;
         x = xPos + 20 - vp.getViewportX();
@@ -52,6 +52,8 @@ public class PathXLevel {
         rendery = y + 120 - vp.getViewportY();
         
         levelName = name;
+        
+        levelDescription = description;
         
         currentState = state;
         
@@ -70,6 +72,10 @@ public class PathXLevel {
     public String getLevelName(){
         return levelName;
     }
+    
+    public String getLevelDescription(){
+        return levelDescription;
+    }    
     
     public int getSpriteID(){
         return spriteID;

@@ -148,16 +148,16 @@ public class PathXPanel extends JPanel {
                
             }
             
+            
+            
             renderStats(g);
-            
-            renderDialogs(g);
-            
             // AND THE BUTTONS AND DECOR
             renderGUIControls(g);
 
             // AND THE TIME AND TILES STATS
             
-            
+            renderDialogs(g);
+
             
 
         
@@ -465,6 +465,8 @@ public class PathXPanel extends JPanel {
             if(game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
                 g.setFont(FONT_BALANCE);
                 g.drawString(((PathXDataModel)game.getDataModel()).getCurrentLevel(), LEVEL_NAME_DIALOG_X, LEVEL_NAME_DIALOG_Y);
+                g.drawString(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription(), LEVEL_DESCRIPTION_X, LEVEL_DESCRIPTION_Y);
+
             }
         }
     }

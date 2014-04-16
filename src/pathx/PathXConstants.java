@@ -54,8 +54,8 @@ public class PathXConstants {
     public static final String LEFT_BUTTON_TYPE = "LEFT_BUTTON_TYPE";
     public static final String UP_BUTTON_TYPE = "UP_BUTTON_TYPE";
     public static final String DOWN_BUTTON_TYPE = "DOWN_BUTTON_TYPE";
-    // IN-GAME UI CONTROL TYPES
-//    public static final String NEW_GAME_BUTTON_TYPE = "NEW_GAME_BUTTON_TYPE";
+
+    public static final String START_BUTTON_TYPE = "START_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
 //    public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
 //    public static final String TIME_TYPE = "TIME_TYPE"; 
@@ -136,11 +136,15 @@ public class PathXConstants {
     public static final int UP_BUTTON_Y = 510;
     public static final int DOWN_BUTTON_X = 50;          //changed
     public static final int DOWN_BUTTON_Y = 585;
+    public static final int START_BUTTON_X = 20;          //changed
+    public static final int START_BUTTON_Y = 200;
     
     public static final int LEVEL_DIALOG_X = 150;          //changed
     public static final int LEVEL_DIALOG_Y = 40;
     public static final int LEVEL_NAME_DIALOG_X = LEVEL_DIALOG_X + 50;          //changed
-    public static final int LEVEL_NAME_DIALOG_Y = LEVEL_DIALOG_Y + 50;    
+    public static final int LEVEL_NAME_DIALOG_Y = LEVEL_DIALOG_Y + 50; 
+    public static final int LEVEL_DESCRIPTION_X = LEVEL_DIALOG_X + 50;          //changed
+    public static final int LEVEL_DESCRIPTION_Y = LEVEL_NAME_DIALOG_Y + 50;    
     public static final int CLOSE_BUTTON_X = LEVEL_DIALOG_X + 150;          //changed
     public static final int CLOSE_BUTTON_Y = LEVEL_DIALOG_Y + 375;
     

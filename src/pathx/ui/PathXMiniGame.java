@@ -189,10 +189,12 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(LEFT_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(UP_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(DOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(START_BUTTON_TYPE).setState(VISIBLE_STATE);
        
        guiButtons.get(CLOSE_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(BACK_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiDialogs.get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
+       
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
@@ -427,6 +429,16 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, BACK_BUTTON_X, BACK_BUTTON_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(BACK_BUTTON_TYPE, s);
         
+        //add the HOME button to the home screen
+        String startButton = props.getProperty(PathXPropertyType.START_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(START_BUTTON_TYPE);
+	img = loadImage(imgPath + startButton);
+        sT.addState(VISIBLE_STATE, img);
+        String startMouseOverButton = props.getProperty(PathXPropertyType.START_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + startMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, START_BUTTON_X, START_BUTTON_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(START_BUTTON_TYPE, s);        
         
         ((PathXDataModel)data).initLevels();
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
