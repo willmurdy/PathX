@@ -99,7 +99,7 @@
     
     <!-- PLAYABLE LEVELS CREATED WITH THE LEVEL EDITOR -->
     <property_options_list>
-        <property_options name="LEVELS">
+        <property_options name="LEVEL_OPTIONS">
             <option>1</option>
             <option>2</option>
         </property_options>

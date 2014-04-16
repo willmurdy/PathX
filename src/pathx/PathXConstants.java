@@ -139,6 +139,8 @@ public class PathXConstants {
     
     public static final int LEVEL_DIALOG_X = 150;          //changed
     public static final int LEVEL_DIALOG_Y = 40;
+    public static final int LEVEL_NAME_DIALOG_X = LEVEL_DIALOG_X + 50;          //changed
+    public static final int LEVEL_NAME_DIALOG_Y = LEVEL_DIALOG_Y + 50;    
     public static final int CLOSE_BUTTON_X = LEVEL_DIALOG_X + 150;          //changed
     public static final int CLOSE_BUTTON_Y = LEVEL_DIALOG_Y + 375;
     

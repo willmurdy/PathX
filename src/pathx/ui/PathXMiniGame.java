@@ -13,6 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JFrame;
 import mini_game.MiniGame;
@@ -593,13 +594,22 @@ public class PathXMiniGame extends MiniGame{
             {   eventHandler.respondToHelpRequest();    }
         }); 
         
-               for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
+       for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
            PathXLevel level = ((PathXDataModel)data).getLevel(i);
            guiButtons.get(level.toString()).setActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ae)
-            {   eventHandler.respondToLevelSelectRequest();    }
-        });
+               
+                int lev;
+                public ActionListener init(int level) 
+                {   lev = level; 
+                    return this;    }
+                public void actionPerformed(ActionEvent ae)
+                {   eventHandler.respondToLevelSelectRequest(lev);    }
+            
+               
+//            public void actionPerformed(ActionEvent ae)
+//            {   eventHandler.respondToLevelSelectRequest(level.toString());    }
+            }.init(i));
        }
  
         // Home BUTTON EVENT HANDLER
@@ -614,19 +624,30 @@ public class PathXMiniGame extends MiniGame{
             {   eventHandler.respondToBackRequest();    }
         });        
         
-//        // undo BUTTON EVENT HANDLER
-//        guiButtons.get(UNDO_BUTTON_TYPE).setActionListener(new ActionListener(){   //ADDED
-//            public void actionPerformed(ActionEvent ae)
-//            {   eventHandler.respondToUndoRequest();    }
-//        });
-//        
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
         this.setKeyListener(new KeyAdapter(){
             public void keyPressed(KeyEvent ke)
             {   
                 eventHandler.respondToKeyPress(ke.getKeyCode());    
             }
-        });    
+        });
+        
+//                // SEND ALL LEVEL SELECTION HANDLING OFF TO THE EVENT HANDLER
+//        PropertiesManager props = PropertiesManager.getPropertiesManager();
+//        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
+//        for (String levelFile : levels)
+//        {
+//            Sprite levelButton = guiButtons.get(levelFile);
+//            //levelButton.setActionCommand(PATH_DATA + levelFile);
+//            levelButton.setActionListener(new ActionListener(){
+//                Sprite s;
+//                public ActionListener init(Sprite initS) 
+//                {   s = initS; 
+//                    return this;    }
+//                public void actionPerformed(ActionEvent ae)
+//                {   eventHandler.respondToSelectLevelRequest(s.getActionCommand());    }
+//            }.init(levelButton));
+//        } 
     }
     
         public boolean isCurrentScreenState(String testScreenState)

@@ -285,22 +285,6 @@ public class PathXPanel extends JPanel {
         
     }
     
-//    public void renderSnake(Graphics g)
-//    {
-//        ArrayList<SnakeCell> snake = data.getSnake();
-//        int red = 255;
-//        Viewport viewport = data.getViewport();
-//        for (SnakeCell sC : snake)
-//        {
-//            int x = data.calculateGridTileX(sC.col);
-//            int y = data.calculateGridTileY(sC.row);            
-//            g.setColor(new Color(0, 0, red, 200));
-//            g.fillRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-//            red -= COLOR_INC;
-//            g.setColor(Color.BLACK);
-//            g.drawRect(x, y, TILE_WIDTH, TILE_HEIGHT);
-//        }
-//    }
 
     /**
      * This method renders the on-screen stats that change as
@@ -339,6 +323,7 @@ public class PathXPanel extends JPanel {
             //g.drawRect(20, 200, 160, 200);
             
         }
+        
 //            
 //            //Render miscasts
 //            String miscasts = Integer.toString(data.getBadSpellsCounter());
@@ -474,6 +459,13 @@ public class PathXPanel extends JPanel {
         {
             // RENDER THE DIALOG, NOTE IT WILL ONLY DO IT IF IT'S VISIBLE
             renderSprite(g, s);
+        }
+        
+        if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
+            if(game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
+                g.setFont(FONT_BALANCE);
+                g.drawString(((PathXDataModel)game.getDataModel()).getCurrentLevel(), LEVEL_NAME_DIALOG_X, LEVEL_NAME_DIALOG_Y);
+            }
         }
     }
     

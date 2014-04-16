@@ -6,7 +6,9 @@
 
 package pathx.ui;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import mini_game.SpriteType;
 import static pathx.PathXConstants.CLOSE_BUTTON_TYPE;
 import static pathx.PathXConstants.INVISIBLE_STATE;
 import static pathx.PathXConstants.LEVEL_DIALOG_TYPE;
@@ -101,8 +103,10 @@ public class PathXEventHandler {
         game.switchToSettingsScreen();
     }
     
-    public void respondToLevelSelectRequest()
+    public void respondToLevelSelectRequest(int level)
     {
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.setCurrentLevel(level);
         game.switchToGamePlayScreen();
     }
         
