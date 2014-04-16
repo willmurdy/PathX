@@ -334,8 +334,8 @@ public class PathXPanel extends JPanel {
         }
         
         if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
-            g.drawRect(180, 20, 550, 610);
-            g.drawRect(20, 500, 160, 130);
+            g.drawRect(180, 20, 550, 610-20);
+            g.drawRect(20, 500, 160, 130-20);
             //g.drawRect(20, 200, 160, 200);
             
         }
