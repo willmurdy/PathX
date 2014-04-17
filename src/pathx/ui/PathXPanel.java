@@ -470,7 +470,11 @@ public class PathXPanel extends JPanel {
             renderSprite(g, s);
         }
         
+        //special case where the close button needs to be rendered ontop of the leveldiscription dialog
+        renderSprite(g, game.getGUIButtons().get(CLOSE_BUTTON_TYPE));
+        
 
+        //used for rendering the level description dialog
         renderLevelDescription(false, text);
         if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
             if(game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
@@ -481,6 +485,7 @@ public class PathXPanel extends JPanel {
                 renderLevelDescription(false, text);
             }
         }
+        
     }
     
     /**

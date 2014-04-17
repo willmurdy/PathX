@@ -52,6 +52,8 @@ public class PathXDataModel extends MiniGameDataModel{
     
     //Levels
     private ArrayList<PathXLevel> levels;
+    
+    
 
     // KEEPS TRACK OF HOW MANY BAD SPELLS WERE CAST
     private int badSpellsCounter;

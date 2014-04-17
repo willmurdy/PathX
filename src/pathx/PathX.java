@@ -141,6 +141,8 @@ public class PathX {
         UP_MOUSE_OVER_BUTTON_IMAGE_NAME,
         DOWN_BUTTON_IMAGE_NAME,
         DOWN_MOUSE_OVER_BUTTON_IMAGE_NAME,
+        PAUSE_BUTTON_IMAGE_NAME,
+        PAUSE_MOUSE_OVER_BUTTON_IMAGE_NAME,
         //Home screen button types
 //        PLAY_GAME_BUTTON_TYPE,
 //        RESET_GAME_BUTTON_TYPE,

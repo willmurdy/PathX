@@ -51,6 +51,8 @@ public class PathXMiniGame extends MiniGame{
     private String currentScreenState;
     
     private Viewport map;
+    
+    private Viewport level;
 
     @Override
     public void initAudioContent() {
@@ -142,6 +144,15 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(true);
        guiButtons.get(UP_BUTTON_TYPE).setEnabled(true);
        guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(true);
+       
+       guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_X);
+       guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_Y);
+       guiButtons.get(LEFT_BUTTON_TYPE).setX(LEFT_BUTTON_X);
+       guiButtons.get(LEFT_BUTTON_TYPE).setY(LEFT_BUTTON_Y);
+       guiButtons.get(UP_BUTTON_TYPE).setX(UP_BUTTON_X);
+       guiButtons.get(UP_BUTTON_TYPE).setY(UP_BUTTON_Y);
+       guiButtons.get(DOWN_BUTTON_TYPE).setX(DOWN_BUTTON_X);
+       guiButtons.get(DOWN_BUTTON_TYPE).setY(DOWN_BUTTON_Y);
 
        guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(HOME_BUTTON_TYPE).setEnabled(true);
@@ -232,10 +243,19 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setX(GAMEPLAY_QUIT_BUTTON_X);
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setY(GAMEPLAY_QUIT_BUTTON_Y);
        
-       guiButtons.get(RIGHT_BUTTON_TYPE).setState(INVISIBLE_STATE);
-       guiButtons.get(LEFT_BUTTON_TYPE).setState(INVISIBLE_STATE);
-       guiButtons.get(UP_BUTTON_TYPE).setState(INVISIBLE_STATE);
-       guiButtons.get(DOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
+//       guiButtons.get(RIGHT_BUTTON_TYPE).setState(INVISIBLE_STATE);
+//       guiButtons.get(LEFT_BUTTON_TYPE).setState(INVISIBLE_STATE);
+//       guiButtons.get(UP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+//       guiButtons.get(DOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(RIGHT_BUTTON_TYPE).setX(RIGHT_BUTTON_GAME_X);
+       guiButtons.get(RIGHT_BUTTON_TYPE).setY(RIGHT_BUTTON_GAME_Y);
+       guiButtons.get(LEFT_BUTTON_TYPE).setX(LEFT_BUTTON_GAME_X);
+       guiButtons.get(LEFT_BUTTON_TYPE).setY(LEFT_BUTTON_GAME_Y);
+       guiButtons.get(UP_BUTTON_TYPE).setX(UP_BUTTON_GAME_X);
+       guiButtons.get(UP_BUTTON_TYPE).setY(UP_BUTTON_GAME_Y);
+       guiButtons.get(DOWN_BUTTON_TYPE).setX(DOWN_BUTTON_GAME_X);
+       guiButtons.get(DOWN_BUTTON_TYPE).setY(DOWN_BUTTON_GAME_Y);
+       
        guiButtons.get(START_BUTTON_TYPE).setState(VISIBLE_STATE);
        
        guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
@@ -311,48 +331,6 @@ public class PathXMiniGame extends MiniGame{
         guiDecor.put(MAP_TYPE, s);
         
         ((PathXDataModel)data).initViewport();  
-      
-        // LOAD THE WAND CURSOR
-//        String cursorName = props.getProperty(PathXPropertyType.IMAGE_CURSOR_ARROW);
-//        img = loadImageWithColorKey(imgPath + cursorName, COLOR_KEY);
-//        Point cursorHotSpot = new Point(0,0);
-//        Cursor wandCursor = Toolkit.getDefaultToolkit().createCustomCursor(img, cursorHotSpot, cursorName);
-//        window.setCursor(wandCursor);
-        
-        // ADD A BUTTON FOR EACH LEVEL AVAILABLE
-//        ((PathXDataModel)data).initLevels();
-////        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
-////        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
-////        Viewport viewport = data.getViewport();
-////        x = (viewport.getScreenWidth() - totalWidth)/2.0f;
-//        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
-//        {
-//            sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
-//            if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.AVAILABLE_STATE.toString())){
-//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE));
-//                sT.addState(VISIBLE_STATE, img);
-//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE_MOUSE_OVER));
-//                sT.addState(MOUSE_OVER_STATE, img);
-//
-//            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.COMPLETED_STATE.toString())){
-//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
-//                sT.addState(VISIBLE_STATE, img);
-//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE_MOUSE_OVER));
-//                sT.addState(MOUSE_OVER_STATE, img);
-//
-//            } else if(((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.LOCKED_STATE.toString())){
-//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED));
-//                sT.addState(VISIBLE_STATE, img);
-//                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_LOCKED_MOUSE_OVER));
-//                sT.addState(MOUSE_OVER_STATE, img);
-//
-//            }
-//            sT.addState(INVISIBLE_STATE, null);
-//            s = new Sprite(sT, ((PathXDataModel)data).getLevel(i).getX(), ((PathXDataModel)data).getLevel(i).getY(),
-//                    0, 0, INVISIBLE_STATE);
-//            guiButtons.put(((PathXDataModel)data).getLevel(i).toString(), s);
-//            ((PathXDataModel)data).getLevel(i).setSpriteID(s.getID());
-//        }
         
         //Add the Buttons for the Home screen
         String playButton = props.getProperty(PathXPropertyType.PLAY_GAME_BUTTON_IMAGE_NAME);
@@ -495,7 +473,18 @@ public class PathXMiniGame extends MiniGame{
         img = loadImage(imgPath + startMouseOverButton);
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, START_BUTTON_X, START_BUTTON_Y, 0, 0, INVISIBLE_STATE);
-        guiButtons.put(START_BUTTON_TYPE, s);        
+        guiButtons.put(START_BUTTON_TYPE, s);   
+        
+        //add the HOME button to the home screen
+        String pauseButton = props.getProperty(PathXPropertyType.PAUSE_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(PAUSE_BUTTON_TYPE);
+	img = loadImage(imgPath + pauseButton);
+        sT.addState(VISIBLE_STATE, img);
+        String pauseMouseOverButton = props.getProperty(PathXPropertyType.PAUSE_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + pauseMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, START_BUTTON_X, START_BUTTON_Y, 0, 0, INVISIBLE_STATE)
+        guiButtons.put(START_BUTTON_TYPE, s);
         
         ((PathXDataModel)data).initLevels();
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);

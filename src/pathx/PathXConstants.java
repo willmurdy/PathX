@@ -54,6 +54,7 @@ public class PathXConstants {
     public static final String LEFT_BUTTON_TYPE = "LEFT_BUTTON_TYPE";
     public static final String UP_BUTTON_TYPE = "UP_BUTTON_TYPE";
     public static final String DOWN_BUTTON_TYPE = "DOWN_BUTTON_TYPE";
+    public static final String PAUSE_BUTTON_TYPE = "PAUSE_BUTTON_TYPE";
 
     public static final String START_BUTTON_TYPE = "START_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
@@ -136,6 +137,16 @@ public class PathXConstants {
     public static final int UP_BUTTON_Y = 510;
     public static final int DOWN_BUTTON_X = 50;          //changed
     public static final int DOWN_BUTTON_Y = 585;
+    
+    public static final int RIGHT_BUTTON_GAME_X = 95 + 25;          //changed
+    public static final int RIGHT_BUTTON_GAME_Y = 540 - 10;
+    public static final int LEFT_BUTTON_GAME_X = 20 + 25;          //changed
+    public static final int LEFT_BUTTON_GAME_Y = 540 - 10;
+    public static final int UP_BUTTON_GAME_X = 50 + 25;          //changed
+    public static final int UP_BUTTON_GAME_Y = 510 - 10;
+    public static final int DOWN_BUTTON_GAME_X = 50 + 25;          //changed
+    public static final int DOWN_BUTTON_GAME_Y = 585 - 10;
+    
     public static final int START_BUTTON_X = 20;          //changed
     public static final int START_BUTTON_Y = 200;
     
