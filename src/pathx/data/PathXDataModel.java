@@ -119,7 +119,7 @@ public class PathXDataModel extends MiniGameDataModel{
         
         PathXLevel level = new PathXLevel(305, 420, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "Level One","This is a test description for level one that i want to make a bit long", 10);
         levels.add(level);
-        level = new PathXLevel(1400, 350, viewport, PathXLevelState.LOCKED_STATE.toString(), "Level Two","Level two needs a description as well", 20);
+        level = new PathXLevel(1400, 900, viewport, PathXLevelState.LOCKED_STATE.toString(), "Level Two","Level two needs a description as well", 20);
         levels.add(level);
     }
     

@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.text.NumberFormat;
 import java.util.Collection;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import mini_game.MiniGame;
 import mini_game.Sprite;
 import mini_game.SpriteType;
@@ -44,7 +45,9 @@ public class PathXPanel extends JPanel {
     private BufferedImage blankTileSelectedImage;
     
     // THIS IS FOR WHEN THE USE MOUSES OVER A TILE
-    private BufferedImage blankTileMouseOverImage; 
+    private BufferedImage blankTileMouseOverImage;
+    
+    private JTextArea text;
     
     private Viewport viewport;
     
@@ -65,6 +68,12 @@ public class PathXPanel extends JPanel {
         numberFormatter = NumberFormat.getNumberInstance();
         numberFormatter.setMinimumFractionDigits(3);
         numberFormatter.setMaximumFractionDigits(3);
+        text = new JTextArea();
+                text.setLineWrap(true);
+                text.setFont(FONT_BALANCE);
+                text.setWrapStyleWord(true);
+                text.setBounds(JTEXTAREA_X, JTEXTAREA_Y, 400, 150);
+                text.setLocation(200, 150);
     }
     
     // MUTATOR METHODS
@@ -238,8 +247,8 @@ public class PathXPanel extends JPanel {
         s.setY(y);  
 //        !(s.getX() < viewport.getViewportX() || s.getX() > (viewport.getViewportX() + viewport.getViewportWidth())) 
 //                && !(s.getY() < viewport.getViewportY() || s.getY() > (viewport.getViewportY() + viewport.getViewportHeight()))
-        if((x > VIEWPORT_MARGIN_LEFT - 10 && x < VIEWPORT_MARGIN_LEFT + 710 - 40) && 
-                (y > NORTH_PANEL_HEIGHT + 10) && y < VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT + 460){
+        if((x > VIEWPORT_MARGIN_LEFT - 5 && x < VIEWPORT_MARGIN_LEFT + 710 - 20) && 
+                (y > NORTH_PANEL_HEIGHT + 10) && y < VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT + 475){
             renderSprite(g, s);
             if(s.getState().equals(MOUSE_OVER_STATE)){
                  String levelInfo = data.getLevelSprite(s.getID()).getLevelName() + " - $" + data.getLevelSprite(s.getID()).getReward();
@@ -461,12 +470,15 @@ public class PathXPanel extends JPanel {
             renderSprite(g, s);
         }
         
+
+        renderLevelDescription(false, text);
         if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
             if(game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
                 g.setFont(FONT_BALANCE);
                 g.drawString(((PathXDataModel)game.getDataModel()).getCurrentLevel(), LEVEL_NAME_DIALOG_X, LEVEL_NAME_DIALOG_Y);
-                g.drawString(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription(), LEVEL_DESCRIPTION_X, LEVEL_DESCRIPTION_Y);
-
+                renderLevelDescription(true, text);
+            } else {
+                renderLevelDescription(false, text);
             }
         }
     }
@@ -488,6 +500,20 @@ public class PathXPanel extends JPanel {
             Image img = bgST.getStateImage(s.getState());
             g.drawImage(img, (int)s.getX(), (int)s.getY(), bgST.getWidth(), bgST.getHeight(), null); 
         }
+    }
+    
+        public void renderLevelDescription(boolean enable, JTextArea text)
+    {
+        // ONLY RENDER THE VISIBLE ONES
+
+                text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription());
+                this.add(text);
+                text.setLocation(200, 150);
+                if(enable && !text.isVisible())
+                    text.setVisible(true);
+                else 
+                    if(!enable && text.isVisible())
+                        text.setVisible(false);
     }
 
     /**

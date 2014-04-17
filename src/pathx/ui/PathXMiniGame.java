@@ -83,12 +83,24 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setEnabled(true);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setEnabled(true);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setEnabled(true);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setEnabled(true);
        
        guiButtons.get(HOME_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(RIGHT_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(LEFT_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(UP_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(DOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(START_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
+       guiButtons.get(HOME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(UP_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(START_BUTTON_TYPE).setEnabled(false);
        
        
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setX(QUIT_BUTTON_X);
@@ -97,6 +109,7 @@ public class PathXMiniGame extends MiniGame{
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
            guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setState(INVISIBLE_STATE);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(false);
        }
        
        
@@ -113,22 +126,38 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
        
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setEnabled(false);
+       
        
        guiButtons.get(RIGHT_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(LEFT_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(UP_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(DOWN_BUTTON_TYPE).setState(VISIBLE_STATE);
+       
+
+       guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(true);
+       guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(true);
+       guiButtons.get(UP_BUTTON_TYPE).setEnabled(true);
+       guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(true);
 
        guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(HOME_BUTTON_TYPE).setEnabled(true);
        
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setX(QUIT_BUTTON_X);
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setY(QUIT_BUTTON_Y);
+       guiButtons.get(START_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(START_BUTTON_TYPE).setEnabled(false);
        
        guiButtons.get(BACK_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
            guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setState(VISIBLE_STATE);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(true);
        }
        
        currentScreenState = LEVEL_SELECT_SCREEN_STATE;
@@ -143,8 +172,14 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setEnabled(false);
 
        guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(HOME_BUTTON_TYPE).setEnabled(true);
        
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setX(QUIT_BUTTON_X);
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setY(QUIT_BUTTON_Y);
@@ -161,8 +196,14 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(RESET_GAME_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setEnabled(false);
 
        guiButtons.get(HOME_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(HOME_BUTTON_TYPE).setEnabled(true);
        
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setX(QUIT_BUTTON_X);
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setY(QUIT_BUTTON_Y);
@@ -180,7 +221,13 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(VIEW_HELP_BUTTON_TYPE).setState(INVISIBLE_STATE);
        
+       guiButtons.get(PLAY_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(RESET_GAME_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_SETTINGS_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(VIEW_HELP_BUTTON_TYPE).setEnabled(false);
+       
        guiButtons.get(HOME_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(HOME_BUTTON_TYPE).setEnabled(false);
        
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setX(GAMEPLAY_QUIT_BUTTON_X);
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setY(GAMEPLAY_QUIT_BUTTON_Y);
@@ -191,14 +238,23 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(DOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(START_BUTTON_TYPE).setState(VISIBLE_STATE);
        
+       guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(UP_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(false);
+       guiButtons.get(START_BUTTON_TYPE).setEnabled(true);
+       
        guiButtons.get(CLOSE_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(BACK_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(CLOSE_BUTTON_TYPE).setEnabled(true);
+       guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
        guiDialogs.get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
        
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
            guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setState(INVISIBLE_STATE);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(false);
        }
        
        currentScreenState = GAMEPLAY_SCREEN_STATE;
@@ -428,6 +484,7 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, BACK_BUTTON_X, BACK_BUTTON_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(BACK_BUTTON_TYPE, s);
+        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
         
         //add the HOME button to the home screen
         String startButton = props.getProperty(PathXPropertyType.START_BUTTON_IMAGE_NAME);
@@ -471,6 +528,7 @@ public class PathXMiniGame extends MiniGame{
             s = new Sprite(sT, ((PathXDataModel)data).getLevel(i).getX(), ((PathXDataModel)data).getLevel(i).getY(),
                     0, 0, INVISIBLE_STATE);
             guiButtons.put(((PathXDataModel)data).getLevel(i).toString(), s);
+            guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(false);
             ((PathXDataModel)data).getLevel(i).setSpriteID(s.getID());
         }
         

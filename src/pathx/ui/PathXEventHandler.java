@@ -118,6 +118,7 @@ public class PathXEventHandler {
     
     public void respondToBackRequest()
     {
+        respondToCloseRequest();
         game.switchToLevelSelectScreen();
     }
     
