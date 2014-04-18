@@ -162,8 +162,14 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(START_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(START_BUTTON_TYPE).setEnabled(false);
        
+       guiButtons.get(PAUSE_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(PAUSE_BUTTON_TYPE).setEnabled(false);
+       
        guiButtons.get(BACK_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
+       
+       ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
+       guiDecor.get(MAP_TYPE).setState(LEVEL_SCREEN_STATE);
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
@@ -258,17 +264,23 @@ public class PathXMiniGame extends MiniGame{
        
        guiButtons.get(START_BUTTON_TYPE).setState(VISIBLE_STATE);
        
-       guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
-       guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
-       guiButtons.get(UP_BUTTON_TYPE).setEnabled(false);
-       guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(false);
+//       guiButtons.get(RIGHT_BUTTON_TYPE).setEnabled(false);
+//       guiButtons.get(LEFT_BUTTON_TYPE).setEnabled(false);
+//       guiButtons.get(UP_BUTTON_TYPE).setEnabled(false);
+//       guiButtons.get(DOWN_BUTTON_TYPE).setEnabled(false);
        guiButtons.get(START_BUTTON_TYPE).setEnabled(true);
+       
+       guiButtons.get(PAUSE_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(PAUSE_BUTTON_TYPE).setEnabled(true);
        
        guiButtons.get(CLOSE_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(BACK_BUTTON_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(CLOSE_BUTTON_TYPE).setEnabled(true);
        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
        guiDialogs.get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
+       
+       ((PathXDataModel)data).setViewportState(GAMEPLAY_SCREEN_STATE);
+       guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
        
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
@@ -326,11 +338,15 @@ public class PathXMiniGame extends MiniGame{
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_MAP));
         sT = new SpriteType(MAP_TYPE);
         sT.addState(LEVEL_SCREEN_STATE, img);
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_BACKGROUND_LEVEL_MAP));
+        sT.addState(GAMEPLAY_SCREEN_STATE, img);
         sT.addState(INVISIBLE_STATE, null);
         s = new Sprite(sT, data.getViewport().getViewportMarginRight(), data.getViewport().getViewportMarginTop(), 0, 0, INVISIBLE_STATE);
         guiDecor.put(MAP_TYPE, s);
         
-        ((PathXDataModel)data).initViewport();  
+        ((PathXDataModel)data).initLevelSelectionViewport();
+        ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
+        
         
         //Add the Buttons for the Home screen
         String playButton = props.getProperty(PathXPropertyType.PLAY_GAME_BUTTON_IMAGE_NAME);
@@ -483,8 +499,8 @@ public class PathXMiniGame extends MiniGame{
         String pauseMouseOverButton = props.getProperty(PathXPropertyType.PAUSE_MOUSE_OVER_BUTTON_IMAGE_NAME);
         img = loadImage(imgPath + pauseMouseOverButton);
         sT.addState(MOUSE_OVER_STATE, img);
-        s = new Sprite(sT, START_BUTTON_X, START_BUTTON_Y, 0, 0, INVISIBLE_STATE)
-        guiButtons.put(START_BUTTON_TYPE, s);
+        s = new Sprite(sT, PAUSE_BUTTON_GAME_X, PAUSE_BUTTON_GAME_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(PAUSE_BUTTON_TYPE, s);
         
         ((PathXDataModel)data).initLevels();
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
@@ -681,7 +697,13 @@ public class PathXMiniGame extends MiniGame{
         guiButtons.get(BACK_BUTTON_TYPE).setActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae)
             {   eventHandler.respondToBackRequest();    }
-        });        
+        });
+        
+        // Home BUTTON EVENT HANDLER
+        guiButtons.get(PAUSE_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToPauseRequest();    }
+        });
         
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
         this.setKeyListener(new KeyAdapter(){

@@ -130,7 +130,8 @@ public class PathXPanel extends JPanel {
             // RENDER THE BACKGROUND, WHICHEVER SCREEN WE'RE ON
             renderBackground(g);
             
-            if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE))
+            if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE) ||
+                    ((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE))
                     renderViewport(g);
 
             if(((PathXMiniGame)game).isCurrentScreenState(HELP_SCREEN_STATE))
@@ -225,16 +226,16 @@ public class PathXPanel extends JPanel {
         Viewport vp = data.getViewport();
         Sprite bg = game.getGUIDecor().get(MAP_TYPE);
         SpriteType bgST = bg.getSpriteType();
-        Image img = game.loadImage("./img/Default/BackgroundMap.png");
+        Image img = bgST.getStateImage(bg.getState());
         
         
-        g.drawImage(img, VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
-                WINDOW_WIDTH - VIEWPORT_MARGIN_RIGHT, WINDOW_HEIGHT - VIEWPORT_MARGIN_BOTTOM, 
+        g.drawImage(img, vp.getViewportMarginLeft(), vp.getViewportMarginTop(),
+                vp.getViewportMarginLeft() + vp.getViewportWidth(), vp.getViewportMarginTop() + vp.getViewportHeight(), 
                 vp.getViewportX(), vp.getViewportY(), vp.getViewportWidth() + vp.getViewportX(), vp.getViewportHeight() + vp.getViewportY(), this);
         //g.setColor(Color.BLACK);
-       
-       g.drawRect(VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
-                710, 500);
+       if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE))
+            g.drawRect(VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
+                    710, 500);
         
         
     }
@@ -273,7 +274,8 @@ public class PathXPanel extends JPanel {
         Collection<Sprite> decorSprites = game.getGUIDecor().values();
         for (Sprite s : decorSprites)
         {
-            if (s.getSpriteType().getSpriteTypeID() != BACKGROUND_TYPE)
+            if (s.getSpriteType().getSpriteTypeID() != BACKGROUND_TYPE 
+                    && s.getSpriteType().getSpriteTypeID() != MAP_TYPE)
                 renderSprite(g, s);
         }
         

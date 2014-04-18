@@ -26,6 +26,7 @@ public class PathXConstants {
     // EACH SCREEN HAS ITS OWN BACKGROUND TYPE
     public static final String BACKGROUND_TYPE = "BACKGROUND_TYPE";
     public static final String MAP_TYPE = "MAP_TYPE";
+    public static final String LEVEL_TYPE = "LEVEL_TYPE";
     
     // THIS REPRESENTS THE BUTTONS ON THE MENU SCREEN FOR LEVEL SELECTION
     public static final String LEVEL_SELECT_BUTTON_TYPE = "LEVEL_SELECT_BUTTON_TYPE";
@@ -146,6 +147,9 @@ public class PathXConstants {
     public static final int UP_BUTTON_GAME_Y = 510 - 10;
     public static final int DOWN_BUTTON_GAME_X = 50 + 25;          //changed
     public static final int DOWN_BUTTON_GAME_Y = 585 - 10;
+    public static final int PAUSE_BUTTON_GAME_X = LEFT_BUTTON_GAME_X + 36;          //changed
+    public static final int PAUSE_BUTTON_GAME_Y = LEFT_BUTTON_GAME_Y + 6;
+    
     
     public static final int START_BUTTON_X = 20;          //changed
     public static final int START_BUTTON_Y = 200;

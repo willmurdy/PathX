@@ -107,6 +107,7 @@ public class PathXEventHandler {
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.setCurrentLevel(level);
+        ((PathXDataModel)data).initGameplayViewPort();
         game.switchToGamePlayScreen();
     }
         
@@ -120,6 +121,10 @@ public class PathXEventHandler {
     {
         respondToCloseRequest();
         game.switchToLevelSelectScreen();
+    }
+    
+    public void respondToPauseRequest()
+    {
     }
     
     /**

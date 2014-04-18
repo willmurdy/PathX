@@ -9,8 +9,10 @@ package pathx.data;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Stack;
+import java.util.TreeMap;
 import mini_game.MiniGame;
 import mini_game.MiniGameDataModel;
+import mini_game.Viewport;
 import static pathx.PathXConstants.*;
 
 /**
@@ -78,6 +80,10 @@ public class PathXDataModel extends MiniGameDataModel{
     
     private int balance;
     
+    private TreeMap<String, Viewport> viewports;
+    
+    public static String CURRENT_VIEWPORT_IMG;
+    
     public PathXDataModel(MiniGame initMiniGame)
     {
         // KEEP THE GAME FOR LATER
@@ -94,23 +100,50 @@ public class PathXDataModel extends MiniGameDataModel{
 //        tempTile = null;
         prevMoves = new Stack();
         levels = new ArrayList<PathXLevel>();
-        balance = 1000;     
+        balance = 1000;  
+        viewports = new TreeMap<String, Viewport>();
     }
     
     public boolean notStarted(){
         return true;
     }
     
-    public void initViewport(){
+    public void initLevelSelectionViewport(){
         
-        viewport.setNorthPanelHeight(NORTH_PANEL_HEIGHT + 10);
-        viewport.setViewportSize(WINDOW_WIDTH -40, WINDOW_HEIGHT - 20 - 100);
-        viewport.setGameWorldSize(MAP_WIDTH, MAP_HEIGHT);
-        viewport.setScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-//        viewport.initViewportMargins();
-        viewport.updateViewportBoundaries();
-        viewport.scroll(150, 150);
-
+        Viewport vp = new Viewport();
+        
+        vp.setNorthPanelHeight(NORTH_PANEL_HEIGHT);
+        vp.setViewportSize(WINDOW_WIDTH -40, WINDOW_HEIGHT - 20 - 100);
+        vp.setGameWorldSize(MAP_WIDTH, MAP_HEIGHT);
+        vp.setScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        vp.initViewportMargins(20, 20, 20, 30);
+        vp.updateViewportBoundaries();
+        vp.scroll(150, 150);
+        
+        viewports.put(LEVEL_SCREEN_STATE, vp);
+        
+    }
+    
+    public void initGameplayViewPort(){
+        
+        Viewport vp = new Viewport();
+        
+        vp.setNorthPanelHeight(0);
+        vp.setViewportSize(550, 590);
+        vp.setGameWorldSize(800, 1600);
+        vp.setScreenSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+        vp.initViewportMargins(20, 180, 20, 40);
+        vp.updateViewportBoundaries();
+        vp.scroll(0, 0);
+       
+        
+        viewports.put(GAMEPLAY_SCREEN_STATE, vp);
+        
+        
+    }
+    
+    public void setViewportState(String state){
+        viewport = viewports.get(state);
     }
     
     public void initLevels(){
