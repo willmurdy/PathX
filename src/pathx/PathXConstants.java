@@ -59,6 +59,11 @@ public class PathXConstants {
 
     public static final String START_BUTTON_TYPE = "START_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
+    
+    public static final String SPECIALS_REDLIGHT_TYPE = "SPECIALS_REDLIGHT_TYPE";
+    public static final String SPECIALS_REDLIGHT_TYPE1 = "SPECIALS_REDLIGHT_TYPE1";
+    public static final String SPECIALS_REDLIGHT_TYPE2 = "SPECIALS_REDLIGHT_TYPE2";
+    public static final String SPECIALS_REDLIGHT_TYPE3 = "SPECIALS_REDLIGHT_TYPE3";
 //    public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
 //    public static final String TIME_TYPE = "TIME_TYPE"; 
 //    public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
@@ -139,6 +144,9 @@ public class PathXConstants {
     public static final int DOWN_BUTTON_X = 50;          //changed
     public static final int DOWN_BUTTON_Y = 585;
     
+    public static final int SPECIALS_X = 20;          //changed
+    public static final int SPECIALS_Y = 340;
+    
     public static final int RIGHT_BUTTON_GAME_X = 95 + 25;          //changed
     public static final int RIGHT_BUTTON_GAME_Y = 540 - 10;
     public static final int LEFT_BUTTON_GAME_X = 20 + 25;          //changed
@@ -152,7 +160,7 @@ public class PathXConstants {
     
     
     public static final int START_BUTTON_X = 20;          //changed
-    public static final int START_BUTTON_Y = 200;
+    public static final int START_BUTTON_Y = 200 + 65;
     
     public static final int LEVEL_DIALOG_X = 150;          //changed
     public static final int LEVEL_DIALOG_Y = 40;

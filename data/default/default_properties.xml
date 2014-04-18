@@ -58,8 +58,10 @@
         <property name="PAUSE_BUTTON_IMAGE_NAME"        value="./default/ButtonPause.png"></property>
         <property name="PAUSE_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPauseMouseOver.png"></property>
         
-<!-- 
-        <property name="IMAGE_BUTTON_TEMP_TILE"             value="./default/ButtonTempTile.png"></property>
+ 
+        <property name="IMAGE_SPECIALS_REDLIGHT"             value="./default/UpgradeRedLight.png"></property>
+        <property name="IMAGE_SPECIALS_REDLIGHT_MOUSE_OVER"             value="./default/UpgradeRedLightMouseOver.png"></property>
+        
         <property name="IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER"  value="./default/ButtonTempTileMouseOver.png"></property>
         <property name="IMAGE_CURSOR_ARROW"                  value="./default/CursorArrow.png"></property>
         <property name="IMAGE_DECOR_TIME"                   value="./default/DecorTime.png"></property>
@@ -70,7 +72,7 @@
         <property name="IMAGE_TILE_BACKGROUND"              value="./default/TileBackground.png"></property>
         <property name="IMAGE_TILE_BACKGROUND_SELECTED"     value="./default/TileBackgroundSelected.png"></property>
         <property name="IMAGE_TILE_BACKGROUND_MOUSE_OVER"   value="./default/TileBackgroundMouseOver.png"></property>
- -->
+ 
         <property name="WINDOW_ICON"                  value="./default/WindowIcon.png"></property>
 
         <!-- ALL THE TEXT TO BE DISPLAYED -->

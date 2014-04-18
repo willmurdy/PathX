@@ -331,6 +331,9 @@ public class PathXPanel extends JPanel {
         if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
             g.drawRect(180, 20, 550, 610-20);
             g.drawRect(20, 500, 160, 130-20);
+            g.setFont(FONT_BALANCE);
+            g.drawString(((PathXDataModel)data).getCurrentLevel(), 190, 50);
+            g.drawString("$" + Integer.toString(((PathXDataModel)data).getCurrentLevelReward()), 190, 80);
             //g.drawRect(20, 200, 160, 200);
             
         }

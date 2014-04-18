@@ -144,11 +144,10 @@ public class PathX {
         DOWN_MOUSE_OVER_BUTTON_IMAGE_NAME,
         PAUSE_BUTTON_IMAGE_NAME,
         PAUSE_MOUSE_OVER_BUTTON_IMAGE_NAME,
-        //Home screen button types
-//        PLAY_GAME_BUTTON_TYPE,
-//        RESET_GAME_BUTTON_TYPE,
-//        VIEW_SETTINGS_BUTTON_TYPE,
-//        QUIT_GAME_BUTTON_TYPE,
+
+        //Specials Image Names
+        IMAGE_SPECIALS_REDLIGHT,
+        IMAGE_SPECIALS_REDLIGHT_MOUSE_OVER,
         
         /* GAME TEXT */
         TEXT_ERROR_LOADING_AUDIO,

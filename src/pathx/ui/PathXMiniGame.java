@@ -168,6 +168,9 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(BACK_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(false);
        
+       guiButtons.get(SPECIALS_REDLIGHT_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(SPECIALS_REDLIGHT_TYPE).setEnabled(false);
+       
        ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(LEVEL_SCREEN_STATE);
        
@@ -278,6 +281,13 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(CLOSE_BUTTON_TYPE).setEnabled(true);
        guiButtons.get(BACK_BUTTON_TYPE).setEnabled(true);
        guiDialogs.get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
+       
+       guiButtons.get(SPECIALS_REDLIGHT_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_REDLIGHT_TYPE1).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_REDLIGHT_TYPE2).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_REDLIGHT_TYPE3).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_REDLIGHT_TYPE).setEnabled(true);
+    
        
        ((PathXDataModel)data).setViewportState(GAMEPLAY_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
@@ -501,6 +511,26 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, PAUSE_BUTTON_GAME_X, PAUSE_BUTTON_GAME_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(PAUSE_BUTTON_TYPE, s);
+        
+        //add the HOME button to the home screen
+        String redButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_REDLIGHT);
+        sT = new SpriteType(SPECIALS_REDLIGHT_TYPE);
+	img = loadImage(imgPath + redButton);
+        sT.addState(VISIBLE_STATE, img);
+        String redMouseOverButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_REDLIGHT_MOUSE_OVER);
+        img = loadImage(imgPath + redMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, SPECIALS_X, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_REDLIGHT_TYPE, s);
+        
+        s = new Sprite(sT, SPECIALS_X,40 + SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_REDLIGHT_TYPE1, s);
+        
+        s = new Sprite(sT, SPECIALS_X, 80+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_REDLIGHT_TYPE2, s);
+        
+        s = new Sprite(sT, SPECIALS_X, 120+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_REDLIGHT_TYPE3, s);
         
         ((PathXDataModel)data).initLevels();
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);

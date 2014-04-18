@@ -182,6 +182,10 @@ public class PathXDataModel extends MiniGameDataModel{
         return levels.get(currentLevelint).getLevelDescription();
     }
     
+    public int getCurrentLevelReward(){
+        return levels.get(currentLevelint).getReward();
+    }
+    
     public void scrollViewPort(int incX, int incY){
         
         if((viewport.getViewportX() + incX >= 0 && viewport.getViewportX() + incX <= viewport.getMaxViewportX())
