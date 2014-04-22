@@ -105,13 +105,16 @@
         <property name="AUDIO_CUE_WIN"                      value="./default/Win.mid"></property>
         <property name="SONG_CUE_GAME_SCREEN"               value="./default/GameSong.mid"></property>        
         <property name="SONG_CUE_MENU_SCREEN"               value="./default/MenuSong.mid"></property>
+        
     </property_list>
     
     <!-- PLAYABLE LEVELS CREATED WITH THE LEVEL EDITOR -->
     <property_options_list>
         <property_options name="LEVEL_OPTIONS">
-            <option>1</option>
-            <option>2</option>
+            <option>Test</option>
+        </property_options>
+        <property_options name="LEVEL_OPTIONS_FILES">
+            <option>test.xml</option>
         </property_options>
     </property_options_list>
 </properties>

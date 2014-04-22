@@ -1,23 +1,36 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and oneWay the template in the editor.
  */
 
 package pathx.data;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.Stack;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mini_game.MiniGame;
 import mini_game.MiniGameDataModel;
 import mini_game.Viewport;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import static pathx.PathX.PathXPropertyType.LEVEL_IMG_PATH;
+import static pathx.PathX.PathXPropertyType.LEVEL_OPTIONS_FILES;
+import static pathx.PathX.PathXPropertyType.LEVEL_PATH;
+import static pathx.PathX.PathXPropertyType.LEVEL_SCHEMA;
 import static pathx.PathXConstants.*;
+import properties_manager.PropertiesManager;
+import xml_utilities.InvalidXMLFileFormatException;
+import xml_utilities.XMLUtilities;
 
 /**
  *
- * @author willmurdy
+ * @author willmurdid2
  */
 public class PathXDataModel extends MiniGameDataModel{
     
@@ -148,14 +161,100 @@ public class PathXDataModel extends MiniGameDataModel{
     
     public void initLevels(){
                 
-//        PropertiesManager props = PropertiesManager.getPropertiesManager();
-//        ArrayList<String> levels = props.getPropertyOptionsList(PathX.PathXPropertyType.LEVEL_OPTIONS);
+        XMLUtilities xmlUtil = new XMLUtilities();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
         
-        
-        PathXLevel level = new PathXLevel(305, 420, viewport, PathXLevelState.AVAILABLE_STATE.toString(), "Level One","This is a test description for level one that i want to make a bit long", 10);
-        levels.add(level);
-        level = new PathXLevel(1400, 900, viewport, PathXLevelState.LOCKED_STATE.toString(), "Level Two","Level two needs a description as well", 20);
-        levels.add(level);
+        ArrayList<String> levelFiles = props.getPropertyOptionsList(LEVEL_OPTIONS_FILES);
+        for(String file : levelFiles){
+            try {
+                
+                PathXLevel newLevel = new PathXLevel();
+                
+                Document doc = xmlUtil.loadXMLDocument(props.getProperty(LEVEL_PATH) + file, props.getProperty(LEVEL_SCHEMA));
+
+                Node levelNode = xmlUtil.getNodeWithName(doc, "level");
+                NamedNodeMap temp = levelNode.getAttributes();
+
+                //get the background image
+                String imageName = temp.getNamedItem("image").getNodeValue();
+                BufferedImage backgroundImage = miniGame.loadImage(props.getProperty(LEVEL_IMG_PATH) + imageName);
+                newLevel.setBackgroundImage(backgroundImage);
+                
+                //get level name
+                String levelName = temp.getNamedItem("name").getNodeValue();
+                newLevel.setLevelName(levelName);
+                
+                //initialize the intersections
+                int intersectionNodes = xmlUtil.getNumNodesOfElement(doc, "intersection");
+                PathXIntersection newInter;
+                //Node intersection = xmlUtil.getNodeWithName(doc, "intersection");
+                
+                //adds the intersections to the Level
+                for(int j = 0; j < intersectionNodes; j++)
+                {
+                    Node intersection = xmlUtil.getNodeInSequence(doc, "intersection", j);
+                    temp = intersection.getAttributes();
+                    
+//                    int id = Integer.parseInt(temp.getNamedItem("id").getNodeValue());
+                    boolean open = Boolean.parseBoolean(temp.getNamedItem("open").getNodeValue());
+                    int x = Integer.parseInt(temp.getNamedItem("x").getNodeValue());
+                    int y = Integer.parseInt(temp.getNamedItem("y").getNodeValue());
+                    
+                    newInter = new PathXIntersection(x, y, open);
+                    
+                    newLevel.addIntersection(newInter);
+                    
+//                    NamedNodeMap attributes = n.getAttributes();
+//                    for (int i = 0; i < attributes.getLength(); i++)
+//                    {
+//                        Node att = attributes.getNamedItem(NAME_ATT);
+//                        String attName = attributes.getNamedItem(NAME_ATT).getTextContent();
+//                        String attValue = attributes.getNamedItem(VALUE_ATT).getTextContent();
+//                        //properties.put(attName, attValue);
+//                    }
+                }
+                
+                                //initialize the intersections
+                int roadNodes = xmlUtil.getNumNodesOfElement(doc, "road");
+                PathXRoad newRoad;
+                //Node intersection = xmlUtil.getNodeWithName(doc, "intersection");
+                
+                //adds the intersections to the Level
+                for(int j = 0; j < roadNodes; j++)
+                {
+                    Node road = xmlUtil.getNodeInSequence(doc, "road", j);
+                    temp = road.getAttributes();
+                    
+//                    int id = Integer.parseInt(temp.getNamedItem("id").getNodeValue());
+                    boolean oneWay = Boolean.parseBoolean(temp.getNamedItem("one_way").getNodeValue());
+                    int limit = Integer.parseInt(temp.getNamedItem("speed_limit").getNodeValue());
+                    int id1 = Integer.parseInt(temp.getNamedItem("int_id1").getNodeValue());
+                    int id2 = Integer.parseInt(temp.getNamedItem("int_id2").getNodeValue());
+                    
+                    newRoad = new PathXRoad(id1, id2, limit, oneWay);
+                    
+                    newLevel.addRoad(newRoad);
+                    
+//                    NamedNodeMap attributes = n.getAttributes();
+//                    for (int i = 0; i < attributes.getLength(); i++)
+//                    {
+//                        Node att = attributes.getNamedItem(NAME_ATT);
+//                        String attName = attributes.getNamedItem(NAME_ATT).getTextContent();
+//                        String attValue = attributes.getNamedItem(VALUE_ATT).getTextContent();
+//                        //properties.put(attName, attValue);
+//                    }
+                }
+
+
+               // intersection.equals(null);
+
+
+            } catch (InvalidXMLFileFormatException ex) {
+                Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+    //        } catch (IOException ex) {
+    //            Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public PathXLevel getLevel(int levelNum){
@@ -179,7 +278,9 @@ public class PathXDataModel extends MiniGameDataModel{
     }
     
     public String getCurrentLevelDescription(){
-        return levels.get(currentLevelint).getLevelDescription();
+        if(levels.size() > 0)
+            return levels.get(currentLevelint).getLevelDescription();
+        return null;
     }
     
     public int getCurrentLevelReward(){

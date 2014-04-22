@@ -63,6 +63,10 @@ public class PathX {
         /* SETUP FILE NAMES */
         FILE_GAME_PROPERTIES,
         FILE_PLAYER_RECORD,
+        LEVEL_SCHEMA,
+        LEVEL_IMG_PATH,
+        LEVEL_OPTIONS_FILES,
+        LEVEL_PATH,
 
         /* DIRECTORY PATHS FOR FILE LOADING */
         PATH_AUDIO,

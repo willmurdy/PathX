@@ -10,6 +10,9 @@
         <property name="FILE_PLAYER_RECORD"     value="PlayerRecord.dat"></property>
         <property name="AUDIO_PATH"             value="./audio/"></property>
         <property name="IMG_PATH"               value="./img/"></property>
+        <property name="LEVEL_IMG_PATH"         value="./data/default/levels/img/"></property>
+        <property name="LEVEL_PATH"             value="./data/default/levels/"></property>
+        <property name="LEVEL_SCHEMA"           value="./data/pathx_level_schema.xsd"></property>
     </property_list>
 
     <property_options_list>

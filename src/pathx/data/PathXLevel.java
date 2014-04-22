@@ -7,10 +7,26 @@
 package pathx.data;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import mini_game.Viewport;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import static pathx.PathX.PathXPropertyType.LEVEL_IMG_PATH;
+import static pathx.PathX.PathXPropertyType.LEVEL_SCHEMA;
 import static pathx.PathXConstants.NORTH_PANEL_HEIGHT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_LEFT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_TOP;
+import properties_manager.PropertiesManager;
+import static properties_manager.PropertiesManager.NAME_ATT;
+import static properties_manager.PropertiesManager.VALUE_ATT;
+import xml_utilities.InvalidXMLFileFormatException;
+import xml_utilities.XMLUtilities;
 
 /**
  *
@@ -41,6 +57,10 @@ public class PathXLevel {
     
     private Viewport vp;
     
+    private ArrayList<PathXIntersection> intersections;
+    
+    private ArrayList<PathXRoad> roads;
+    
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
                             String description, int reward){
         
@@ -59,6 +79,58 @@ public class PathXLevel {
         
         money = reward;
         
+        intersections = new ArrayList<PathXIntersection>();
+        
+        roads = new ArrayList<PathXRoad>();
+        
+    }
+    
+    public PathXLevel(){
+        intersections = new ArrayList<PathXIntersection>();
+        
+        roads = new ArrayList<PathXRoad>();
+    }
+    
+    public PathXLevel(String xmlFile){
+        XMLUtilities xmlUtil = new XMLUtilities();
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        
+        try {
+            Document doc = xmlUtil.loadXMLDocument(xmlFile, props.getProperty(LEVEL_SCHEMA));
+
+            Node levelNode = xmlUtil.getNodeWithName(doc, "level");
+            NamedNodeMap temp = levelNode.getAttributes();
+
+            //get the background image
+//            String imageName = temp.getNamedItem("image").getNodeValue();
+//            backgroundImage = ImageIO.read(new File(LEVEL_IMG_PATH + imageName));//loadImage(LEVEL_IMG_PATH + imageName);;
+
+
+
+            ArrayList<Node> intersectionNodes = xmlUtil.getChildNodesWithName(levelNode, "intersection");
+            for(Node n : intersectionNodes)
+            {
+                NamedNodeMap attributes = n.getAttributes();
+                for (int i = 0; i < attributes.getLength(); i++)
+                {
+                    Node att = attributes.getNamedItem(NAME_ATT);
+                    String attName = attributes.getNamedItem(NAME_ATT).getTextContent();
+                    String attValue = attributes.getNamedItem(VALUE_ATT).getTextContent();
+                    //properties.put(attName, attValue);
+                }
+            }
+            
+            
+            
+            
+            
+            
+        } catch (InvalidXMLFileFormatException ex) {
+            Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+//        } catch (IOException ex) {
+//            Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
     public void setSpriteID(int id){
@@ -71,6 +143,10 @@ public class PathXLevel {
     
     public String getLevelName(){
         return levelName;
+    }
+    
+    public void setLevelName(String name){
+        levelName = name;
     }
     
     public String getLevelDescription(){
@@ -91,6 +167,23 @@ public class PathXLevel {
     
     public String getState(){
         return currentState;
+    }
+    
+    public void addIntersection(PathXIntersection newIntersection){
+        newIntersection.setId(intersections.size());
+        intersections.add(newIntersection);
+    }
+    
+    public void addRoad(PathXRoad road){
+        roads.add(road);
+    }
+    
+    public void setBackgroundImage(BufferedImage img){
+        backgroundImage = img;
+    }
+    
+    public BufferedImage getBackgroundImage(){
+        return backgroundImage;
     }
     
     public void updateLocation(int xInc, int yInc){
