@@ -108,10 +108,10 @@ public class PathXEventHandler {
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.setCurrentLevel(level);
+        data.getLevel(data.getCurrentLevelInt()).setIngame(true);
         data.setViewportState(GAMEPLAY_SCREEN_STATE);
         data.updateViewport();
         data.getLevel(data.getCurrentLevelInt()).setViewport(data.getViewport());
-        data.getLevel(data.getCurrentLevelInt()).setIngame(true);
         data.getLevel(data.getCurrentLevelInt()).updateIntersectionLocations();
         //((PathXDataModel)data).initGameplayViewPort();
         game.switchToGamePlayScreen();
@@ -128,6 +128,7 @@ public class PathXEventHandler {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.getLevel(data.getCurrentLevelInt()).setIngame(false);
         data.setViewportState(LEVEL_SELECT_SCREEN_STATE);
+        data.setCurrentLevel(-1);
         respondToCloseRequest();
         game.switchToLevelSelectScreen();
     }

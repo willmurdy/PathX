@@ -38,32 +38,11 @@ public class PathXDataModel extends MiniGameDataModel{
     // CAN NOTIFY IT TO UPDATE THE DISPLAY WHEN THE DATA MODEL CHANGES
     private MiniGame miniGame;
 
-    // THIS STORES THE TILES ON THE GRID DURING THE GAME
-//    private ArrayList<SortingHatTile> tilesToSort;
-
-    // THE LEGAL TILES IN ORDER FROM LOW SORT INDEX TO HIGH
-//    private ArrayList<SnakeCell> snake;
-
     // GAME GRID AND TILE DATA
     private int gameTileWidth;
     private int gameTileHeight;
     private int numGameGridColumns;
     private int numGameGridRows;
-
-    // THESE ARE THE TILES STACKED AT THE START OF THE GAME
-//    private ArrayList<SortingHatTile> stackTiles;
-//    private int stackTilesX;
-//    private int stackTilesY;
-
-    // THESE ARE THE TILES THAT ARE MOVING AROUND, AND SO WE HAVE TO UPDATE
-//    private ArrayList<SortingHatTile> movingTiles;
-
-    // THIS IS THE TILE THE USER IS DRAGGING
-//    private SortingHatTile selectedTile;
-//    private int selectedTileIndex;
-
-    // THIS IS THE TEMP TILE
-//    private SortingHatTile tempTile;
     
     //Levels
     private ArrayList<PathXLevel> levels;
@@ -81,13 +60,6 @@ public class PathXDataModel extends MiniGameDataModel{
     private String currentLevel;
     
     int currentLevelint;
-
-    // THE SORTING ALGORITHM WHICH GENERATES THE PROPER TRANSACTIONS
-//    private SortingHatAlgorithm sortingAlgorithm;
-
-    // THE PROPER TRANSACTIONS TO USE FOR COMPARISION AGAINST PLAYER MOVES
-//    private ArrayList<SortTransaction> properTransactionOrder;
-//    private int transactionCounter;
     
     private Stack prevMoves;
     
@@ -157,11 +129,14 @@ public class PathXDataModel extends MiniGameDataModel{
     
     public void setViewportState(String state){
         viewport = viewports.get(state);
+        if(!levels.isEmpty() && currentLevelint >= 0)
+            levels.get(currentLevelint).setViewport(viewports.get(LEVEL_SCREEN_STATE));
     }
     
     public void updateViewport(){
         viewport.setGameWorldSize(levels.get(currentLevelint).getBackgroundWidth(), levels.get(currentLevelint).getBackgroundHeight());
         viewport.updateViewportBoundaries();
+        viewport.scroll(-viewport.getViewportX(), -viewport.getViewportY());
     }
     
     public void initLevels(){
@@ -194,7 +169,6 @@ public class PathXDataModel extends MiniGameDataModel{
                 //initialize the intersections
                 int intersectionNodes = xmlUtil.getNumNodesOfElement(doc, "intersection");
                 PathXIntersection newInter;
-                //Node intersection = xmlUtil.getNodeWithName(doc, "intersection");
                 
                 newLevel.setViewport(viewport);
 
@@ -208,20 +182,8 @@ public class PathXDataModel extends MiniGameDataModel{
                     boolean open = Boolean.parseBoolean(temp.getNamedItem("open").getNodeValue());
                     int x = Integer.parseInt(temp.getNamedItem("x").getNodeValue());
                     int y = Integer.parseInt(temp.getNamedItem("y").getNodeValue());
-                    
-                    //newInter = new PathXIntersection(x, y, open);
-                    
-                    //newLevel.addIntersection(newInter);
+
                     newLevel.addIntersection(x, y, open);
-                    
-//                    NamedNodeMap attributes = n.getAttributes();
-//                    for (int i = 0; i < attributes.getLength(); i++)
-//                    {
-//                        Node att = attributes.getNamedItem(NAME_ATT);
-//                        String attName = attributes.getNamedItem(NAME_ATT).getTextContent();
-//                        String attValue = attributes.getNamedItem(VALUE_ATT).getTextContent();
-//                        //properties.put(attName, attValue);
-//                    }
                 }
                 
                 //initialize the roads
@@ -292,9 +254,6 @@ public class PathXDataModel extends MiniGameDataModel{
             }
             
         }
-        
-        if(this.badSpellsCounter == 0)
-            ;
     }
     
     public PathXLevel getLevel(int levelNum){
@@ -309,8 +268,13 @@ public class PathXDataModel extends MiniGameDataModel{
     }
     
     public void setCurrentLevel(int level){
-        currentLevel = levels.get(level).getLevelName();
+        if(level >= 0){
+            currentLevel = levels.get(level).getLevelName();
+        } else
+            currentLevel = null;
         currentLevelint = level;
+        
+        
     }
     
     public String getCurrentLevel(){

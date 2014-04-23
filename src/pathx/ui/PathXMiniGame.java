@@ -174,6 +174,8 @@ public class PathXMiniGame extends MiniGame{
        ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(LEVEL_SCREEN_STATE);
        
+       guiDecor.get(INTERSECTION_TYPE).setState(INVISIBLE_STATE);
+       
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
            guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setState(VISIBLE_STATE);
