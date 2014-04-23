@@ -11,6 +11,7 @@ import static pathx.PathXConstants.CLOSE_BUTTON_TYPE;
 import static pathx.PathXConstants.GAMEPLAY_SCREEN_STATE;
 import static pathx.PathXConstants.INVISIBLE_STATE;
 import static pathx.PathXConstants.LEVEL_DIALOG_TYPE;
+import static pathx.PathXConstants.LEVEL_SELECT_SCREEN_STATE;
 import static pathx.PathXConstants.VIEWPORT_INC;
 import pathx.data.PathXDataModel;
 
@@ -91,6 +92,7 @@ public class PathXEventHandler {
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         //data.getViewport().scroll(incX, incY);
+        //data.getLevel(data.getCurrentLevelInt()).updateIntersectionLocations();
         data.scrollViewPort(incX, incY);
     }
     
@@ -109,6 +111,7 @@ public class PathXEventHandler {
         data.setViewportState(GAMEPLAY_SCREEN_STATE);
         data.updateViewport();
         data.getLevel(data.getCurrentLevelInt()).setViewport(data.getViewport());
+        data.getLevel(data.getCurrentLevelInt()).setIngame(true);
         data.getLevel(data.getCurrentLevelInt()).updateIntersectionLocations();
         //((PathXDataModel)data).initGameplayViewPort();
         game.switchToGamePlayScreen();
@@ -122,6 +125,9 @@ public class PathXEventHandler {
     
     public void respondToBackRequest()
     {
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.getLevel(data.getCurrentLevelInt()).setIngame(false);
+        data.setViewportState(LEVEL_SELECT_SCREEN_STATE);
         respondToCloseRequest();
         game.switchToLevelSelectScreen();
     }

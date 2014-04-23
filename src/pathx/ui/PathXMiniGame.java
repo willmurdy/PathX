@@ -290,7 +290,7 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setEnabled(true);
     
        
-       ((PathXDataModel)data).setViewportState(GAMEPLAY_SCREEN_STATE);
+       //((PathXDataModel)data).setViewportState(GAMEPLAY_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
        
        

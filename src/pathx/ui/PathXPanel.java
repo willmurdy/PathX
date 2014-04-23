@@ -278,14 +278,18 @@ public class PathXPanel extends JPanel {
         ArrayList<PathXIntersection> intersections = data.getLevel(data.getCurrentLevelInt()).getIntersections();
         Sprite s = game.getGUIDecor().get(INTERSECTION_TYPE);
         for(int i = 0; i < intersections.size(); i++){
-            s.setX(intersections.get(i).getRenderX());
-            s.setY(intersections.get(i).getRenderY());
-            if(intersections.get(i).open())
-                s.setState(OPEN_STATE);
-            else
-                s.setState(CLOSED_STATE);
-            
-            renderSprite(g, s);
+            int x = intersections.get(i).getRenderX();
+            int y = intersections.get(i).getRenderY();
+            if((x > 180 - 5 && x < 730 - 20) && (y > 20) && y < 610-5){
+                s.setX(x);
+                s.setY(y);
+                if(intersections.get(i).open())
+                    s.setState(OPEN_STATE);
+                else
+                    s.setState(CLOSED_STATE);
+
+                renderSprite(g, s);
+            }
         }
     }
 

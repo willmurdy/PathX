@@ -63,6 +63,8 @@ public class PathXLevel {
     
     private ArrayList<PathXRoad> roads;
     
+    private boolean inGame;
+    
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
                             String description, int reward){
         
@@ -91,6 +93,8 @@ public class PathXLevel {
         intersections = new ArrayList<PathXIntersection>();
         
         roads = new ArrayList<PathXRoad>();
+        
+        inGame = false;
     }
     
     public void setLocation(int xPos, int yPos){
@@ -100,15 +104,15 @@ public class PathXLevel {
         renderx = x + 20 - vp.getViewportX();
         rendery = y + 120 - vp.getViewportY();
         
-        for(int i = 0; i < intersections.size(); i++){
-            intersections.get(i).setRenderX(x);
-        }
+        //for(int i = 0; i < intersections.size(); i++){
+          //  intersections.get(i).setRenderX(x);
+        //}
     }
     
     public void updateIntersectionLocations(){
         for(int i = 0; i < intersections.size(); i++){
             intersections.get(i).setRenderX(intersections.get(i).getX() + 180 - vp.getViewportX());
-            intersections.get(i).setRenderY(intersections.get(i).getY() + 20 - vp.getViewportY());
+            intersections.get(i).setRenderY(intersections.get(i).getY() + 50 - vp.getViewportY());
         }
     }
     
@@ -274,14 +278,24 @@ public class PathXLevel {
         return destinationImage;
     }
     
+    public void setIngame(boolean in){
+        inGame = in;
+    }
+    
+    public boolean inGame(){
+        return inGame;
+    }
+    
     public void updateLocation(int xInc, int yInc){
         
         //renderx += -xInc;
         //rendery += -yInc;
+        if(!inGame){
+            renderx = x + VIEWPORT_MARGIN_LEFT - vp.getViewportX();
+            rendery = y + VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT - vp.getViewportY();
+        } else
+            updateIntersectionLocations();
         
-        renderx = x + VIEWPORT_MARGIN_LEFT - vp.getViewportX();
-        rendery = y + VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT - vp.getViewportY();
-
     }
     
     public void changeState(String newState){

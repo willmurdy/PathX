@@ -171,6 +171,7 @@ public class PathXDataModel extends MiniGameDataModel{
         
         ArrayList<String> levelFiles = props.getPropertyOptionsList(LEVEL_OPTIONS_FILES);
         boolean aval = true;
+        int i = 0;
         for(String file : levelFiles){
             try {
                 
@@ -274,12 +275,14 @@ public class PathXDataModel extends MiniGameDataModel{
                     aval = false;
                 }
                 else{
-                   newLevel.setState(PathXLevelState.LOCKED_STATE.toString()); 
-                   newLevel.setLocation(400, 505);
+                   newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString()); 
+                   newLevel.setLocation(400 + i, 505 + i);
                 }
                 
                 newLevel.setLevelDescription("TEST");
             
+                i += 50;
+                
                 levels.add(newLevel);
 
             } catch (InvalidXMLFileFormatException ex) {
