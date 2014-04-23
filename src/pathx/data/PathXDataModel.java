@@ -318,6 +318,15 @@ public class PathXDataModel extends MiniGameDataModel{
     public int getBalance(){
         return balance;
     }
+    
+    public void initRoadCoords(){
+        for(PathXLevel lev : levels){
+            ArrayList<PathXRoad> road = lev.getRoads();
+            for(PathXRoad rd : road){
+                
+            }
+        }
+    }
 
     @Override
     public void checkMousePressOnSprites(MiniGame game, int x, int y) {

@@ -111,8 +111,8 @@ public class PathXLevel {
     
     public void updateIntersectionLocations(){
         for(int i = 0; i < intersections.size(); i++){
-            intersections.get(i).setRenderX(intersections.get(i).getX() + 180 - vp.getViewportX());
-            intersections.get(i).setRenderY(intersections.get(i).getY() + 50 - vp.getViewportY());
+            intersections.get(i).setRenderX(intersections.get(i).getX() + 150 - vp.getViewportX() - 12);
+            intersections.get(i).setRenderY(intersections.get(i).getY() + 150 - vp.getViewportY() - 12);
         }
     }
     
@@ -296,6 +296,10 @@ public class PathXLevel {
         } else
             updateIntersectionLocations();
         
+    }
+    
+    public void getIntersection(int id){
+        intersections.get(id);
     }
     
     public void changeState(String newState){

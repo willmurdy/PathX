@@ -10,6 +10,7 @@ import pathx.data.PathXDataModel;
 import pathx.PathXConstants.*;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import mini_game.Viewport;
 import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.*;
 import pathx.data.PathXIntersection;
+import pathx.data.PathXRoad;
 import properties_manager.PropertiesManager;
 
 /**
@@ -294,6 +296,40 @@ public class PathXPanel extends JPanel {
             }
         }
     }
+    
+    public void renderRoads(Graphics g){
+        ArrayList<PathXRoad> roads = data.getLevel(data.getCurrentLevelInt()).getRoads();
+        for(int i = 0; i < roads.size(); i++){
+//            renderRoad(g, roads.get(i));
+        }
+    }
+    
+//    public void renderRoad(Graphics g, PathXRoad road){
+//                
+//        //int strokeId = road.getSpeedLimit()/10;
+//
+//        // CLAMP THE SPEED LIMIT STROKE
+//        //if (strokeId < 1) strokeId = 1;
+//        //if (strokeId > 10) strokeId = 10;
+//        //g2.setStroke(recyclableStrokes.get(strokeId));
+//
+//        Line2D.Double recyclableLine = new Line2D.Double(0,0,0,0);;
+//        
+//        // LOAD ALL THE DATA INTO THE RECYCLABLE LINE
+//        recyclableLine.x1 = road.getNode1().x-viewport.x;
+//        recyclableLine.y1 = road.getNode1().y-viewport.y;
+//        recyclableLine.x2 = road.getNode2().x-viewport.x;
+//        recyclableLine.y2 = road.getNode2().y-viewport.y;
+//
+//        // AND DRAW IT
+//        g2.draw(recyclableLine);
+//        
+//        // AND IF IT'S A ONE WAY ROAD DRAW THE MARKER
+//        if (road.isOneWay())
+//        {
+//            this.renderOneWaySignalsOnRecyclableLine(g2);
+//        }
+//    }
 
     /**
      * Renders all the GUI decor and buttons.
@@ -324,7 +360,6 @@ public class PathXPanel extends JPanel {
     
     public void renderHeader(Graphics g)
     {
-        //g.setColor(COLOR_ALGORITHM_HEADER);
         
     }
     
