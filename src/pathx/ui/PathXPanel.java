@@ -289,6 +289,8 @@ public class PathXPanel extends JPanel {
                     s.setState(CLOSED_STATE);
 
                 renderSprite(g, s);
+            } else {
+                s.setState(INVISIBLE_STATE);
             }
         }
     }
