@@ -159,12 +159,18 @@ public class PathXDataModel extends MiniGameDataModel{
         viewport = viewports.get(state);
     }
     
+    public void updateViewport(){
+        viewport.setGameWorldSize(levels.get(currentLevelint).getBackgroundWidth(), levels.get(currentLevelint).getBackgroundHeight());
+        viewport.updateViewportBoundaries();
+    }
+    
     public void initLevels(){
                 
         XMLUtilities xmlUtil = new XMLUtilities();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
         
         ArrayList<String> levelFiles = props.getPropertyOptionsList(LEVEL_OPTIONS_FILES);
+        boolean aval = true;
         for(String file : levelFiles){
             try {
                 
@@ -172,8 +178,8 @@ public class PathXDataModel extends MiniGameDataModel{
                 
                 Document doc = xmlUtil.loadXMLDocument(props.getProperty(LEVEL_PATH) + file, props.getProperty(LEVEL_SCHEMA));
 
-                Node levelNode = xmlUtil.getNodeWithName(doc, "level");
-                NamedNodeMap temp = levelNode.getAttributes();
+                Node node = xmlUtil.getNodeWithName(doc, "level");
+                NamedNodeMap temp = node.getAttributes();
 
                 //get the background image
                 String imageName = temp.getNamedItem("image").getNodeValue();
@@ -189,20 +195,23 @@ public class PathXDataModel extends MiniGameDataModel{
                 PathXIntersection newInter;
                 //Node intersection = xmlUtil.getNodeWithName(doc, "intersection");
                 
+                newLevel.setViewport(viewport);
+
+                
                 //adds the intersections to the Level
                 for(int j = 0; j < intersectionNodes; j++)
                 {
                     Node intersection = xmlUtil.getNodeInSequence(doc, "intersection", j);
                     temp = intersection.getAttributes();
                     
-//                    int id = Integer.parseInt(temp.getNamedItem("id").getNodeValue());
                     boolean open = Boolean.parseBoolean(temp.getNamedItem("open").getNodeValue());
                     int x = Integer.parseInt(temp.getNamedItem("x").getNodeValue());
                     int y = Integer.parseInt(temp.getNamedItem("y").getNodeValue());
                     
-                    newInter = new PathXIntersection(x, y, open);
+                    //newInter = new PathXIntersection(x, y, open);
                     
-                    newLevel.addIntersection(newInter);
+                    //newLevel.addIntersection(newInter);
+                    newLevel.addIntersection(x, y, open);
                     
 //                    NamedNodeMap attributes = n.getAttributes();
 //                    for (int i = 0; i < attributes.getLength(); i++)
@@ -214,18 +223,17 @@ public class PathXDataModel extends MiniGameDataModel{
 //                    }
                 }
                 
-                                //initialize the intersections
+                //initialize the roads
                 int roadNodes = xmlUtil.getNumNodesOfElement(doc, "road");
                 PathXRoad newRoad;
                 //Node intersection = xmlUtil.getNodeWithName(doc, "intersection");
                 
-                //adds the intersections to the Level
+                //adds the roads to the Level
                 for(int j = 0; j < roadNodes; j++)
                 {
                     Node road = xmlUtil.getNodeInSequence(doc, "road", j);
                     temp = road.getAttributes();
                     
-//                    int id = Integer.parseInt(temp.getNamedItem("id").getNodeValue());
                     boolean oneWay = Boolean.parseBoolean(temp.getNamedItem("one_way").getNodeValue());
                     int limit = Integer.parseInt(temp.getNamedItem("speed_limit").getNodeValue());
                     int id1 = Integer.parseInt(temp.getNamedItem("int_id1").getNodeValue());
@@ -234,27 +242,56 @@ public class PathXDataModel extends MiniGameDataModel{
                     newRoad = new PathXRoad(id1, id2, limit, oneWay);
                     
                     newLevel.addRoad(newRoad);
-                    
-//                    NamedNodeMap attributes = n.getAttributes();
-//                    for (int i = 0; i < attributes.getLength(); i++)
-//                    {
-//                        Node att = attributes.getNamedItem(NAME_ATT);
-//                        String attName = attributes.getNamedItem(NAME_ATT).getTextContent();
-//                        String attValue = attributes.getNamedItem(VALUE_ATT).getTextContent();
-//                        //properties.put(attName, attValue);
-//                    }
+
                 }
+                
+                //get the startingLocation image
+                node = xmlUtil.getNodeWithName(doc, "start_intersection");
+                temp = node.getAttributes();
+                imageName = temp.getNamedItem("image").getNodeValue();
+                backgroundImage = miniGame.loadImage(props.getProperty(LEVEL_IMG_PATH) + imageName);
+                newLevel.setStartingImage(backgroundImage);
+                
+                //get the destinationLocation image
+                node = xmlUtil.getNodeWithName(doc, "destination_intersection");
+                temp = node.getAttributes();
+                imageName = temp.getNamedItem("image").getNodeValue();
+                backgroundImage = miniGame.loadImage(props.getProperty(LEVEL_IMG_PATH) + imageName);
+                newLevel.setDestinationImage(backgroundImage);
 
-
-               // intersection.equals(null);
-
+                //get the reward
+                node = xmlUtil.getNodeWithName(doc, "money");
+                temp = node.getAttributes();
+                int amount = Integer.parseInt(temp.getNamedItem("amount").getNodeValue());
+                newLevel.setReward(amount);
+                
+                
+                
+                
+                if(aval){
+                    newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString());
+                    newLevel.setLocation(305, 405);
+                    aval = false;
+                }
+                else{
+                   newLevel.setState(PathXLevelState.LOCKED_STATE.toString()); 
+                   newLevel.setLocation(400, 505);
+                }
+                
+                newLevel.setLevelDescription("TEST");
+            
+                levels.add(newLevel);
 
             } catch (InvalidXMLFileFormatException ex) {
                 Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
     //        } catch (IOException ex) {
     //            Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
         }
+        
+        if(this.badSpellsCounter == 0)
+            ;
     }
     
     public PathXLevel getLevel(int levelNum){
@@ -277,6 +314,10 @@ public class PathXDataModel extends MiniGameDataModel{
         return currentLevel;
     }
     
+    public int getCurrentLevelInt(){
+        return currentLevelint;
+    }    
+    
     public String getCurrentLevelDescription(){
         if(levels.size() > 0)
             return levels.get(currentLevelint).getLevelDescription();
@@ -297,6 +338,10 @@ public class PathXDataModel extends MiniGameDataModel{
         for(int i = 0; i < levels.size(); i++){
             levels.get(i).updateLocation(incX, incY);
         }
+    }
+    
+    public ArrayList<PathXLevel> getLevels(){
+        return (ArrayList<PathXLevel>)levels.clone();
     }
     
     public int getNumLevels(){

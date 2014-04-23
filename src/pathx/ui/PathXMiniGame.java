@@ -110,8 +110,8 @@ public class PathXMiniGame extends MiniGame{
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
-           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setState(INVISIBLE_STATE);
-           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(false);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setState(INVISIBLE_STATE);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setEnabled(false);
        }
        
        
@@ -176,8 +176,9 @@ public class PathXMiniGame extends MiniGame{
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
-           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setState(VISIBLE_STATE);
-           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(true);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setState(VISIBLE_STATE);
+           if(!((PathXDataModel)data).getLevel(i).getState().equals(PathXLevelState.LOCKED_STATE.toString()))
+                guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setEnabled(true);
        }
        
        currentScreenState = LEVEL_SELECT_SCREEN_STATE;
@@ -283,9 +284,9 @@ public class PathXMiniGame extends MiniGame{
        guiDialogs.get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
        
        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setState(VISIBLE_STATE);
-       guiButtons.get(SPECIALS_REDLIGHT_TYPE1).setState(VISIBLE_STATE);
-       guiButtons.get(SPECIALS_REDLIGHT_TYPE2).setState(VISIBLE_STATE);
-       guiButtons.get(SPECIALS_REDLIGHT_TYPE3).setState(VISIBLE_STATE);
+//       guiButtons.get(SPECIALS_REDLIGHT_TYPE1).setState(VISIBLE_STATE);
+//       guiButtons.get(SPECIALS_REDLIGHT_TYPE2).setState(VISIBLE_STATE);
+//       guiButtons.get(SPECIALS_REDLIGHT_TYPE3).setState(VISIBLE_STATE);
        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setEnabled(true);
     
        
@@ -295,8 +296,8 @@ public class PathXMiniGame extends MiniGame{
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
-           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setState(INVISIBLE_STATE);
-           guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(false);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setState(INVISIBLE_STATE);
+           guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setEnabled(false);
        }
        
        currentScreenState = GAMEPLAY_SCREEN_STATE;
@@ -342,6 +343,13 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, 0, 0, 0, 0, HOME_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
         
+        sT = new SpriteType(INTERSECTION_TYPE);
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
+        sT.addState(OPEN_STATE, img);
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE));
+        sT.addState(CLOSED_STATE, img);
+        s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
+        guiDecor.put(INTERSECTION_TYPE, s);
         
         
         //viewport
@@ -355,6 +363,7 @@ public class PathXMiniGame extends MiniGame{
         guiDecor.put(MAP_TYPE, s);
         
         ((PathXDataModel)data).initLevelSelectionViewport();
+        ((PathXDataModel)data).initGameplayViewPort();
         ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
         
         
@@ -522,15 +531,15 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, SPECIALS_X, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(SPECIALS_REDLIGHT_TYPE, s);
-        
-        s = new Sprite(sT, SPECIALS_X,40 + SPECIALS_Y, 0, 0, INVISIBLE_STATE);
-        guiButtons.put(SPECIALS_REDLIGHT_TYPE1, s);
-        
-        s = new Sprite(sT, SPECIALS_X, 80+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
-        guiButtons.put(SPECIALS_REDLIGHT_TYPE2, s);
-        
-        s = new Sprite(sT, SPECIALS_X, 120+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
-        guiButtons.put(SPECIALS_REDLIGHT_TYPE3, s);
+//        
+//        s = new Sprite(sT, SPECIALS_X,40 + SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+//        guiButtons.put(SPECIALS_REDLIGHT_TYPE1, s);
+//        
+//        s = new Sprite(sT, SPECIALS_X, 80+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+//        guiButtons.put(SPECIALS_REDLIGHT_TYPE2, s);
+//        
+//        s = new Sprite(sT, SPECIALS_X, 120+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+//        guiButtons.put(SPECIALS_REDLIGHT_TYPE3, s);
         
         ((PathXDataModel)data).initLevels();
 //        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
@@ -562,8 +571,8 @@ public class PathXMiniGame extends MiniGame{
             sT.addState(INVISIBLE_STATE, null);
             s = new Sprite(sT, ((PathXDataModel)data).getLevel(i).getX(), ((PathXDataModel)data).getLevel(i).getY(),
                     0, 0, INVISIBLE_STATE);
-            guiButtons.put(((PathXDataModel)data).getLevel(i).toString(), s);
-            guiButtons.get(((PathXDataModel)data).getLevel(i).toString()).setEnabled(false);
+            guiButtons.put(((PathXDataModel)data).getLevel(i).getLevelName(), s);
+            guiButtons.get(((PathXDataModel)data).getLevel(i).getLevelName()).setEnabled(false);
             ((PathXDataModel)data).getLevel(i).setSpriteID(s.getID());
         }
         
@@ -702,7 +711,7 @@ public class PathXMiniGame extends MiniGame{
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
            PathXLevel level = ((PathXDataModel)data).getLevel(i);
-           guiButtons.get(level.toString()).setActionListener(new ActionListener(){
+           guiButtons.get(level.getLevelName()).setActionListener(new ActionListener(){
                
                 int lev;
                 public ActionListener init(int level) 

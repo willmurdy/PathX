@@ -42,7 +42,9 @@ public class PathXLevel {
     
     private int money;
     
-    private BufferedImage startingLoc;
+    private BufferedImage startingImage;
+    
+    private BufferedImage destinationImage;
     
     private BufferedImage backgroundImage;
     
@@ -91,6 +93,60 @@ public class PathXLevel {
         roads = new ArrayList<PathXRoad>();
     }
     
+    public void setLocation(int xPos, int yPos){
+        x = xPos + 20 - vp.getViewportX();
+        y = yPos + 120 - vp.getViewportY(); 
+        
+        renderx = x + 20 - vp.getViewportX();
+        rendery = y + 120 - vp.getViewportY();
+        
+        for(int i = 0; i < intersections.size(); i++){
+            intersections.get(i).setRenderX(x);
+        }
+    }
+    
+    public void updateIntersectionLocations(){
+        for(int i = 0; i < intersections.size(); i++){
+            intersections.get(i).setRenderX(intersections.get(i).getX() + 180 - vp.getViewportX());
+            intersections.get(i).setRenderY(intersections.get(i).getY() + 20 - vp.getViewportY());
+        }
+    }
+    
+    public void addIntersection(int x, int y, boolean open){
+        PathXIntersection newInter = new PathXIntersection();
+        newInter.setX(x + 180 - vp.getViewportX());
+        newInter.setY(y + 20 - vp.getViewportY()); 
+        
+        newInter.setRenderX(x + 180 - vp.getViewportX());
+        newInter.setRenderY(y + 20 - vp.getViewportY());
+        
+        newInter.setOpen(open);
+        
+        newInter.setId(intersections.size());
+        
+        intersections.add(newInter);
+    }
+    
+    public void setViewport(Viewport view){
+        vp = view;
+    }
+    
+    public void setState(String state){
+        currentState = state;
+    }
+    
+    public int getBackgroundWidth(){
+        return backgroundImage.getWidth();
+    }
+    
+    public int getBackgroundHeight(){
+        return backgroundImage.getHeight();
+    }
+    
+    public Viewport getViewport(){
+        return vp;
+    }
+    
     public PathXLevel(String xmlFile){
         XMLUtilities xmlUtil = new XMLUtilities();
         PropertiesManager props = PropertiesManager.getPropertiesManager();
@@ -137,8 +193,16 @@ public class PathXLevel {
         spriteID = id;
     }
     
+    public void setLevelDescription(String desc){
+        levelDescription = desc;
+    }
+    
     public int getReward(){
         return money;
+    }
+    
+    public void setReward(int amount){
+        money = amount;
     }
     
     public String getLevelName(){
@@ -174,8 +238,16 @@ public class PathXLevel {
         intersections.add(newIntersection);
     }
     
+    public ArrayList<PathXIntersection> getIntersections(){
+        return (ArrayList<PathXIntersection>)intersections.clone();
+    }
+    
     public void addRoad(PathXRoad road){
         roads.add(road);
+    }
+    
+    public ArrayList<PathXRoad> getRoads(){
+        return (ArrayList<PathXRoad>)roads.clone();
     }
     
     public void setBackgroundImage(BufferedImage img){
@@ -184,6 +256,22 @@ public class PathXLevel {
     
     public BufferedImage getBackgroundImage(){
         return backgroundImage;
+    }
+    
+    public void setStartingImage(BufferedImage img){
+        startingImage = img;
+    }
+    
+    public BufferedImage getStartingImage(){
+        return startingImage;
+    }
+    
+    public void setDestinationImage(BufferedImage img){
+        destinationImage = img;
+    }
+    
+    public BufferedImage getDestinationImage(){
+        return destinationImage;
     }
     
     public void updateLocation(int xInc, int yInc){

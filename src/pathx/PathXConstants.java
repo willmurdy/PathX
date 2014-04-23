@@ -64,11 +64,10 @@ public class PathXConstants {
     public static final String SPECIALS_REDLIGHT_TYPE1 = "SPECIALS_REDLIGHT_TYPE1";
     public static final String SPECIALS_REDLIGHT_TYPE2 = "SPECIALS_REDLIGHT_TYPE2";
     public static final String SPECIALS_REDLIGHT_TYPE3 = "SPECIALS_REDLIGHT_TYPE3";
-//    public static final String MISCASTS_COUNT_TYPE = "TILE_COUNT_TYPE";
-//    public static final String TIME_TYPE = "TIME_TYPE"; 
-//    public static final String STATS_BUTTON_TYPE = "STATS_BUTTON_TYPE";
-//    public static final String UNDO_BUTTON_TYPE = "UNDO_BUTTON_TYPE";
-//    public static final String ALGORITHM_TYPE = "ALGORITHM_TYPE";
+
+    public static final String INTERSECTION_TYPE = "INTERSECTION_TYPE";
+    public static final String OPEN_STATE = "OPEN_STATE";
+    public static final String CLOSED_STATE = "CLOSED_STATE";
 
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";

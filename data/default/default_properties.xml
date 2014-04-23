@@ -115,6 +115,7 @@
         </property_options>
         <property_options name="LEVEL_OPTIONS_FILES">
             <option>test.xml</option>
+            <option>cali.xml</option>
         </property_options>
     </property_options_list>
 </properties>

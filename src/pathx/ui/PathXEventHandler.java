@@ -6,10 +6,9 @@
 
 package pathx.ui;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import mini_game.SpriteType;
 import static pathx.PathXConstants.CLOSE_BUTTON_TYPE;
+import static pathx.PathXConstants.GAMEPLAY_SCREEN_STATE;
 import static pathx.PathXConstants.INVISIBLE_STATE;
 import static pathx.PathXConstants.LEVEL_DIALOG_TYPE;
 import static pathx.PathXConstants.VIEWPORT_INC;
@@ -107,7 +106,11 @@ public class PathXEventHandler {
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.setCurrentLevel(level);
-        ((PathXDataModel)data).initGameplayViewPort();
+        data.setViewportState(GAMEPLAY_SCREEN_STATE);
+        data.updateViewport();
+        data.getLevel(data.getCurrentLevelInt()).setViewport(data.getViewport());
+        data.getLevel(data.getCurrentLevelInt()).updateIntersectionLocations();
+        //((PathXDataModel)data).initGameplayViewPort();
         game.switchToGamePlayScreen();
     }
         

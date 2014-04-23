@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -21,6 +22,7 @@ import mini_game.SpriteType;
 import mini_game.Viewport;
 import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.*;
+import pathx.data.PathXIntersection;
 import properties_manager.PropertiesManager;
 
 /**
@@ -225,8 +227,13 @@ public class PathXPanel extends JPanel {
         
         Viewport vp = data.getViewport();
         Sprite bg = game.getGUIDecor().get(MAP_TYPE);
-        SpriteType bgST = bg.getSpriteType();
-        Image img = bgST.getStateImage(bg.getState());
+        Image img;
+        if(!bg.getState().equals(GAMEPLAY_SCREEN_STATE.toString())){     
+            SpriteType bgST = bg.getSpriteType();
+            img = bgST.getStateImage(bg.getState());
+        } else{
+             img = data.getLevel(data.getCurrentLevelInt()).getBackgroundImage();
+        }
         
         
         g.drawImage(img, vp.getViewportMarginLeft(), vp.getViewportMarginTop(),
@@ -236,7 +243,9 @@ public class PathXPanel extends JPanel {
        if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE))
             g.drawRect(VIEWPORT_MARGIN_LEFT, VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT,
                     710, 500);
-        
+        if(bg.getState().equals(GAMEPLAY_SCREEN_STATE.toString())){
+            renderIntersections(g);
+        }
         
     }
     
@@ -244,6 +253,8 @@ public class PathXPanel extends JPanel {
         
         int x = data.getLevelSprite(s.getID()).getX();
         int y = data.getLevelSprite(s.getID()).getY();
+
+        
         s.setX(x);
         s.setY(y);  
 //        !(s.getX() < viewport.getViewportX() || s.getX() > (viewport.getViewportX() + viewport.getViewportWidth())) 
@@ -261,6 +272,21 @@ public class PathXPanel extends JPanel {
         }
            
         
+    }
+    
+    public void renderIntersections(Graphics g){
+        ArrayList<PathXIntersection> intersections = data.getLevel(data.getCurrentLevelInt()).getIntersections();
+        Sprite s = game.getGUIDecor().get(INTERSECTION_TYPE);
+        for(int i = 0; i < intersections.size(); i++){
+            s.setX(intersections.get(i).getRenderX());
+            s.setY(intersections.get(i).getRenderY());
+            if(intersections.get(i).open())
+                s.setState(OPEN_STATE);
+            else
+                s.setState(CLOSED_STATE);
+            
+            renderSprite(g, s);
+        }
     }
 
     /**
@@ -480,7 +506,7 @@ public class PathXPanel extends JPanel {
         
 
         //used for rendering the level description dialog
-        renderLevelDescription(false, text);
+        //renderLevelDescription(false, text);
         if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
             if(game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
                 g.setFont(FONT_BALANCE);
