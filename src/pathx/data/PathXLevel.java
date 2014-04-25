@@ -293,17 +293,29 @@ public class PathXLevel {
         if(!inGame){
             renderx = x + VIEWPORT_MARGIN_LEFT - vp.getViewportX();
             rendery = y + VIEWPORT_MARGIN_TOP + NORTH_PANEL_HEIGHT - vp.getViewportY();
-        } else
+        } else{
             updateIntersectionLocations();
+            updateRoadLocations();
+        }
         
     }
     
-    public void getIntersection(int id){
-        intersections.get(id);
+    public PathXIntersection getIntersection(int id){
+        return intersections.get(id);
     }
     
     public void changeState(String newState){
         currentState = newState;
     }
+    
+    public void updateRoadLocations(){
+        for(PathXRoad rd : roads){
+            PathXIntersection inter = getIntersection(rd.getId1());
+            rd.setId1Coords(inter.getRenderX(), inter.getRenderY());
+            inter = getIntersection(rd.getId2());
+            rd.setId2Coords(inter.getRenderX(), inter.getRenderY());
+        }
+    }        
+    
     
 }

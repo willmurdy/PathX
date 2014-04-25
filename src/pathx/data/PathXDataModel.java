@@ -90,6 +90,8 @@ public class PathXDataModel extends MiniGameDataModel{
     }
     
     public boolean notStarted(){
+        if(currentLevelint >= 0)
+            return !levels.get(currentLevelint).inGame();
         return true;
     }
     
@@ -208,6 +210,10 @@ public class PathXDataModel extends MiniGameDataModel{
 
                 }
                 
+                this.initRoadCoords();
+                
+                
+                
                 //get the startingLocation image
                 node = xmlUtil.getNodeWithName(doc, "start_intersection");
                 temp = node.getAttributes();
@@ -244,6 +250,9 @@ public class PathXDataModel extends MiniGameDataModel{
                 newLevel.setLevelDescription("TEST");
             
                 i += 50;
+                
+                newLevel.updateIntersectionLocations();
+                newLevel.updateRoadLocations();
                 
                 levels.add(newLevel);
 
@@ -323,7 +332,10 @@ public class PathXDataModel extends MiniGameDataModel{
         for(PathXLevel lev : levels){
             ArrayList<PathXRoad> road = lev.getRoads();
             for(PathXRoad rd : road){
-                
+                PathXIntersection inter = lev.getIntersection(rd.getId1());
+                rd.setId1Coords(inter.getRenderX() + 150, inter.getRenderY() + 150);
+                inter = lev.getIntersection(rd.getId2());
+                rd.setId2Coords(inter.getRenderX() + 150, inter.getRenderY() + 150);
             }
         }
     }

@@ -194,6 +194,8 @@ public class PathXConstants {
     public static final int TEMP_TILE_OFFSET2 = 105;
     public static final int TEMP_TILE_TEXT_OFFSET_Y = 50;
     
+    public static final int ONE_WAY_TRIANGLE_WIDTH = 30;
+    
    
     
     // STATS DIALOG COORDINATES
