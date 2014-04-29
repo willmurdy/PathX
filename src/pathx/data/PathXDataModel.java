@@ -206,11 +206,15 @@ public class PathXDataModel extends MiniGameDataModel{
                     
                     newRoad = new PathXRoad(id1, id2, limit, oneWay);
                     
+                    newRoad.calculateLength();
+                    
                     newLevel.addRoad(newRoad);
 
                 }
                 
                 this.initRoadCoords();
+                
+                
                 
                 
                 
@@ -253,6 +257,8 @@ public class PathXDataModel extends MiniGameDataModel{
                 
                 newLevel.updateIntersectionLocations();
                 newLevel.updateRoadLocations();
+                newLevel.initConnections();
+                
                 
                 levels.add(newLevel);
 

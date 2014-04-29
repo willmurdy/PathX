@@ -279,8 +279,21 @@ public class PathXPanel extends JPanel {
         if(bg.getState().equals(GAMEPLAY_SCREEN_STATE.toString())){
             renderRoads(g);
             renderIntersections(g);
+            renderPlayer(g);
         }
         
+    }
+    
+    public void renderPlayer(Graphics g){
+        int x = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
+        int y = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
+        
+        Sprite s = ((PathXMiniGame)game).getGuiEntities().get(PLAYER_TYPE);
+        
+        s.setX(x);
+        s.setY(y);
+        
+        renderSprite(g, s);
     }
     
     public void renderLevels(Sprite s, Graphics g){
@@ -391,7 +404,7 @@ public class PathXPanel extends JPanel {
         }
     }
     
-        private void renderOneWaySignalsOnRecyclableLine(Graphics2D g2, Line2D.Double recyclableLine)
+    private void renderOneWaySignalsOnRecyclableLine(Graphics2D g2, Line2D.Double recyclableLine)
     {
         
         // CALCULATE THE ROAD LINE SLOPE

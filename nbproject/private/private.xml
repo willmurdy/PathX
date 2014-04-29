@@ -5,7 +5,7 @@
             <url>src/pathx/ui/PathXPanel.java</url>
             <bookmark id="3">
                 <name/>
-                <line>234</line>
+                <line>265</line>
                 <key/>
             </bookmark>
         </file>
@@ -18,17 +18,17 @@
             </bookmark>
             <bookmark id="2">
                 <name/>
-                <line>92</line>
+                <line>93</line>
                 <key/>
             </bookmark>
             <bookmark id="5">
                 <name/>
-                <line>231</line>
+                <line>241</line>
                 <key/>
             </bookmark>
             <bookmark id="6">
                 <name/>
-                <line>255</line>
+                <line>270</line>
                 <key/>
             </bookmark>
         </file>
@@ -41,6 +41,8 @@
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXRoad.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXIntersection.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/ui/PathXEventHandler.java</file>
+            <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXCarType.java</file>
+            <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXCar.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/PathX.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXLevelState.java</file>
             <file>file:/Users/willmurdy/NetBeansProjects/PathX/src/pathx/data/PathXLevel.java</file>

@@ -153,6 +153,12 @@ public class PathX {
         IMAGE_SPECIALS_REDLIGHT,
         IMAGE_SPECIALS_REDLIGHT_MOUSE_OVER,
         
+        //Entity image names
+        IMAGE_ENTITY_PLAYER,
+        IMAGE_ENTITY_POLICE,
+        IMAGE_ENTITY_BANDIT,
+        IMAGE_ENTITY_ZOMBIE,
+        
         /* GAME TEXT */
         TEXT_ERROR_LOADING_AUDIO,
         TEXT_ERROR_LOADING_LEVEL,

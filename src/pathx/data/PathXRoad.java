@@ -21,6 +21,10 @@ public class PathXRoad {
     
     private int speedLimit;
     
+    private double length;
+    
+    private double cost;
+    
     private boolean oneWay;
     
     public PathXRoad(int firstId, int secondId, int limit, boolean oneWay){
@@ -30,6 +34,25 @@ public class PathXRoad {
         speedLimit = limit;
         
         this.oneWay = oneWay;
+    }
+    
+    public double calculateLength(){
+        double tempX = id1x - id2x;
+        tempX = tempX * tempX;
+        
+        double tempY = id1y - id2y;
+        tempY = tempY * tempY;
+        
+        double temp = tempX + tempY;
+        length = Math.sqrt(temp);
+        
+        cost = length / speedLimit;
+        
+        return length;
+    }
+    
+    public double getCost(){
+        return cost;
     }
     
     public boolean oneWay(){

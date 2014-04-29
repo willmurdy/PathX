@@ -41,6 +41,9 @@ public class PathXConstants {
     //used for switching viewport states
     public static final String LEVEL_SCREEN_STATE = "LEVEL_SCREEN_STATE";
     
+    //Entity Types
+    public static final String PLAYER_TYPE = "PLAYER_TYPE";
+    
     // this represents the buttons on the home screen
     public static final String HOME_SCREEN_BUTTON_TYPE = "HOME_SCREEN_BUTTON_TYPE";
     public static final String PLAY_GAME_BUTTON_TYPE = "PLAY_GAME_BUTTON_TYPE";

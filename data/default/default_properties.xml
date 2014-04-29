@@ -28,6 +28,12 @@
         <property name="IMAGE_LEVEL_LOCKED"                value="./default/LevelLocked.png"></property>
         <property name="IMAGE_LEVEL_LOCKED_MOUSE_OVER"     value="./default/LevelLockedMouseOver.png"></property>
         
+        <!-- Entity images-->
+        <property name="IMAGE_ENTITY_PLAYER"             value="./default/CarPlayer.png"></property>
+        <property name="IMAGE_ENTITY_BANDIT"             value="./default/CarBandit.png"></property>
+        <property name="IMAGE_ENTITY_POLICE"             value="./default/CarPolice.png"></property>
+        <property name="IMAGE_ENTITY_ZOMBIE"             value="./default/CarZombie.png"></property>
+        
         <!-- Button images -->
         <property name="PLAY_GAME_BUTTON_IMAGE_NAME"        value="./default/ButtonPlayGame.png"></property>
         <property name="PLAY_GAME_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPlayGameMouseOver.png"></property>
@@ -114,8 +120,8 @@
             <option>Test</option>
         </property_options>
         <property_options name="LEVEL_OPTIONS_FILES">
+        	<option>cali.xml</option>
             <option>test.xml</option>
-            <option>cali.xml</option>
             <option>levelOne.xml</option>
             <option>levelthree.xml</option>
             <option>level4.xml</option>

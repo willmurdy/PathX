@@ -15,6 +15,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.TreeMap;
 import javax.swing.JFrame;
 import mini_game.MiniGame;
 import mini_game.Sprite;
@@ -53,6 +54,8 @@ public class PathXMiniGame extends MiniGame{
     private Viewport map;
     
     private Viewport level;
+    
+    private TreeMap<String, Sprite> guiEntities;
 
     @Override
     public void initAudioContent() {
@@ -72,6 +75,8 @@ public class PathXMiniGame extends MiniGame{
         
         // INIT OUR DATA MANAGER
         data = new PathXDataModel(this);
+        
+        guiEntities = new TreeMap<String, Sprite>();
         
         
     }
@@ -295,6 +300,8 @@ public class PathXMiniGame extends MiniGame{
        //((PathXDataModel)data).setViewportState(GAMEPLAY_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
        
+       guiEntities.get(PLAYER_TYPE).setState(VISIBLE_STATE);
+       
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
@@ -344,6 +351,14 @@ public class PathXMiniGame extends MiniGame{
         
         s = new Sprite(sT, 0, 0, 0, 0, HOME_SCREEN_STATE);
         guiDecor.put(BACKGROUND_TYPE, s);
+        
+        //load the enitites images
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_ENTITY_PLAYER));
+        sT = new SpriteType(PLAYER_TYPE);
+        sT.addState(VISIBLE_STATE, img);
+        sT.addState(INVISIBLE_STATE, null);
+        s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
+        guiEntities.put(PLAYER_TYPE, s);
         
         sT = new SpriteType(INTERSECTION_TYPE);
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
@@ -808,6 +823,10 @@ public class PathXMiniGame extends MiniGame{
                 }
             }
         }
+    }
+    
+    public TreeMap<String, Sprite> getGuiEntities(){
+        return (TreeMap<String, Sprite>)guiEntities.clone();
     }
     
 }

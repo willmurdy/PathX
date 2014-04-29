@@ -6,6 +6,8 @@
 
 package pathx.data;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author willmurdy
@@ -22,14 +24,28 @@ public class PathXIntersection {
     
     private int id;
     
+    private ArrayList<Integer> adjacentNodesIds;
+    private ArrayList<Double> adjacentNodesCost;
+
+    private ArrayList<PathXRoad> roads;
+    
     public PathXIntersection(int x, int y, boolean open){
         this.x = x;
         this.y = y;
         this.open = open;
+        adjacentNodesIds = new ArrayList<Integer>();
+        adjacentNodesCost = new ArrayList<Double>();
+        roads = new ArrayList<PathXRoad>();
     }
     
     public PathXIntersection(){
-        
+        adjacentNodesIds = new ArrayList<Integer>();
+        adjacentNodesCost = new ArrayList<Double>();        
+    }
+    
+    public void addConnection(int id, double cost){
+        adjacentNodesIds.add(id);
+        adjacentNodesCost.add(cost);
     }
     
     protected void setId(int id){
