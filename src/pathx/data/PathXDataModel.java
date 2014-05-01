@@ -206,7 +206,7 @@ public class PathXDataModel extends MiniGameDataModel{
                     
                     newRoad = new PathXRoad(id1, id2, limit, oneWay);
                     
-                    newRoad.calculateLength();
+                    //newRoad.calculateLength();
                     
                     newLevel.addRoad(newRoad);
 
@@ -238,26 +238,36 @@ public class PathXDataModel extends MiniGameDataModel{
                 int amount = Integer.parseInt(temp.getNamedItem("amount").getNodeValue());
                 newLevel.setReward(amount);
                 
+                //get the reward
+                node = xmlUtil.getNodeWithName(doc, "x");
+                temp = node.getAttributes();
+                int x = Integer.parseInt(temp.getNamedItem("num").getNodeValue());
+                node = xmlUtil.getNodeWithName(doc, "y");
+                temp = node.getAttributes();
+                int y = Integer.parseInt(temp.getNamedItem("num").getNodeValue());
+                newLevel.setLocation(x, y);
                 
                 
                 
-                if(aval){
+                
+//                if(aval){
                     newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString());
-                    newLevel.setLocation(305, 405);
-                    aval = false;
-                }
-                else{
-                   newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString()); 
-                   newLevel.setLocation(400 + i, 505 + i);
-                }
+//                    newLevel.setLocation(305, 405);
+//                    aval = false;
+//                }
+//                else{
+//                   newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString()); 
+//                   newLevel.setLocation(400 + i, 505 + i);
+//                }
                 
                 newLevel.setLevelDescription("TEST");
             
-                i += 50;
+               // i += 50;
                 
                 newLevel.updateIntersectionLocations();
                 newLevel.updateRoadLocations();
                 newLevel.initConnections();
+               // newLevel.initPlayerLocation();
                 
                 
                 levels.add(newLevel);
@@ -342,7 +352,9 @@ public class PathXDataModel extends MiniGameDataModel{
                 rd.setId1Coords(inter.getRenderX() + 150, inter.getRenderY() + 150);
                 inter = lev.getIntersection(rd.getId2());
                 rd.setId2Coords(inter.getRenderX() + 150, inter.getRenderY() + 150);
+                rd.calculateLength();
             }
+            lev.initPlayerLocation();
         }
     }
 

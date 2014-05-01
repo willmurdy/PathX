@@ -363,8 +363,12 @@ public class PathXMiniGame extends MiniGame{
         sT = new SpriteType(INTERSECTION_TYPE);
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
         sT.addState(OPEN_STATE, img);
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE_MOUSE_OVER));
+        sT.addState(OPEN_MOUSE_OVER_STATE, img);
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE));
         sT.addState(CLOSED_STATE, img);
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE_MOUSE_OVER));
+        sT.addState(CLOSED_MOUSE_OVER_STATE, img);
         s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
         guiDecor.put(INTERSECTION_TYPE, s);
         
@@ -548,21 +552,8 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, SPECIALS_X, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(SPECIALS_REDLIGHT_TYPE, s);
-//        
-//        s = new Sprite(sT, SPECIALS_X,40 + SPECIALS_Y, 0, 0, INVISIBLE_STATE);
-//        guiButtons.put(SPECIALS_REDLIGHT_TYPE1, s);
-//        
-//        s = new Sprite(sT, SPECIALS_X, 80+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
-//        guiButtons.put(SPECIALS_REDLIGHT_TYPE2, s);
-//        
-//        s = new Sprite(sT, SPECIALS_X, 120+SPECIALS_Y, 0, 0, INVISIBLE_STATE);
-//        guiButtons.put(SPECIALS_REDLIGHT_TYPE3, s);
         
         ((PathXDataModel)data).initLevels();
-//        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
-//        float totalWidth = levels.size() * (LEVEL_BUTTON_WIDTH + LEVEL_BUTTON_MARGIN) - LEVEL_BUTTON_MARGIN;
-//        Viewport viewport = data.getViewport();
-//        x = (viewport.getScreenWidth() - totalWidth)/2.0f;
         for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
         {
             sT = new SpriteType(LEVEL_SELECT_BUTTON_TYPE);
@@ -593,24 +584,6 @@ public class PathXMiniGame extends MiniGame{
             ((PathXDataModel)data).getLevel(i).setSpriteID(s.getID());
         }
         
-        //add the down scroll button for the viewport
-//        String levelButton = props.getProperty(PathXPropertyType.DOWN_BUTTON_IMAGE_NAME);
-//        sT = new SpriteType(DOWN_BUTTON_TYPE);
-//	img = loadImage(imgPath + downButton);
-//        sT.addState(VISIBLE_STATE, img);
-//        String downMouseOverButton = props.getProperty(PathXPropertyType.DOWN_MOUSE_OVER_BUTTON_IMAGE_NAME);
-//        img = loadImage(imgPath + downMouseOverButton);
-//        sT.addState(MOUSE_OVER_STATE, img);
-//        s = new Sprite(sT, DOWN_BUTTON_X, DOWN_BUTTON_Y, 0, 0, INVISIBLE_STATE);
-//        guiButtons.put(DOWN_BUTTON_TYPE, s);
-
-        // AND THE TILE STACK
-//        String tileStack = props.getProperty(SortingHatPropertyType.IMAGE_BUTTON_TEMP_TILE);
-//        sT = new SpriteType(ALGORITHM_TYPE);
-//        img = loadImageWithColorKey(imgPath + tileStack, COLOR_KEY);
-//        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
-//        s = new Sprite(sT, TEMP_TILE_X, TEMP_TILE_Y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
-//        guiDecor.put(ALGORITHM_TYPE, s);
 
         // NOW ADD THE DIALOGS
         
@@ -621,19 +594,7 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(VISIBLE_STATE, img);
         s = new Sprite(sT, LEVEL_DIALOG_X, LEVEL_DIALOG_Y, 0, 0, INVISIBLE_STATE);
         guiDialogs.put(LEVEL_DIALOG_TYPE, s);
-        
-        // AND THE WIN CONDITION DISPLAY
-//        String winDisplay = props.getProperty(SortingHatPropertyType.IMAGE_DIALOG_WIN);
-//        sT = new SpriteType(WIN_DIALOG_TYPE);
-//        img = loadImageWithColorKey(imgPath + winDisplay, COLOR_KEY);
-//        sT.addState(SortingHatTileState.VISIBLE_STATE.toString(), img);
-//        x = (viewport.getScreenWidth()/2) - (img.getWidth(null)/2);
-//        y = (viewport.getScreenHeight()/2) - (img.getHeight(null)/2);
-//        s = new Sprite(sT, x, y, 0, 0, SortingHatTileState.INVISIBLE_STATE.toString());
-//        guiDialogs.put(WIN_DIALOG_TYPE, s);
-//		
-        // THEN THE TILES STACKED TO THE TOP LEFT
-//        ((SortingHatDataModel)data).initTiles();
+
      }
 
     @Override
@@ -759,6 +720,12 @@ public class PathXMiniGame extends MiniGame{
         guiButtons.get(PAUSE_BUTTON_TYPE).setActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae)
             {   eventHandler.respondToPauseRequest();    }
+        });
+        
+                // Home BUTTON EVENT HANDLER
+        guiDecor.get(INTERSECTION_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToIntersectionRequest();    }
         });
         
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES

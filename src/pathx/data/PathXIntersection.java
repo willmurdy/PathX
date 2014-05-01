@@ -40,12 +40,21 @@ public class PathXIntersection {
     
     public PathXIntersection(){
         adjacentNodesIds = new ArrayList<Integer>();
-        adjacentNodesCost = new ArrayList<Double>();        
+        adjacentNodesCost = new ArrayList<Double>(); 
+        roads = new ArrayList<PathXRoad>();
+    }
+    
+    public ArrayList<PathXRoad> getRoads(){
+        return roads;
     }
     
     public void addConnection(int id, double cost){
         adjacentNodesIds.add(id);
         adjacentNodesCost.add(cost);
+    }
+    
+    public ArrayList<Integer> getAdjacentNodes(){
+        return adjacentNodesIds;
     }
     
     protected void setId(int id){
@@ -90,6 +99,10 @@ public class PathXIntersection {
     
     public boolean open(){
         return open;
+    }
+    
+    public void addRoad(PathXRoad newRoad){
+        roads.add(newRoad);
     }
     
 }

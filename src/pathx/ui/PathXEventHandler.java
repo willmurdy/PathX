@@ -138,6 +138,10 @@ public class PathXEventHandler {
     {
     }
     
+    public void respondToIntersectionRequest(){
+        
+    }
+    
     /**
      * Called when the user presses a key on the keyboard.
      */    

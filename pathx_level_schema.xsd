@@ -94,24 +94,6 @@
             </xs:simpleContent>
           </xs:complexType>
         </xs:element>
-        <xs:element name="x">
-          <xs:complexType>
-            <xs:simpleContent>
-              <xs:extension base="xs:string">
-                <xs:attribute type="xs:short" name="num"/>
-              </xs:extension>
-            </xs:simpleContent>
-          </xs:complexType>
-        </xs:element>
-        <xs:element name="y">
-          <xs:complexType>
-            <xs:simpleContent>
-              <xs:extension base="xs:string">
-                <xs:attribute type="xs:short" name="num"/>
-              </xs:extension>
-            </xs:simpleContent>
-          </xs:complexType>
-        </xs:element>
       </xs:sequence>
       <xs:attribute type="xs:string" name="image"/>
       <xs:attribute type="xs:string" name="name"/>

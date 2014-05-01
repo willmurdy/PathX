@@ -6,6 +6,8 @@
 
 package pathx.data;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author willmurdy
@@ -15,6 +17,7 @@ public class PathXRoad {
     private int id1;
     private int id1x;
     private int id1y;
+    
     private int id2;
     private int id2x;
     private int id2y;
@@ -27,6 +30,9 @@ public class PathXRoad {
     
     private boolean oneWay;
     
+    private ArrayList<Integer> x;
+    private ArrayList<Integer> y;
+    
     public PathXRoad(int firstId, int secondId, int limit, boolean oneWay){
         id1 = firstId;
         id2 = secondId;
@@ -34,6 +40,9 @@ public class PathXRoad {
         speedLimit = limit;
         
         this.oneWay = oneWay;
+        
+        x = new ArrayList<Integer>();
+        y = new ArrayList<Integer>();
     }
     
     public double calculateLength(){
@@ -47,8 +56,97 @@ public class PathXRoad {
         length = Math.sqrt(temp);
         
         cost = length / speedLimit;
+      
+        calculatePositions();
         
         return length;
+    }
+    
+    public void calculatePositions(){
+//        int deltaX = id2x - id1x;
+//        int deltaY = id2y - id1y;
+//        float error = 0;
+//        float deltaError;
+//        if(deltaX != 0)
+//            deltaError = Math.abs(deltaY / deltaX);
+//        else 
+//            return;
+//        int y = id1y;
+//        for(int x = id1x; x < id2x; x++){
+//            this.x.add(x);
+//            this.y.add(y);
+//            error = error + deltaError;
+//            if(error >= 0.5){
+//                y = y + 1;
+//                error = error - 1;
+//            }
+//        }
+        
+//         function line(x0, y0, x1, y1)
+//   dx := abs(x1-x0)
+//   dy := abs(y1-y0) 
+//   if x0 < x1 then sx := 1 else sx := -1
+//   if y0 < y1 then sy := 1 else sy := -1
+//   err := dx-dy
+// 
+//   loop
+//     plot(x0,y0)
+//     if x0 = x1 and y0 = y1 exit loop
+//     e2 := 2*err
+//     if e2 > -dy then 
+//       err := err - dy
+//       x0 := x0 + sx
+//     end if
+//     if e2 < dx then 
+//       err := err + dx
+//       y0 := y0 + sy 
+//     end if
+//   end loop
+        
+        int deltaX = Math.abs(id2x - id1x);
+        int deltaY = Math.abs(id2y - id1y);
+        int sx;
+        int sy;
+        if(id1x < id2x)
+            sx = 1;
+        else
+            sx = -1;
+        if(id1y < id2y)
+            sy = 1;
+        else 
+            sy = -1;
+        int error = deltaX - deltaY;
+        int x = id1x;
+        int y = id1y;
+        int e2;
+        while(x != id2x && y != id2y){
+            this.x.add(x);
+            this.y.add(y);
+            e2 = 2 * error;
+            if(e2 > -deltaY){
+                error = error - deltaY;
+                x += sx;
+            }
+            if(e2 < deltaX){
+                error = error + deltaX;
+                y += sy;
+            }
+        }
+        
+        
+        System.out.println("TEST");
+    }
+    
+    public int getXPosition(int i){
+        if(x.isEmpty())
+            return 0;
+        return x.get(i);
+    }
+    
+    public int getYPosition(int i){
+        if(y.isEmpty())
+            return 0;
+        return y.get(i);
     }
     
     public double getCost(){

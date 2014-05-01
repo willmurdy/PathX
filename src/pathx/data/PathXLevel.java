@@ -66,6 +66,8 @@ public class PathXLevel {
     private boolean inGame;
     
     private PathXCar player;
+    
+    int i;
 
     
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
@@ -102,6 +104,8 @@ public class PathXLevel {
         inGame = false;
         
         player = new PathXCar(PathXCarType.PLAYER_TYPE.toString());
+        
+        i = 2;
     }
     
     public void setLocation(int xPos, int yPos){
@@ -114,6 +118,8 @@ public class PathXLevel {
         //for(int i = 0; i < intersections.size(); i++){
           //  intersections.get(i).setRenderX(x);
         //}
+        
+        //initPlayerLocation();
     }
     
     
@@ -152,70 +158,31 @@ public class PathXLevel {
     public void calculatePath(int id1, int id2){
         
     }
-    
-    public void setViewport(Viewport view){
-        vp = view;
-    }
-    
-    public void setState(String state){
-        currentState = state;
-    }
-    
-    public int getBackgroundWidth(){
-        return backgroundImage.getWidth();
-    }
-    
-    public int getBackgroundHeight(){
-        return backgroundImage.getHeight();
-    }
-    
-    public Viewport getViewport(){
-        return vp;
-    }
-    
-    public void setSpriteID(int id){
-        spriteID = id;
-    }
-    
-    public void setLevelDescription(String desc){
-        levelDescription = desc;
-    }
-    
-    public int getReward(){
-        return money;
-    }
-    
-    public void setReward(int amount){
-        money = amount;
-    }
-    
-    public String getLevelName(){
-        return levelName;
-    }
-    
-    public void setLevelName(String name){
-        levelName = name;
-    }
-    
-    public String getLevelDescription(){
-        return levelDescription;
-    }    
-    
-    public int getSpriteID(){
-        return spriteID;
-    }
-    
-    public int getX(){
-        return renderx;
-    }
-    
-    public int getY(){
-        return rendery;
-    }
-    
-    public String getState(){
-        return currentState;
-    }
+        
+    public void setStartingImage(BufferedImage img){ startingImage = img; }  
+    public BufferedImage getStartingImage(){ return startingImage; }
+    public void setDestinationImage(BufferedImage img){ destinationImage = img; }
+    public BufferedImage getDestinationImage(){ return destinationImage; }
+    public void setIngame(boolean in){ inGame = in; }
+    public boolean inGame(){ return inGame; }
+    public void setViewport(Viewport view){ vp = view; }  
+    public void setState(String state){ currentState = state; }
+    public int getBackgroundWidth(){ return backgroundImage.getWidth(); }
+    public int getBackgroundHeight(){ return backgroundImage.getHeight(); }
+    public Viewport getViewport(){ return vp; }
+    public void setSpriteID(int id){ spriteID = id; }
+    public void setLevelDescription(String desc){ levelDescription = desc; }
+    public int getReward(){ return money; }
+    public void setReward(int amount){ money = amount; }
+    public String getLevelName(){ return levelName; }
+    public void setLevelName(String name){ levelName = name; }
+    public String getLevelDescription(){ return levelDescription; }    
+    public int getSpriteID(){ return spriteID; }
+    public int getX(){ return renderx; }
+    public int getY(){ return rendery; }
+    public String getState(){ return currentState; }
+    public void setX(int x){ this.x = x;}
+    public void setY(int y){this.y = y;}
     
     public void addIntersection(PathXIntersection newIntersection){
         newIntersection.setId(intersections.size());
@@ -228,6 +195,9 @@ public class PathXLevel {
     
     public void addRoad(PathXRoad road){
         roads.add(road);
+        intersections.get(road.getId1()).addRoad(road);
+        if(!road.oneWay())
+            intersections.get(road.getId2()).addRoad(road);
         
     }
     
@@ -254,13 +224,6 @@ public class PathXLevel {
         return backgroundImage;
     }
     
-    public void setStartingImage(BufferedImage img){ startingImage = img; }  
-    public BufferedImage getStartingImage(){ return startingImage; }
-    public void setDestinationImage(BufferedImage img){ destinationImage = img; }
-    public BufferedImage getDestinationImage(){ return destinationImage; }
-    public void setIngame(boolean in){ inGame = in; }
-    public boolean inGame(){ return inGame; }
-    
     public void updateLocation(int xInc, int yInc){
         
         if(!inGame){
@@ -271,12 +234,23 @@ public class PathXLevel {
             updateRoadLocations();
             updatePlayerLocations();
         }
+        i++;
         
     }
     
+    
+    
     public void updatePlayerLocations(){
-        player.setX(intersections.get(0).getRenderX() + 25);
-        player.setY(intersections.get(0).getRenderY());
+        PathXRoad rd = intersections.get(0).getRoads().get(0);
+        player.setX(rd.getXPosition(i) + 15 - vp.getViewportX() - 12);
+        player.setY(rd.getYPosition(i) + 15 - vp.getViewportY() - 12);
+    }
+    
+    public void initPlayerLocation(){
+        player.setX(intersections.get(0).getRoads().get(0).getXPosition(i) + 165 - vp.getViewportX() - 12);
+        player.setY(intersections.get(0).getRoads().get(0).getYPosition(i) + 165 - vp.getViewportY() - 12);
+        
+        
     }
     
     public PathXIntersection getIntersection(int id){

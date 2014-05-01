@@ -347,11 +347,17 @@ public class PathXPanel extends JPanel {
                         renderSprite(g, s1);
                     } else
                         if(intersections.get(i).open()){
-                            s.setState(OPEN_STATE);
+                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+                                s.setState(OPEN_MOUSE_OVER_STATE);
+                            else
+                                s.setState(OPEN_STATE);
                             renderSprite(g, s);
                         }
                         else{
-                            s.setState(CLOSED_STATE);
+                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+                                s.setState(CLOSED_MOUSE_OVER_STATE);
+                            else
+                                s.setState(CLOSED_STATE);
                             renderSprite(g, s);
                         }
 
