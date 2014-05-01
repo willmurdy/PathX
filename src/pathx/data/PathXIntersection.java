@@ -6,6 +6,7 @@
 
 package pathx.data;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +27,7 @@ public class PathXIntersection {
     
     private ArrayList<Integer> adjacentNodesIds;
     private ArrayList<Double> adjacentNodesCost;
+    
 
     private ArrayList<PathXRoad> roads;
     

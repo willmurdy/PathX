@@ -73,6 +73,8 @@ public class PathXConstants {
     public static final String OPEN_MOUSE_OVER_STATE = "OPEN_MOUSE_OVER_STATE";
     public static final String CLOSED_STATE = "CLOSED_STATE";
     public static final String CLOSED_MOUSE_OVER_STATE = "CLOSED_MOUSE_OVER_STATE";
+    public static final String STARTING_STATE = "STARTING_STATE";
+    public static final String ENDING_STATE = "ENDING_STATE";
 
     // DIALOG TYPES
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";

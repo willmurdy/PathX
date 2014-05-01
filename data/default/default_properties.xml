@@ -126,6 +126,7 @@
             <option>levelthree.xml</option>
             <option>level4.xml</option>
             <option>new.xml</option>
+            <option>12.xml</option>
         </property_options>
     </property_options_list>
 </properties>

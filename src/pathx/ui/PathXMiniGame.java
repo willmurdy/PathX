@@ -13,7 +13,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.TreeMap;
 import javax.swing.JFrame;
@@ -25,6 +24,7 @@ import properties_manager.PropertiesManager;
 import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.*;
 import pathx.data.PathXDataModel;
+import pathx.data.PathXIntersection;
 import pathx.data.PathXLevel;
 import pathx.data.PathXLevelState;
 import pathx.data.PathXRecord;
@@ -56,6 +56,8 @@ public class PathXMiniGame extends MiniGame{
     private Viewport level;
     
     private TreeMap<String, Sprite> guiEntities;
+    
+    private TreeMap<Integer, Sprite> guiIntersections;
 
     @Override
     public void initAudioContent() {
@@ -77,6 +79,8 @@ public class PathXMiniGame extends MiniGame{
         data = new PathXDataModel(this);
         
         guiEntities = new TreeMap<String, Sprite>();
+        
+        guiIntersections = new TreeMap<Integer, Sprite>();
         
         
     }
@@ -179,7 +183,7 @@ public class PathXMiniGame extends MiniGame{
        ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(LEVEL_SCREEN_STATE);
        
-       guiDecor.get(INTERSECTION_TYPE).setState(INVISIBLE_STATE);
+//       guiDecor.get(INTERSECTION_TYPE).setState(INVISIBLE_STATE);
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
@@ -240,7 +244,7 @@ public class PathXMiniGame extends MiniGame{
         
     }
     
-        public void switchToGamePlayScreen(){
+    public void switchToGamePlayScreen(){
         
        guiDecor.get(BACKGROUND_TYPE).setState(GAMEPLAY_SCREEN_STATE);
         
@@ -301,6 +305,59 @@ public class PathXMiniGame extends MiniGame{
        guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
        
        guiEntities.get(PLAYER_TYPE).setState(VISIBLE_STATE);
+       
+       int currentLevel = ((PathXDataModel)data).getCurrentLevelInt();
+       
+       PathXIntersection intersection;
+       
+       guiIntersections = new TreeMap<Integer, Sprite>();
+       
+       Sprite s;
+       SpriteType sT;
+       PropertiesManager props = PropertiesManager.getPropertiesManager();
+       String imgPath = props.getProperty("IMG_PATH");
+       BufferedImage img;
+       
+       for(int i = 0; i < ((PathXDataModel)data).getLevel(currentLevel).getNumIntersections(); i++){
+            intersection = ((PathXDataModel)data).getLevel(currentLevel).getIntersection(i);
+            
+            sT = new SpriteType(INTERSECTION_TYPE);
+            if(intersection.open()){
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
+                sT.addState(VISIBLE_STATE, img);
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE_MOUSE_OVER));
+                sT.addState(MOUSE_OVER_STATE, img);
+            } else {
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE));
+                sT.addState(VISIBLE_STATE, img);
+                img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE_MOUSE_OVER));
+                sT.addState(MOUSE_OVER_STATE, img);
+            }
+            //sT.addState(STARTING_STATE, null);
+            //sT.addState(ENDING_STATE, null);
+            s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
+            
+           
+            guiIntersections.put(i, s);
+//            if(i == 0){
+//                guiIntersections.get(i).getSpriteType().addState(STARTING_STATE, ((PathXDataModel)data).getLevel(currentLevel).getStartingImage());
+//                guiIntersections.get(i).setState(STARTING_STATE);
+//            } else
+//                if(i == 1){
+//                    guiIntersections.get(i).getSpriteType().addState(ENDING_STATE, ((PathXDataModel)data).getLevel(currentLevel).getDestinationImage());
+//                    guiIntersections.get(i).setState(ENDING_STATE);  
+//                } else
+//                    if(intersection.open())
+//                        guiIntersections.get(i).setState(OPEN_STATE);
+//                    else
+//                        guiIntersections.get(i).setState(CLOSED_STATE);
+            
+            guiIntersections.get(i).setEnabled(true);
+            
+//            guiButtons.put(((PathXDataModel)data).getLevel(currentLevel).getLevelName() + i,guiDecor.get(INTERSECTION_TYPE));
+       }
+       
+       initIntersectionsHandlers();
        
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
@@ -369,8 +426,10 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(CLOSED_STATE, img);
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_AVAILABLE_MOUSE_OVER));
         sT.addState(CLOSED_MOUSE_OVER_STATE, img);
+        //sT.addState(STARTING_STATE, null);
+        //sT.addState(ENDING_STATE, null);
         s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
-        guiDecor.put(INTERSECTION_TYPE, s);
+        //guiButtons.put(INTERSECTION_TYPE, s);
         
         
         //viewport
@@ -607,24 +666,7 @@ public class PathXMiniGame extends MiniGame{
         window.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent we) 
             { eventHandler.respondToExitRequest(); }
-        });
-
-//        // SEND ALL LEVEL SELECTION HANDLING OFF TO THE EVENT HANDLER
-//        PropertiesManager props = PropertiesManager.getPropertiesManager();
-//        ArrayList<String> levels = props.getPropertyOptionsList(SortingHatPropertyType.LEVEL_OPTIONS);
-//        for (String levelFile : levels)
-//        {
-//            Sprite levelButton = guiButtons.get(levelFile);
-//            levelButton.setActionCommand(PATH_DATA + levelFile);
-//            levelButton.setActionListener(new ActionListener(){
-//                Sprite s;
-//                public ActionListener init(Sprite initS) 
-//                {   s = initS; 
-//                    return this;    }
-//                public void actionPerformed(ActionEvent ae)
-//                {   eventHandler.respondToSelectLevelRequest(s.getActionCommand());    }
-//            }.init(levelButton));
-//        }   
+        });  
 
         // NEW GAME EVENT HANDLER
         guiButtons.get(PLAY_GAME_BUTTON_TYPE).setActionListener(new ActionListener(){
@@ -723,10 +765,10 @@ public class PathXMiniGame extends MiniGame{
         });
         
                 // Home BUTTON EVENT HANDLER
-        guiDecor.get(INTERSECTION_TYPE).setActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent ae)
-            {   eventHandler.respondToIntersectionRequest();    }
-        });
+//        guiDecor.get(INTERSECTION_TYPE).setActionListener(new ActionListener(){
+//            public void actionPerformed(ActionEvent ae)
+//            {   eventHandler.respondToIntersectionRequest();    }
+//        });
         
         // KEY LISTENER - LET'S US PROVIDE CUSTOM RESPONSES
         this.setKeyListener(new KeyAdapter(){
@@ -736,25 +778,31 @@ public class PathXMiniGame extends MiniGame{
             }
         });
         
-//                // SEND ALL LEVEL SELECTION HANDLING OFF TO THE EVENT HANDLER
-//        PropertiesManager props = PropertiesManager.getPropertiesManager();
-//        ArrayList<String> levels = props.getPropertyOptionsList(PathXPropertyType.LEVEL_OPTIONS);
-//        for (String levelFile : levels)
-//        {
-//            Sprite levelButton = guiButtons.get(levelFile);
-//            //levelButton.setActionCommand(PATH_DATA + levelFile);
-//            levelButton.setActionListener(new ActionListener(){
-//                Sprite s;
-//                public ActionListener init(Sprite initS) 
-//                {   s = initS; 
-//                    return this;    }
-//                public void actionPerformed(ActionEvent ae)
-//                {   eventHandler.respondToSelectLevelRequest(s.getActionCommand());    }
-//            }.init(levelButton));
-//        } 
+        
     }
     
-        public boolean isCurrentScreenState(String testScreenState)
+    public void initIntersectionsHandlers(){
+        int currentLevel = ((PathXDataModel)data).getCurrentLevelInt();
+        for (int i = 0; i < ((PathXDataModel)data).getLevel(currentLevel).getNumIntersections(); i++)
+        {
+           //PathXIntersection intersection = ((PathXDataModel)data).getLevel(currentLevel).getIntersection(i);
+           guiIntersections.get(i).setActionListener(new ActionListener(){
+               
+                int id;
+                public ActionListener init(int intersectionId) 
+                {   id = intersectionId; 
+                    return this;    }
+                public void actionPerformed(ActionEvent ae)
+                {   eventHandler.respondToIntersectionRequest(id);    }
+            
+               
+//            public void actionPerformed(ActionEvent ae)
+//            {   eventHandler.respondToLevelSelectRequest(level.toString());    }
+            }.init(i));
+       }
+    }
+    
+    public boolean isCurrentScreenState(String testScreenState)
     {
         return testScreenState.equals(currentScreenState);
     }
@@ -790,10 +838,75 @@ public class PathXMiniGame extends MiniGame{
                 }
             }
         }
+//        if(!data.notStarted()){
+//            Iterator<Sprite> intersectionsIt = guiIntersections.values().iterator();
+//            while (intersectionsIt.hasNext())
+//            {
+//                Sprite button = intersectionsIt.next();
+//
+//                // ARE WE ENTERING A BUTTON?
+//                if (button.getState().equals(VISIBLE_STATE))
+//                {
+//                    if (button.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+//                    {
+//                        button.setState(MOUSE_OVER_STATE);
+//
+//                    }
+//                }
+//                // ARE WE EXITING A BUTTON?
+//                else if (button.getState().equals(MOUSE_OVER_STATE))
+//                {
+//                     if (!button.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+//                    {
+//                        button.setState(VISIBLE_STATE);
+//                    }
+//                }
+//            }
+//        }
     }
     
     public TreeMap<String, Sprite> getGuiEntities(){
         return (TreeMap<String, Sprite>)guiEntities.clone();
+    }
+    
+    public TreeMap<Integer, Sprite> getGuiIntersections(){
+        return guiIntersections;
+    }   
+    
+    @Override
+    public boolean processButtonPress(int x, int y)
+    {
+        boolean buttonClickPerformed = false;
+
+        // TEST EACH BUTTON
+        for (Sprite s : guiButtons.values())
+        {
+            // THIS METHOD WILL INVOKE actionPeformed WHEN NEEDED
+            buttonClickPerformed = s.testForClick(this, x, y);
+
+            // ONLY EXECUTE THE FIRST ONE, SINCE BUTTONS
+            // SHOULD NOT OVERLAP
+            if (buttonClickPerformed)
+            {
+                return true;
+            }
+        }
+        
+        if(!data.notStarted()){
+            for (Sprite s : guiIntersections.values())
+            {
+                // THIS METHOD WILL INVOKE actionPeformed WHEN NEEDED
+                buttonClickPerformed = s.testForClick(this, x, y);
+
+                // ONLY EXECUTE THE FIRST ONE, SINCE BUTTONS
+                // SHOULD NOT OVERLAP
+                if (buttonClickPerformed)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
 }

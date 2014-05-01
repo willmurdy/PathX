@@ -132,9 +132,6 @@ public class PathXRoad {
                 y += sy;
             }
         }
-        
-        
-        System.out.println("TEST");
     }
     
     public int getXPosition(int i){

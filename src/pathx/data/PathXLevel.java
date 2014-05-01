@@ -183,6 +183,7 @@ public class PathXLevel {
     public String getState(){ return currentState; }
     public void setX(int x){ this.x = x;}
     public void setY(int y){this.y = y;}
+    public int getNumIntersections(){ return intersections.size(); }
     
     public void addIntersection(PathXIntersection newIntersection){
         newIntersection.setId(intersections.size());

@@ -138,8 +138,8 @@ public class PathXEventHandler {
     {
     }
     
-    public void respondToIntersectionRequest(){
-        
+    public void respondToIntersectionRequest(int id){
+        System.out.println("THE INTERSECTION TJAT WAS CHOSSEN IS: " + id);
     }
     
     /**

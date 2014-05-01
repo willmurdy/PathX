@@ -323,43 +323,77 @@ public class PathXPanel extends JPanel {
     
     public void renderIntersections(Graphics g){
         ArrayList<PathXIntersection> intersections = data.getLevel(data.getCurrentLevelInt()).getIntersections();
-        Sprite s1;
 //        SpriteType sprite = new SpriteType("START");
 //        sprite.addState("START", data.getLevel(data.getCurrentLevelInt()).getStartingImage());
 //        s1 = new Sprite(sprite, 0, 0, 0, 0, "START");
-        Sprite s = game.getGUIDecor().get(INTERSECTION_TYPE);
-        for(int i = 0; i < intersections.size(); i++){
+        Sprite s;
+        
+        for(int i = 0; i < data.getLevel(data.getCurrentLevelInt()).getNumIntersections(); i++){
+            s = ((PathXMiniGame)game).getGuiIntersections().get(i);
+//            if(data.getLevel(data.getCurrentLevelInt()).getIntersection(i).open())
+//                s.setState(OPEN_STATE);
+//            else
+//                s.setState(CLOSED_STATE);
+//        }
+//        for(int i = 0; i < intersections.size(); i++){
             int x = intersections.get(i).getRenderX();
             int y = intersections.get(i).getRenderY();
-            //if((x > 180 - 5 && x < 730 - 20) && (y > 20) && y < 610-5){
+//            if((x > 180 - 5 && x < 730 - 20) && (y > 20) && y < 610-5){
                 s.setX(x);
                 s.setY(y);
+
+                //if(intersections.get(i).open()){
+                    if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+                        s.setState(MOUSE_OVER_STATE);
+                    else
+                        s.setState(VISIBLE_STATE);
+//                } else {
+//                    if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+//                         s.setState(CLOSED_MOUSE_OVER_STATE);
+//                    else
+//                         s.setState(CLOSED_STATE);       
+//                }
+                
                 if(i == 0){
                     SpriteType sprite = new SpriteType("START");
                     sprite.addState("START", data.getLevel(data.getCurrentLevelInt()).getStartingImage());
-                    s1 = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
-                    renderSprite(g, s1);
+                    s = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
+                    renderSprite(g, s);
                 } else
                     if(i == 1){
                         SpriteType sprite = new SpriteType("START");
                         sprite.addState("START", data.getLevel(data.getCurrentLevelInt()).getDestinationImage());
-                        s1 = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
-                        renderSprite(g, s1);
-                    } else
-                        if(intersections.get(i).open()){
-                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
-                                s.setState(OPEN_MOUSE_OVER_STATE);
-                            else
-                                s.setState(OPEN_STATE);
-                            renderSprite(g, s);
-                        }
-                        else{
-                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
-                                s.setState(CLOSED_MOUSE_OVER_STATE);
-                            else
-                                s.setState(CLOSED_STATE);
-                            renderSprite(g, s);
-                        }
+                        s = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
+                        renderSprite(g, s);
+                    }
+                
+                renderSprite(g, s);
+//                if(i == 0){
+//                    SpriteType sprite = new SpriteType("START");
+//                    sprite.addState("START", data.getLevel(data.getCurrentLevelInt()).getStartingImage());
+//                    s1 = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
+//                    renderSprite(g, s);
+//                } else
+//                    if(i == 1){
+//                        SpriteType sprite = new SpriteType("START");
+//                        sprite.addState("START", data.getLevel(data.getCurrentLevelInt()).getDestinationImage());
+//                        s1 = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
+//                        renderSprite(g, s);
+//                    } else
+//                        if(intersections.get(i).open()){
+//                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+//                                s.setState(OPEN_MOUSE_OVER_STATE);
+//                            else
+//                                s.setState(OPEN_STATE);
+//                            renderSprite(g, s);
+//                        }
+//                        else{
+//                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
+//                                s.setState(CLOSED_MOUSE_OVER_STATE);
+//                            else
+//                                s.setState(CLOSED_STATE);
+//                            renderSprite(g, s);
+//                        }
 
 //                    renderSprite(g, s);
             //} else {
@@ -367,6 +401,7 @@ public class PathXPanel extends JPanel {
             //}
             
         }
+                
         
     }
     
