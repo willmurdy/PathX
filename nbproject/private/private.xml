@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="6">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="7">
         <file>
             <url>src/pathx/ui/PathXPanel.java</url>
             <bookmark id="3">
                 <name/>
                 <line>265</line>
+                <key/>
+            </bookmark>
+        </file>
+        <file>
+            <url>src/pathx/ui/PathXMiniGame.java</url>
+            <bookmark id="7">
+                <name/>
+                <line>421</line>
                 <key/>
             </bookmark>
         </file>
