@@ -45,6 +45,10 @@ public class PathXRoad {
         y = new ArrayList<Integer>();
     }
     
+    public PathXRoad(){
+        
+    }
+    
     public double calculateLength(){
         double tempX = id1x - id2x;
         tempX = tempX * tempX;
@@ -102,7 +106,8 @@ public class PathXRoad {
 //       y0 := y0 + sy 
 //     end if
 //   end loop
-        
+        if(!x.isEmpty())
+            return;
         int deltaX = Math.abs(id2x - id1x);
         int deltaY = Math.abs(id2y - id1y);
         int sx;
@@ -122,6 +127,8 @@ public class PathXRoad {
         while(x != id2x && y != id2y){
             this.x.add(x);
             this.y.add(y);
+            if(x == id2x && y == id2y)
+                break;
             e2 = 2 * error;
             if(e2 > -deltaY){
                 error = error - deltaY;
@@ -132,6 +139,7 @@ public class PathXRoad {
                 y += sy;
             }
         }
+        this.getCost();
     }
     
     public int getXPosition(int i){
@@ -182,5 +190,8 @@ public class PathXRoad {
 
     public int getid2y(){ return id2y; }
     
-    public int getSpeedLimit(){ return speedLimit; };
+    public int getSpeedLimit(){ return speedLimit; }
+    
+    public ArrayList<Integer> getXList(){ return (ArrayList<Integer>)x.clone(); }
+    public ArrayList<Integer> getYList(){ return (ArrayList<Integer>)y.clone(); }
 }

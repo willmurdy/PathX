@@ -140,6 +140,8 @@ public class PathXEventHandler {
     
     public void respondToIntersectionRequest(int id){
         System.out.println("THE INTERSECTION TJAT WAS CHOSSEN IS: " + id);
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.getLevel(data.getCurrentLevelInt()).movePlayerToIntersection(id);
     }
     
     /**
