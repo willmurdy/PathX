@@ -171,6 +171,7 @@ public class PathXLevel {
                     public void run() {
                         ArrayList<Integer> x = road.getXList();
                         ArrayList<Integer> y = road.getYList();
+                        player.setInMotion(true);
                         if(forward){
                             for(int i = 0; i < x.size(); i++){
                                 System.out.println(i);
@@ -201,7 +202,7 @@ public class PathXLevel {
                             }
                             player.setIntersectionId(road.getId1());
                         }
-                        
+                        player.setInMotion(false);
                         kill();
                     }
                     
