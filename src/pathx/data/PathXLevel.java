@@ -7,26 +7,14 @@
 package pathx.data;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import mini_game.Viewport;
-import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import static pathx.PathX.PathXPropertyType.LEVEL_IMG_PATH;
-import static pathx.PathX.PathXPropertyType.LEVEL_SCHEMA;
 import static pathx.PathXConstants.NORTH_PANEL_HEIGHT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_LEFT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_TOP;
-import properties_manager.PropertiesManager;
-import static properties_manager.PropertiesManager.NAME_ATT;
-import static properties_manager.PropertiesManager.VALUE_ATT;
-import xml_utilities.InvalidXMLFileFormatException;
-import xml_utilities.XMLUtilities;
 
 /**
  *
@@ -65,7 +53,15 @@ public class PathXLevel {
     
     private boolean inGame;
     
+    private boolean won;
+    
+    private boolean paused;
+    
     private PathXCar player;
+    
+    private ArrayList<PathXCar> police;
+    
+    public int numPolice;
 
     
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
@@ -86,23 +82,34 @@ public class PathXLevel {
         
         money = reward;
         
-        player = new PathXCar(PathXCarType.PLAYER_TYPE.toString());
+        player = new PathXCar(PathXCarType.PLAYER_TYPE.toString(), 0);
         
         intersections = new ArrayList<PathXIntersection>();
+  
+        police = new ArrayList<>();        
         
         roads = new ArrayList<PathXRoad>();
+        
+        won = false;
+        
+        paused = false;
         
     }
     
     public PathXLevel(){
-        intersections = new ArrayList<PathXIntersection>();
+        intersections = new ArrayList<>();
         
-        roads = new ArrayList<PathXRoad>();
+        roads = new ArrayList<>();
         
         inGame = false;
         
-        player = new PathXCar(PathXCarType.PLAYER_TYPE.toString());
+        player = new PathXCar(PathXCarType.PLAYER_TYPE.toString(), 0);
+        
+        police  = new ArrayList<>();
 
+        won = false;
+        
+        paused = false;
     }
     
     public void setLocation(int xPos, int yPos){
@@ -174,7 +181,9 @@ public class PathXLevel {
                         player.setInMotion(true);
                         if(forward){
                             for(int i = 0; i < x.size(); i++){
-                                System.out.println(i);
+                                if(paused){
+                                    i--;
+                                }
                                 player.setRenderX(road.getXPosition(i) - vp.getViewportX());
                                 player.setRenderY(road.getYPosition(i) - vp.getViewportY());
                                 player.setX(road.getXPosition(i));
@@ -184,12 +193,12 @@ public class PathXLevel {
                                 } catch (InterruptedException ex) {
                                     Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                                
                             }
                             
                             player.setIntersectionId(road.getId2());
                         } else { 
                             for(int i = x.size() - 1; i > 0; i--){
-                                System.out.println(i);
                                 player.setRenderX(road.getXPosition(i) - vp.getViewportX());
                                 player.setRenderY(road.getYPosition(i) - vp.getViewportY());
                                 player.setX(road.getXPosition(i));
@@ -199,16 +208,16 @@ public class PathXLevel {
                                 } catch (InterruptedException ex) {
                                     Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                                 }
+                                if(paused){
+                                    i++;
+                                }
                             }
                             player.setIntersectionId(road.getId1());
                         }
                         player.setInMotion(false);
-                        kill();
+                        //kill();
                     }
                     
-                    public void kill(){
-                        this.stop();
-                    }
 
                 }
                 
@@ -219,6 +228,10 @@ public class PathXLevel {
         
         
         
+        }
+        
+        if(player.getIntersection() == 1){
+            won = true;
         }
     }
     
@@ -239,6 +252,8 @@ public class PathXLevel {
         return player.getRenderY();
     }
     
+    
+    
     public void addIntersection(int x, int y, boolean open){
         PathXIntersection newInter = new PathXIntersection();
         newInter.setX(x + 180 - vp.getViewportX());
@@ -255,8 +270,52 @@ public class PathXLevel {
         
     }
     
+    public void pause(){
+        if(paused){
+            paused = false;
+        } else {
+            paused = true;
+        }
+    }
+    
+    public boolean paused(){
+        return paused;
+    }
+    
     public void calculatePath(int id1, int id2){
-        
+//1  function Dijkstra(Graph, source):
+//2      dist[source] := 0                     // Initializations
+//3      for each vertex v in Graph:           
+//4          if v ≠ source
+//5              dist[v] := infinity           // Unknown distance from source to v
+//6              previous[v] := undefined      // Predecessor of v
+//7          end if
+//8          PQ.add_with_priority(v,dist[v])
+//9      end for 
+//10
+//11
+//12     while PQ is not empty:                // The main loop
+//13         u := PQ.extract_min()             // Remove and return best vertex
+//14         for each neighbor v of u:         // where v has not yet been removed from PQ.
+//15             alt = dist[u] + length(u, v) 
+//16             if alt < dist[v]              // Relax the edge (u,v) 
+//17                 dist[v] := alt 
+//18                 previous[v] := u
+//19                 PQ.decrease_priority(v,alt)
+//20             end if
+//21         end for
+//22     end while
+//23     return previous[]
+        PriorityQueue<PathXCar> queue;
+        int distance[] = new int[intersections.size()];
+        int previous[] = new int[intersections.size()];
+        distance[id1] = 0;
+        for(PathXIntersection inter : intersections){
+            if(inter.getId() != id1){
+                distance[inter.getId()] = 9999999;
+                previous[inter.getId()] = -1;
+            }
+        }
     }
         
     public void setStartingImage(BufferedImage img){ startingImage = img; }  
@@ -284,6 +343,7 @@ public class PathXLevel {
     public void setX(int x){ this.x = x;}
     public void setY(int y){this.y = y;}
     public int getNumIntersections(){ return intersections.size(); }
+    public void setNumPolice(int police){ numPolice = police; }
     
     public void addIntersection(PathXIntersection newIntersection){
         newIntersection.setId(intersections.size());
@@ -354,6 +414,21 @@ public class PathXLevel {
         player.setY(intersections.get(0).getRoads().get(0).getYPosition(0) + 165 - vp.getViewportY() - 12);
         
         
+    }
+    
+    public void intiPolice(){
+        int temp;
+        for(int i = 0; i < numPolice; i++){
+            temp = ((int)Math.random()) + (intersections.size() - 2) + 1;
+            
+            police.add(new PathXCar(PathXCarType.POLICE_TYPE.toString(), temp));
+            police.get(i).setRenderX(intersections.get(police.get(i).getIntersection()).getRoads().get(0).getXPosition(0) + 165 - vp.getViewportX() - 12);
+            police.get(i).setRenderX(intersections.get(police.get(i).getIntersection()).getRoads().get(0).getYPosition(0) + 165 - vp.getViewportY() - 12);
+        }
+    }
+    
+    public ArrayList<PathXCar> getPolice(){
+        return (ArrayList<PathXCar>)police;
     }
     
     public PathXIntersection getIntersection(int id){

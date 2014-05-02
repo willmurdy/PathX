@@ -26,13 +26,11 @@ public class PathXCar {
     
     private int intersectionId;
     
-    public PathXCar(String carType){
+    public PathXCar(String carType, int id){
         
         type = carType;
         
-        if(PathXCarType.PLAYER_TYPE.toString().equals(carType)){
-            intersectionId = 0;
-        }
+        intersectionId = id;
         
         inMotion = false;
         

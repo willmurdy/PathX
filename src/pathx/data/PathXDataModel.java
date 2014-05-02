@@ -141,6 +141,14 @@ public class PathXDataModel extends MiniGameDataModel{
         viewport.scroll(-viewport.getViewportX(), -viewport.getViewportY());
     }
     
+    public void pauseGame(){
+        levels.get(currentLevelint).pause();
+    }
+    
+    public boolean isPaused(){
+        return levels.get(currentLevelint).paused();
+    }
+    
     public void initLevels(){
                 
         XMLUtilities xmlUtil = new XMLUtilities();
@@ -238,7 +246,15 @@ public class PathXDataModel extends MiniGameDataModel{
                 int amount = Integer.parseInt(temp.getNamedItem("amount").getNodeValue());
                 newLevel.setReward(amount);
                 
-                //get the reward
+                //get the num Police
+                node = xmlUtil.getNodeWithName(doc, "police");
+                temp = node.getAttributes();
+                int police = Integer.parseInt(temp.getNamedItem("num").getNodeValue());
+                newLevel.setNumPolice(police);
+                
+                newLevel.intiPolice();
+                
+                //get the location
                 node = xmlUtil.getNodeWithName(doc, "x");
                 temp = node.getAttributes();
                 int x = Integer.parseInt(temp.getNamedItem("num").getNodeValue());

@@ -67,45 +67,6 @@ public class PathXRoad {
     }
     
     public void calculatePositions(){
-//        int deltaX = id2x - id1x;
-//        int deltaY = id2y - id1y;
-//        float error = 0;
-//        float deltaError;
-//        if(deltaX != 0)
-//            deltaError = Math.abs(deltaY / deltaX);
-//        else 
-//            return;
-//        int y = id1y;
-//        for(int x = id1x; x < id2x; x++){
-//            this.x.add(x);
-//            this.y.add(y);
-//            error = error + deltaError;
-//            if(error >= 0.5){
-//                y = y + 1;
-//                error = error - 1;
-//            }
-//        }
-        
-//         function line(x0, y0, x1, y1)
-//   dx := abs(x1-x0)
-//   dy := abs(y1-y0) 
-//   if x0 < x1 then sx := 1 else sx := -1
-//   if y0 < y1 then sy := 1 else sy := -1
-//   err := dx-dy
-// 
-//   loop
-//     plot(x0,y0)
-//     if x0 = x1 and y0 = y1 exit loop
-//     e2 := 2*err
-//     if e2 > -dy then 
-//       err := err - dy
-//       x0 := x0 + sx
-//     end if
-//     if e2 < dx then 
-//       err := err + dx
-//       y0 := y0 + sy 
-//     end if
-//   end loop
         if(!x.isEmpty())
             return;
         int deltaX = Math.abs(id2x - id1x);

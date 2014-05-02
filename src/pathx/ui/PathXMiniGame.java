@@ -417,6 +417,13 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
         guiEntities.put(PLAYER_TYPE, s);
         
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_ENTITY_POLICE));
+        sT = new SpriteType(POLICE_TYPE);
+        sT.addState(VISIBLE_STATE, img);
+        sT.addState(INVISIBLE_STATE, null);
+        s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
+        guiEntities.put(POLICE_TYPE, s);
+        
         sT = new SpriteType(INTERSECTION_TYPE);
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));
         sT.addState(OPEN_STATE, img);

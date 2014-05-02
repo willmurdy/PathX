@@ -12,7 +12,10 @@ import static pathx.PathXConstants.GAMEPLAY_SCREEN_STATE;
 import static pathx.PathXConstants.INVISIBLE_STATE;
 import static pathx.PathXConstants.LEVEL_DIALOG_TYPE;
 import static pathx.PathXConstants.LEVEL_SELECT_SCREEN_STATE;
+import static pathx.PathXConstants.MOUSE_OVER_STATE;
+import static pathx.PathXConstants.PAUSE_BUTTON_TYPE;
 import static pathx.PathXConstants.VIEWPORT_INC;
+import static pathx.PathXConstants.VISIBLE_STATE;
 import pathx.data.PathXDataModel;
 
 /**
@@ -136,10 +139,16 @@ public class PathXEventHandler {
     
     public void respondToPauseRequest()
     {
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.pauseGame();
+        if(data.isPaused()){
+            game.getGUIButtons().get(PAUSE_BUTTON_TYPE).setState(MOUSE_OVER_STATE);
+        } else {
+            game.getGUIButtons().get(PAUSE_BUTTON_TYPE).setState(VISIBLE_STATE);
+        }
     }
     
     public void respondToIntersectionRequest(int id){
-        System.out.println("THE INTERSECTION TJAT WAS CHOSSEN IS: " + id);
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.getLevel(data.getCurrentLevelInt()).movePlayerToIntersection(id);
     }

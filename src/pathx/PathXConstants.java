@@ -43,6 +43,7 @@ public class PathXConstants {
     
     //Entity Types
     public static final String PLAYER_TYPE = "PLAYER_TYPE";
+    public static final String POLICE_TYPE = "POLICE_TYPE";
     
     // this represents the buttons on the home screen
     public static final String HOME_SCREEN_BUTTON_TYPE = "HOME_SCREEN_BUTTON_TYPE";

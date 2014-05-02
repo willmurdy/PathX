@@ -28,6 +28,7 @@ import mini_game.SpriteType;
 import mini_game.Viewport;
 import pathx.PathX.PathXPropertyType;
 import static pathx.PathXConstants.*;
+import pathx.data.PathXCar;
 import pathx.data.PathXIntersection;
 import pathx.data.PathXRoad;
 import properties_manager.PropertiesManager;
@@ -280,6 +281,7 @@ public class PathXPanel extends JPanel {
             renderRoads(g);
             renderIntersections(g);
             renderPlayer(g);
+            renderPolice(g);
         }
         
     }
@@ -294,6 +296,21 @@ public class PathXPanel extends JPanel {
         s.setY(y);
         
         renderSprite(g, s);
+    }
+    
+    public void renderPolice(Graphics g){
+        ArrayList<PathXCar> police = data.getLevel(data.getCurrentLevelInt()).getPolice();
+        for(PathXCar p : police){
+            int x = p.getRenderX();
+            int y = p.getRenderY();
+        
+            Sprite s = ((PathXMiniGame)game).getGuiEntities().get(POLICE_TYPE);
+        
+            s.setX(x);
+            s.setY(y);
+        
+            renderSprite(g, s);
+        }
     }
     
     public void renderLevels(Sprite s, Graphics g){

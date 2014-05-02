@@ -40,6 +40,10 @@ public class PathXIntersection {
         roads = new ArrayList<PathXRoad>();
     }
     
+    public int getId(){
+        return id;
+    }
+    
     public PathXIntersection(){
         adjacentNodesIds = new ArrayList<Integer>();
         adjacentNodesCost = new ArrayList<Double>(); 
