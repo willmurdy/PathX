@@ -252,7 +252,7 @@ public class PathXDataModel extends MiniGameDataModel{
                 int police = Integer.parseInt(temp.getNamedItem("num").getNodeValue());
                 newLevel.setNumPolice(police);
                 
-                newLevel.intiPolice();
+                
                 
                 //get the location
                 node = xmlUtil.getNodeWithName(doc, "x");
@@ -283,6 +283,7 @@ public class PathXDataModel extends MiniGameDataModel{
                 newLevel.updateIntersectionLocations();
                 newLevel.updateRoadLocations();
                 newLevel.initConnections();
+                newLevel.intiPolice();
                // newLevel.initPlayerLocation();
                 
                 

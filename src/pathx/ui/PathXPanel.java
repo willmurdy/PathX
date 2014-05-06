@@ -303,11 +303,14 @@ public class PathXPanel extends JPanel {
         for(PathXCar p : police){
             int x = p.getRenderX();
             int y = p.getRenderY();
+            System.out.println("(" + x + ", " + y + ")");
         
             Sprite s = ((PathXMiniGame)game).getGuiEntities().get(POLICE_TYPE);
         
             s.setX(x);
             s.setY(y);
+            
+            s.setState(VISIBLE_STATE);
         
             renderSprite(g, s);
         }
@@ -695,7 +698,7 @@ public class PathXPanel extends JPanel {
     {
         // ONLY RENDER THE VISIBLE ONES
 
-                text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription());
+                text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription() + "\nPolice: " + data.getLevel(data.getCurrentLevelInt()).getNumPolice());
                 this.add(text);
                 text.setLocation(200, 150);
                 if(enable && !text.isVisible())

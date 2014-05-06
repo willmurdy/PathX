@@ -61,7 +61,7 @@ public class PathXLevel {
     
     private ArrayList<PathXCar> police;
     
-    public int numPolice;
+    private int numPolice;
 
     
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
@@ -344,6 +344,7 @@ public class PathXLevel {
     public void setY(int y){this.y = y;}
     public int getNumIntersections(){ return intersections.size(); }
     public void setNumPolice(int police){ numPolice = police; }
+    public int getNumPolice(){ return numPolice; }
     
     public void addIntersection(PathXIntersection newIntersection){
         newIntersection.setId(intersections.size());
@@ -394,6 +395,7 @@ public class PathXLevel {
             updateIntersectionLocations();
             updateRoadLocations();
             updatePlayerLocations();
+            updatePoliceLocations();
         }
         //i++;
         
@@ -407,6 +409,13 @@ public class PathXLevel {
         player.setRenderY(player.getY() - vp.getViewportY());
     }
     
+    public void updatePoliceLocations(){
+        for(PathXCar po : police){
+            po.setRenderX(po.getX() - vp.getViewportX());
+            po.setRenderY(po.getY() - vp.getViewportY());
+        }
+    }
+    
     public void initPlayerLocation(){
         player.setRenderX(intersections.get(0).getRoads().get(0).getXPosition(0) + 165 - vp.getViewportX() - 12);
         player.setRenderY(intersections.get(0).getRoads().get(0).getYPosition(0) + 165 - vp.getViewportY() - 12);
@@ -418,12 +427,17 @@ public class PathXLevel {
     
     public void intiPolice(){
         int temp;
+        PathXCar po;
         for(int i = 0; i < numPolice; i++){
-            temp = ((int)Math.random()) + (intersections.size() - 2) + 1;
             
-            police.add(new PathXCar(PathXCarType.POLICE_TYPE.toString(), temp));
-            police.get(i).setRenderX(intersections.get(police.get(i).getIntersection()).getRoads().get(0).getXPosition(0) + 165 - vp.getViewportX() - 12);
-            police.get(i).setRenderX(intersections.get(police.get(i).getIntersection()).getRoads().get(0).getYPosition(0) + 165 - vp.getViewportY() - 12);
+            temp = (int)((Math.random()) * intersections.size()) ;
+            temp = 2;
+            po = new PathXCar(PathXCarType.POLICE_TYPE.toString(), temp);
+            po.setX(intersections.get(temp).getX());
+            po.setY(intersections.get(temp).getY());
+            po.setRenderX(intersections.get(temp).getRenderX());//po.getX() + 180 - vp.getViewportX());
+            po.setRenderY(intersections.get(temp).getRenderY());//po.getY() + 20 - vp.getViewportY());
+            police.add(po);
         }
     }
     
