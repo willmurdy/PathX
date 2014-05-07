@@ -51,7 +51,7 @@ public class PathXLevel {
     
     private ArrayList<PathXRoad> roads;
     
-    private boolean inGame;
+    protected boolean inGame;
     
     private boolean won;
     
@@ -134,7 +134,6 @@ public class PathXLevel {
         PathXRoad roadToTravel = new PathXRoad();
         boolean found = false;
         boolean forward = true;
-        
         if(!player.inMotion()){
             intersectionId = player.getIntersection();
             intersection = intersections.get(intersectionId);
@@ -322,7 +321,11 @@ public class PathXLevel {
     public BufferedImage getStartingImage(){ return startingImage; }
     public void setDestinationImage(BufferedImage img){ destinationImage = img; }
     public BufferedImage getDestinationImage(){ return destinationImage; }
-    public void setIngame(boolean in){ inGame = in; }
+    public void setIngame(boolean in){ inGame = in;
+        if(inGame){
+            this.startPolicePathing();
+        }
+    }
     public boolean inGame(){ return inGame; }
     public void setViewport(Viewport view){ vp = view; }  
     public void setState(String state){ currentState = state; }
@@ -351,9 +354,7 @@ public class PathXLevel {
         intersections.add(newIntersection);
     }
     
-    public ArrayList<PathXIntersection> getIntersections(){
-        return (ArrayList<PathXIntersection>)intersections.clone();
-    }
+    public ArrayList<PathXIntersection> getIntersections(){ return (ArrayList<PathXIntersection>)intersections.clone(); }
     
     public void addRoad(PathXRoad road){
         roads.add(road);
@@ -411,8 +412,8 @@ public class PathXLevel {
     
     public void updatePoliceLocations(){
         for(PathXCar po : police){
-            po.setRenderX(po.getX() - vp.getViewportX());
-            po.setRenderY(po.getY() - vp.getViewportY());
+            po.setRenderX(po.getX() - vp.getViewportX() + 150 - 12);
+            po.setRenderY(po.getY() - vp.getViewportY() + 150 - 12);
         }
     }
     
@@ -431,12 +432,12 @@ public class PathXLevel {
         for(int i = 0; i < numPolice; i++){
             
             temp = (int)((Math.random()) * intersections.size()) ;
-            temp = 2;
             po = new PathXCar(PathXCarType.POLICE_TYPE.toString(), temp);
             po.setX(intersections.get(temp).getX());
             po.setY(intersections.get(temp).getY());
             po.setRenderX(intersections.get(temp).getRenderX());//po.getX() + 180 - vp.getViewportX());
             po.setRenderY(intersections.get(temp).getRenderY());//po.getY() + 20 - vp.getViewportY());
+            po.setIntersectionId(temp);
             police.add(po);
         }
     }
@@ -462,5 +463,170 @@ public class PathXLevel {
         }
     }        
     
+    public void startPolicePathing(){
+        MovePolice move;
+        for(PathXCar cp : police){
+            move = new MovePolice(cp);
+            move.start();
+            System.out.println("TEST!!!!");
+        }
+    }
+    
+    class MovePolice extends Thread{
+        
+        PathXCar cop;
+        int id;
+        long wait;
+        
+        MovePolice(PathXCar po){
+            cop = po;
+        }
+        
+        public void run(){
+            PathXIntersection inter;
+            ArrayList<Integer> adjacent;
+            int nextNode = -1;
+            ArrayList<Integer> x;
+            ArrayList<Integer> y;
+            while(inGame){
+                id = cop.getIntersection();
+                inter = intersections.get(id);
+                adjacent = inter.getAdjacentNodes();
+                while(nextNode != id)
+                    nextNode = (int)(Math.random() * adjacent.size());
+                for(PathXRoad rd :inter.getRoads()){
+                    if(rd.oneWay()){
+                        if(nextNode == rd.getId2()){
+                            wait = 100 -rd.getSpeedLimit();
+                            x = rd.getXList();
+                            y = rd.getYList();
+                            for(int i = 0; i < x.size(); i++){
+                                if(paused){
+                                    i--;
+                                }
+                                cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
+                                cop.setRenderY(rd.getYPosition(i) - vp.getViewportY());
+                                cop.setX(rd.getXPosition(i));
+                                cop.setY(rd.getYPosition(i));
+                                try {
+                                    Thread.sleep(wait);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
+                            }
+                            
+                            cop.setIntersectionId(rd.getId2());
+                        }
+                    } else { //if the road it two way
+                        if(nextNode == rd.getId1()){
+                            wait = 100 -rd.getSpeedLimit();
+                            x = rd.getXList();
+                            y = rd.getYList();
+                            for(int i = x.size() - 1; i > 0; i--){
+                                if(paused){
+                                    i++;
+                                }
+                                cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
+                                cop.setRenderY(rd.getYPosition(i) - vp.getViewportY());
+                                cop.setX(rd.getXPosition(i));
+                                cop.setY(rd.getYPosition(i));
+                                try {
+                                    Thread.sleep(wait);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
+                            }
+                            cop.setIntersectionId(rd.getId1());
+                        } else {
+                            if(nextNode == rd.getId2()){
+                            wait = 100 -rd.getSpeedLimit();
+                            x = rd.getXList();
+                            y = rd.getYList();
+                            for(int i = 0; i < x.size(); i++){
+                                if(paused){
+                                    i--;
+                                }
+                                cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
+                                cop.setRenderY(rd.getYPosition(i) - vp.getViewportY());
+                                cop.setX(rd.getXPosition(i));
+                                cop.setY(rd.getYPosition(i));
+                                try {
+                                    Thread.sleep(wait);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
+                            }
+                            cop.setIntersectionId(rd.getId2());
+                            }
+                        }
+                    }
+                }
+            }//end while
+        }//end run method
+        
+    }//end thread class
     
 }
+
+//class MovePolice extends Thread {
+//
+//                        PathXRoad road;
+//                        boolean forward;
+//                        long wait;
+//
+//                        public MovePolice(PathXRoad rd, boolean forward){ 
+//                            road = rd; 
+//                            wait = 100 -road.getSpeedLimit();// * 100;
+//                            this.forward = forward;
+//                        }
+//
+//                        public void run() {
+//                            while(inGame){
+//                                ArrayList<Integer> x = road.getXList();
+//                                ArrayList<Integer> y = road.getYList();
+//                                player.setInMotion(true);
+//                                if(forward){
+//                                    for(int i = 0; i < x.size(); i++){
+//                                        if(paused){
+//                                            i--;
+//                                        }
+//                                        player.setRenderX(road.getXPosition(i) - vp.getViewportX());
+//                                        player.setRenderY(road.getYPosition(i) - vp.getViewportY());
+//                                        player.setX(road.getXPosition(i));
+//                                        player.setY(road.getYPosition(i));
+//                                        try {
+//                                            Thread.sleep(wait);
+//                                        } catch (InterruptedException ex) {
+//                                            Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+//                                        }
+//
+//                                    }
+//
+//                                    player.setIntersectionId(road.getId2());
+//                                } else { 
+//                                    for(int i = x.size() - 1; i > 0; i--){
+//                                        player.setRenderX(road.getXPosition(i) - vp.getViewportX());
+//                                        player.setRenderY(road.getYPosition(i) - vp.getViewportY());
+//                                        player.setX(road.getXPosition(i));
+//                                        player.setY(road.getYPosition(i));
+//                                        try {
+//                                            Thread.sleep(wait);
+//                                        } catch (InterruptedException ex) {
+//                                            Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+//                                        }
+//                                        if(paused){
+//                                            i++;
+//                                        }
+//                                    }
+//                                    player.setIntersectionId(road.getId1());
+//                                }
+//                                player.setInMotion(false);
+//                                //kill();
+//                            }
+//                        }
+//
+//
+//}

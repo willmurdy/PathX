@@ -116,6 +116,7 @@ public class PathXEventHandler {
         data.updateViewport();
         data.getLevel(data.getCurrentLevelInt()).setViewport(data.getViewport());
         data.getLevel(data.getCurrentLevelInt()).updateIntersectionLocations();
+        data.getLevel(data.getCurrentLevelInt()).updatePoliceLocations();
         data.getLevel(data.getCurrentLevelInt()).updateRoadLocations();
         //((PathXDataModel)data).initGameplayViewPort();
         game.switchToGamePlayScreen();

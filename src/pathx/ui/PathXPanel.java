@@ -303,7 +303,7 @@ public class PathXPanel extends JPanel {
         for(PathXCar p : police){
             int x = p.getRenderX();
             int y = p.getRenderY();
-            System.out.println("(" + x + ", " + y + ")");
+            //System.out.println("(" + x + ", " + y + ")");
         
             Sprite s = ((PathXMiniGame)game).getGuiEntities().get(POLICE_TYPE);
         
