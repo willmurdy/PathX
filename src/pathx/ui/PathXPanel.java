@@ -282,6 +282,8 @@ public class PathXPanel extends JPanel {
             renderIntersections(g);
             renderPlayer(g);
             renderPolice(g);
+            renderZombies(g);
+            renderBandits(g);
         }
         
     }
@@ -303,9 +305,52 @@ public class PathXPanel extends JPanel {
         for(PathXCar p : police){
             int x = p.getRenderX();
             int y = p.getRenderY();
+            int zx = p.getX();
+            int zy = p.getY();
+            int px = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
+            int py = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
+            if((x == px && y == py) || (zx == px && zy == py)){
+                System.out.println("Collision!");
+            }
             //System.out.println("(" + x + ", " + y + ")");
         
             Sprite s = ((PathXMiniGame)game).getGuiEntities().get(POLICE_TYPE);
+        
+            s.setX(x);
+            s.setY(y);
+            
+            s.setState(VISIBLE_STATE);
+        
+            renderSprite(g, s);
+        }
+    }
+    
+    public void renderZombies(Graphics g){
+        ArrayList<PathXCar> zombies = data.getLevel(data.getCurrentLevelInt()).getZombies();
+        for(PathXCar p : zombies){
+            int x = p.getRenderX();
+            int y = p.getRenderY();
+            //System.out.println("(" + x + ", " + y + ")");
+        
+            Sprite s = ((PathXMiniGame)game).getGuiEntities().get(ZOMBIE_TYPE);
+        
+            s.setX(x);
+            s.setY(y);
+            
+            s.setState(VISIBLE_STATE);
+        
+            renderSprite(g, s);
+        }
+    }
+    
+    public void renderBandits(Graphics g){
+        ArrayList<PathXCar> bandits = data.getLevel(data.getCurrentLevelInt()).getBandits();
+        for(PathXCar p : bandits){
+            int x = p.getRenderX();
+            int y = p.getRenderY();
+            //System.out.println("(" + x + ", " + y + ")");
+        
+            Sprite s = ((PathXMiniGame)game).getGuiEntities().get(BANDIT_TYPE);
         
             s.setX(x);
             s.setY(y);

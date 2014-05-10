@@ -305,6 +305,8 @@ public class PathXMiniGame extends MiniGame{
        guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
        
        guiEntities.get(PLAYER_TYPE).setState(VISIBLE_STATE);
+       guiEntities.get(ZOMBIE_TYPE).setState(VISIBLE_STATE);
+       guiEntities.get(BANDIT_TYPE).setState(VISIBLE_STATE);
        
        int currentLevel = ((PathXDataModel)data).getCurrentLevelInt();
        
@@ -423,6 +425,20 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(INVISIBLE_STATE, null);
         s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
         guiEntities.put(POLICE_TYPE, s);
+        
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_ENTITY_ZOMBIE));
+        sT = new SpriteType(ZOMBIE_TYPE);
+        sT.addState(VISIBLE_STATE, img);
+        sT.addState(INVISIBLE_STATE, null);
+        s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
+        guiEntities.put(ZOMBIE_TYPE, s);
+        
+        img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_ENTITY_BANDIT));
+        sT = new SpriteType(BANDIT_TYPE);
+        sT.addState(VISIBLE_STATE, img);
+        sT.addState(INVISIBLE_STATE, null);
+        s = new Sprite(sT, 0, 0, 0, 0, INVISIBLE_STATE);
+        guiEntities.put(BANDIT_TYPE, s);
         
         sT = new SpriteType(INTERSECTION_TYPE);
         img = loadImage(imgPath + props.getProperty(PathXPropertyType.IMAGE_LEVEL_COMPLETE));

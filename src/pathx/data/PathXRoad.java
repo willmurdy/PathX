@@ -153,6 +153,6 @@ public class PathXRoad {
     
     public int getSpeedLimit(){ return speedLimit; }
     
-    public ArrayList<Integer> getXList(){ return (ArrayList<Integer>)x.clone(); }
-    public ArrayList<Integer> getYList(){ return (ArrayList<Integer>)y.clone(); }
+    public ArrayList<Integer> getXList(){ return (ArrayList<Integer>)x; }
+    public ArrayList<Integer> getYList(){ return (ArrayList<Integer>)y; }
 }

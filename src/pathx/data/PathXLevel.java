@@ -8,6 +8,7 @@ package pathx.data;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,8 +61,14 @@ public class PathXLevel {
     private PathXCar player;
     
     private ArrayList<PathXCar> police;
+    private ArrayList<PathXCar> zombies;
+    private ArrayList<PathXCar> bandits;
     
     private int numPolice;
+    private int numZombies;
+    private int numBandits;
+    
+    private boolean unlocked;
 
     
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
@@ -86,7 +93,9 @@ public class PathXLevel {
         
         intersections = new ArrayList<PathXIntersection>();
   
-        police = new ArrayList<>();        
+        police = new ArrayList<>(); 
+        zombies  = new ArrayList<>();
+        bandits  = new ArrayList<>();
         
         roads = new ArrayList<PathXRoad>();
         
@@ -106,6 +115,8 @@ public class PathXLevel {
         player = new PathXCar(PathXCarType.PLAYER_TYPE.toString(), 0);
         
         police  = new ArrayList<>();
+        zombies  = new ArrayList<>();
+        bandits  = new ArrayList<>();
 
         won = false;
         
@@ -170,7 +181,7 @@ public class PathXLevel {
                 
                     public MovePlayer(PathXRoad rd, boolean forward){ 
                         road = rd; 
-                        wait = 100 -road.getSpeedLimit();// * 100;
+                        wait = 125 -road.getSpeedLimit();// * 100;
                         this.forward = forward;
                     }
                 
@@ -214,7 +225,8 @@ public class PathXLevel {
                             player.setIntersectionId(road.getId1());
                         }
                         player.setInMotion(false);
-                        //kill();
+                        if(player.getIntersection() == 1)
+                            endGameAsWin();
                     }
                     
 
@@ -234,7 +246,9 @@ public class PathXLevel {
         }
     }
     
-    
+    public void endGameAsWin(){
+        System.out.println("YOU WIN!");
+    }
     
     public void updateIntersectionLocations(){
         for(int i = 0; i < intersections.size(); i++){
@@ -324,6 +338,7 @@ public class PathXLevel {
     public void setIngame(boolean in){ inGame = in;
         if(inGame){
             this.startPolicePathing();
+            this.startZombiePathing();
         }
     }
     public boolean inGame(){ return inGame; }
@@ -348,6 +363,12 @@ public class PathXLevel {
     public int getNumIntersections(){ return intersections.size(); }
     public void setNumPolice(int police){ numPolice = police; }
     public int getNumPolice(){ return numPolice; }
+    public void setNumZombies(int zom){ numZombies = zom; }
+    public void setNumBandits(int band){ numBandits = band; }
+    public int getNumBandits(){ return numBandits; }
+    public int getNumZombies(){ return numZombies; }
+    public void setUnlocked(boolean un){ unlocked = un; }
+    public boolean unlocked(){ return unlocked; }
     
     public void addIntersection(PathXIntersection newIntersection){
         newIntersection.setId(intersections.size());
@@ -397,6 +418,8 @@ public class PathXLevel {
             updateRoadLocations();
             updatePlayerLocations();
             updatePoliceLocations();
+            updateZombieLocations();
+            updateBanditLocations();
         }
         //i++;
         
@@ -412,6 +435,20 @@ public class PathXLevel {
     
     public void updatePoliceLocations(){
         for(PathXCar po : police){
+            po.setRenderX(po.getX() - vp.getViewportX());// + 150 - 12);
+            po.setRenderY(po.getY() - vp.getViewportY());// + 150 - 12);
+        }
+    }
+    
+    public void updateZombieLocations(){
+        for(PathXCar po : zombies){
+            po.setRenderX(po.getX() - vp.getViewportX());// + 150 - 12);
+            po.setRenderY(po.getY() - vp.getViewportY());// + 150 - 12);
+        }
+    }
+    
+    public void updateBanditLocations(){
+        for(PathXCar po : bandits){
             po.setRenderX(po.getX() - vp.getViewportX() + 150 - 12);
             po.setRenderY(po.getY() - vp.getViewportY() + 150 - 12);
         }
@@ -427,11 +464,12 @@ public class PathXLevel {
     }
     
     public void intiPolice(){
-        int temp;
+        int temp = 0;
         PathXCar po;
         for(int i = 0; i < numPolice; i++){
             
-            temp = (int)((Math.random()) * intersections.size()) ;
+            while(temp == 0)
+                temp = (int)((Math.random()) * intersections.size()) ;
             po = new PathXCar(PathXCarType.POLICE_TYPE.toString(), temp);
             po.setX(intersections.get(temp).getX());
             po.setY(intersections.get(temp).getY());
@@ -442,8 +480,118 @@ public class PathXLevel {
         }
     }
     
+    public void intiZombies(){
+        int temp;
+        PathXCar zom;
+        for(int i = 0; i < numZombies; i++){
+            
+            temp = (int)((Math.random()) * intersections.size()) ;
+            zom = new PathXCar(PathXCarType.ZOMBIE_TYPE.toString(), temp);
+            zom.setX(intersections.get(temp).getX());
+            zom.setY(intersections.get(temp).getY());
+            zom.setRenderX(intersections.get(temp).getRenderX());//po.getX() + 180 - vp.getViewportX());
+            zom.setRenderY(intersections.get(temp).getRenderY());//po.getY() + 20 - vp.getViewportY());
+            zom.setIntersectionId(temp);
+            zombies.add(zom);
+        }
+    }
+    
+    public void initZombiePath(){
+        ArrayList<Integer> path;
+        for(PathXCar zom : zombies){
+            path = new ArrayList<>();
+            int startingNode = zom.getIntersection();
+            int nextNode = 0;
+            int currentNode = startingNode;
+            int prevNode = -1;
+            ArrayList<Integer> adjacentNodes;
+            boolean look = true, cont = true;
+            path.add(startingNode);
+            while(cont){
+                look = true;
+                adjacentNodes = intersections.get(currentNode).getAdjacentNodes();
+                while(look){
+                    nextNode = (int)(Math.random() * adjacentNodes.size());
+                    nextNode = adjacentNodes.get(nextNode);
+                    if(nextNode != prevNode)
+                        look = false;
+                } // end look while
+                path.add(nextNode);
+                prevNode = currentNode;
+                currentNode = nextNode;
+                if(currentNode == startingNode)
+                    cont = false;
+            }//end cont while
+            //the intersection nodes are selected now lets create the x,y coord path
+            //that the zombie will take
+            
+            for(int i = 0; i < path.size() - 1; i++){
+                for(PathXRoad rd : roads){
+                    if(rd.oneWay()){
+                        //intersection check if
+                        if(rd.getId1() == (int)path.get(i) && rd.getId2() == (int)path.get(i+1)){ 
+                            ArrayList<Integer> tempx = rd.getXList();
+                            ArrayList<Integer> tempy = rd.getYList();
+                            //add the coords of the road to the zombies path
+                            for(int j = 0; j < tempx.size(); j++){         
+                                zom.addIntergectionToPath(tempx.get(j));
+                                zom.addIntergectionToPath(tempy.get(j));
+                            }
+                        }// end intersection check if
+                    } else {//end oneway if 
+                        if(rd.getId1() == (int)path.get(i) && rd.getId2() == (int)path.get(i+1)){ 
+                            ArrayList<Integer> tempx = rd.getXList();
+                            ArrayList<Integer> tempy = rd.getYList();
+                            //add the coords of the road to the zombies path
+                            for(int j = 0; j < tempx.size(); j++){         
+                                zom.addIntergectionToPath(tempx.get(j));
+                                zom.addIntergectionToPath(tempy.get(j));
+                            }
+                        } else {
+                            if(rd.getId2() == (int)path.get(i) && rd.getId1() == (int)path.get(i+1)){ 
+                                ArrayList<Integer> tempx = rd.getXList();
+                                ArrayList<Integer> tempy = rd.getYList();
+                                //add the coords of the road to the zombies path
+                                for(int j = tempx.size() - 1; j > 0; j--){         
+                                    zom.addIntergectionToPath(tempx.get(j));
+                                    zom.addIntergectionToPath(tempy.get(j));
+                                }
+                            }
+                        }
+                    }
+                }//end roads for loop
+            }//end int i for loop
+            
+        }//end for loop
+        System.out.println("T");
+    }
+    
+    public void intiBandits(){
+        int temp;
+        PathXCar ban;
+        for(int i = 0; i < numZombies; i++){
+            
+            temp = (int)((Math.random()) * intersections.size()) ;
+            ban = new PathXCar(PathXCarType.BANDIT_TYPE.toString(), temp);
+            ban.setX(intersections.get(temp).getX());
+            ban.setY(intersections.get(temp).getY());
+            ban.setRenderX(intersections.get(temp).getRenderX());//po.getX() + 180 - vp.getViewportX());
+            ban.setRenderY(intersections.get(temp).getRenderY());//po.getY() + 20 - vp.getViewportY());
+            ban.setIntersectionId(temp);
+            bandits.add(ban);
+        }
+    }
+    
     public ArrayList<PathXCar> getPolice(){
         return (ArrayList<PathXCar>)police;
+    }
+    
+    public ArrayList<PathXCar> getZombies(){
+        return (ArrayList<PathXCar>)zombies;
+    }
+    
+    public ArrayList<PathXCar> getBandits(){
+        return (ArrayList<PathXCar>)bandits;
     }
     
     public PathXIntersection getIntersection(int id){
@@ -468,7 +616,15 @@ public class PathXLevel {
         for(PathXCar cp : police){
             move = new MovePolice(cp);
             move.start();
-            System.out.println("TEST!!!!");
+        }
+    }
+    
+    public void startZombiePathing(){
+        MoveZombie move;
+        this.initZombiePath();
+        for(PathXCar zom : zombies){
+            move = new MoveZombie(zom);
+            move.start();
         }
     }
     
@@ -483,21 +639,32 @@ public class PathXLevel {
         }
         
         public void run(){
+            int prevNode = -1;
             PathXIntersection inter;
             ArrayList<Integer> adjacent;
             int nextNode = -1;
             ArrayList<Integer> x;
             ArrayList<Integer> y;
+            boolean cont = true, look = true;
             while(inGame){
                 id = cop.getIntersection();
                 inter = intersections.get(id);
                 adjacent = inter.getAdjacentNodes();
-                while(nextNode != id)
+                Iterator<PathXRoad> road;
+                look = true;
+                while(look){
                     nextNode = (int)(Math.random() * adjacent.size());
-                for(PathXRoad rd :inter.getRoads()){
+                    nextNode = adjacent.get(nextNode);
+                    if(!(prevNode == nextNode) && nextNode != 0){
+                        look = false;
+                    }
+                }
+                    road = roads.iterator();
+                while(road.hasNext() && cont){
+                    PathXRoad rd = road.next();
                     if(rd.oneWay()){
-                        if(nextNode == rd.getId2()){
-                            wait = 100 -rd.getSpeedLimit();
+                        if(nextNode == rd.getId2() && id == rd.getId1()){
+                            wait = 125 -rd.getSpeedLimit();
                             x = rd.getXList();
                             y = rd.getYList();
                             for(int i = 0; i < x.size(); i++){
@@ -515,12 +682,14 @@ public class PathXLevel {
                                 }
                                 
                             }
-                            
+                            cont = false;
+                            prevNode = id;
                             cop.setIntersectionId(rd.getId2());
+                            break;
                         }
                     } else { //if the road it two way
-                        if(nextNode == rd.getId1()){
-                            wait = 100 -rd.getSpeedLimit();
+                        if(nextNode == rd.getId1() && id == rd.getId2()){
+                            wait = 125 -rd.getSpeedLimit();
                             x = rd.getXList();
                             y = rd.getYList();
                             for(int i = x.size() - 1; i > 0; i--){
@@ -538,10 +707,13 @@ public class PathXLevel {
                                 }
                                 
                             }
+                            cont = false;
+                            prevNode = id;
                             cop.setIntersectionId(rd.getId1());
+                            break;
                         } else {
-                            if(nextNode == rd.getId2()){
-                            wait = 100 -rd.getSpeedLimit();
+                            if(nextNode == rd.getId2() && id == rd.getId1()){
+                            wait = 125 -rd.getSpeedLimit();
                             x = rd.getXList();
                             y = rd.getYList();
                             for(int i = 0; i < x.size(); i++){
@@ -559,12 +731,48 @@ public class PathXLevel {
                                 }
                                 
                             }
+                            cont = false;
+                            prevNode = id;
                             cop.setIntersectionId(rd.getId2());
+                            break;
                             }
                         }
                     }
-                }
+                }//end inner while
+                cont = true;
             }//end while
+        }//end run method
+        
+    }//end thread class
+    
+    class MoveZombie extends Thread{
+        
+        PathXCar zombie;
+        int id;
+        long wait;
+        
+        MoveZombie(PathXCar zom){
+            zombie = zom;
+        }
+        
+        public void run(){
+            ArrayList<Integer> path = zombie.getPath();
+            while(inGame){
+                int wait = 50;
+                for(int i = 0; i < path.size() - 2; i += 2){
+                    if(paused)
+                        i -= 2;
+                    zombie.setRenderX(path.get(i) - vp.getViewportX());
+                    zombie.setRenderY(path.get(i+1) - vp.getViewportY());
+                    zombie.setX(path.get(i));
+                    zombie.setY(path.get(i + 1));
+                    try {
+                        Thread.sleep(wait);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                        }       
+                }//end for loop
+            }//end while loop
         }//end run method
         
     }//end thread class

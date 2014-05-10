@@ -6,7 +6,7 @@
 
 package pathx.data;
 
-import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /**
  *
@@ -26,6 +26,8 @@ public class PathXCar {
     
     private int intersectionId;
     
+    private ArrayList<Integer> path;
+    
     public PathXCar(String carType, int id){
         
         type = carType;
@@ -34,6 +36,7 @@ public class PathXCar {
         
         inMotion = false;
         
+        path = new ArrayList<>();
         
         
     }
@@ -55,5 +58,11 @@ public class PathXCar {
     
     public int getIntersection(){ return intersectionId; }
     public void setIntersectionId(int id){ intersectionId = id; }
+    
+    public void addIntergectionToPath(int intersectionId){ path.add(intersectionId); }
+    
+    public ArrayList<Integer> getPath(){
+            return path;
+    }
     
 }

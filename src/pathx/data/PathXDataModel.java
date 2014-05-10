@@ -252,7 +252,17 @@ public class PathXDataModel extends MiniGameDataModel{
                 int police = Integer.parseInt(temp.getNamedItem("num").getNodeValue());
                 newLevel.setNumPolice(police);
                 
+                //get the num zombies
+                node = xmlUtil.getNodeWithName(doc, "zombies");
+                temp = node.getAttributes();
+                int zombies = Integer.parseInt(temp.getNamedItem("num").getNodeValue());
+                newLevel.setNumZombies(zombies);
                 
+                //get the num bandits
+                node = xmlUtil.getNodeWithName(doc, "bandits");
+                temp = node.getAttributes();
+                int bandits = Integer.parseInt(temp.getNamedItem("num").getNodeValue());
+                newLevel.setNumBandits(bandits);
                 
                 //get the location
                 node = xmlUtil.getNodeWithName(doc, "x");
@@ -284,6 +294,9 @@ public class PathXDataModel extends MiniGameDataModel{
                 newLevel.updateRoadLocations();
                 newLevel.initConnections();
                 newLevel.intiPolice();
+                newLevel.intiZombies();
+                //newLevel.initZombiePath();
+                newLevel.intiBandits();
                // newLevel.initPlayerLocation();
                 
                 
@@ -297,6 +310,7 @@ public class PathXDataModel extends MiniGameDataModel{
             
         }
     }
+    
     
     public PathXLevel getLevel(int levelNum){
         return levels.get(levelNum);
