@@ -73,6 +73,10 @@ public class PathXLevel {
     private boolean started;
     
     MovePolice move;
+    
+    private double playerSpeed;
+    
+    private boolean showEndDialog;
 
     
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
@@ -129,6 +133,11 @@ public class PathXLevel {
         paused = false;
         
         started = false;
+        
+        showEndDialog = false;
+        
+        playerSpeed = 1.0;
+        
     }
     
     public void setLocation(int xPos, int yPos){
@@ -189,7 +198,7 @@ public class PathXLevel {
                 
                     public MovePlayer(PathXRoad rd, boolean forward){ 
                         road = rd; 
-                        wait = 125 -road.getSpeedLimit();// * 100;
+                        wait = (long)((110 -road.getSpeedLimit()) * playerSpeed);// * 100;
                         this.forward = forward;
                     }
                 
@@ -202,10 +211,13 @@ public class PathXLevel {
                                 if(paused){
                                     i--;
                                 }
+                                if(!inGame)
+                                    break;
                                 player.setRenderX(road.getXPosition(i) - vp.getViewportX());
                                 player.setRenderY(road.getYPosition(i) - vp.getViewportY());
                                 player.setX(road.getXPosition(i));
                                 player.setY(road.getYPosition(i));
+                                wait = (long)((110 -road.getSpeedLimit()) * playerSpeed);
                                 try {
                                     Thread.sleep(wait);
                                 } catch (InterruptedException ex) {
@@ -213,10 +225,11 @@ public class PathXLevel {
                                 }
                                 
                             }
-                            
                             player.setIntersectionId(road.getId2());
                         } else { 
                             for(int i = x.size() - 1; i > 0; i--){
+                                if(!inGame)
+                                    break;
                                 player.setRenderX(road.getXPosition(i) - vp.getViewportX());
                                 player.setRenderY(road.getYPosition(i) - vp.getViewportY());
                                 player.setX(road.getXPosition(i));
@@ -251,18 +264,42 @@ public class PathXLevel {
         
     }
     
+    public void respondToZombieCollision(){
+        playerSpeed = playerSpeed - 0.1;
+        if(playerSpeed == 0){
+            endGameAsLoss();
+        }
+    }
+    
     public void endGameAsWin(){
         System.out.println("YOU WIN!");
         won = true;
         this.setState(PathXLevelState.COMPLETED_STATE.toString());
         inGame = false;
+        showEndDialog = true;
     }
     
     public void endGameAsLoss(){
         System.out.println("YOU LOSE");
         won = false;
         inGame = false;
+        showEndDialog = true;
         
+    }
+    
+    public void resetLevel(){
+        //setLocation(0,0);
+        this.initPlayerLocation();
+        player.setIntersectionId(0);
+        //this.intiZombies();
+        this.intiPolice();
+        //this.intiBandits();
+        //this.intiBandits();
+        showEndDialog = false;
+    }
+    
+    public boolean showEndDialog(){
+        return showEndDialog;
     }
     
     public void updateIntersectionLocations(){
@@ -442,8 +479,6 @@ public class PathXLevel {
         
     }
     
-    
-    
     public void updatePlayerLocations(){
         //PathXRoad rd = intersections.get(0).getRoads().get(0);
         player.setRenderX(player.getX() - vp.getViewportX());
@@ -477,12 +512,12 @@ public class PathXLevel {
         player.setX(intersections.get(0).getRoads().get(0).getXPosition(0) + 165 - vp.getViewportX() - 12);
         player.setY(intersections.get(0).getRoads().get(0).getYPosition(0) + 165 - vp.getViewportY() - 12);
         
-        
     }
     
     public void intiPolice(){
         int temp = 0;
         PathXCar po;
+        police = new ArrayList<>();
         for(int i = 0; i < numPolice; i++){
             
             while(temp == 0)
@@ -670,6 +705,10 @@ public class PathXLevel {
                 Iterator<PathXRoad> road;
                 look = true;
                 while(look){
+                    if(adjacent.size() == 1){
+                        nextNode = adjacent.get(0);
+                        break;
+                    }
                     nextNode = (int)(Math.random() * adjacent.size());
                     nextNode = adjacent.get(nextNode);
                     if(!(prevNode == nextNode) && nextNode != 0){
@@ -688,6 +727,9 @@ public class PathXLevel {
                                 if(paused){
                                     i--;
                                 }
+                                if(!inGame){
+                                    break;
+                                }
                                 cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
                                 cop.setRenderY(rd.getYPosition(i) - vp.getViewportY());
                                 cop.setX(rd.getXPosition(i));
@@ -701,6 +743,9 @@ public class PathXLevel {
                                     Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 
+                            }
+                            if(!inGame){
+                                break;
                             }
                             cont = false;
                             prevNode = id;
@@ -716,6 +761,9 @@ public class PathXLevel {
                                 if(paused){
                                     i++;
                                 }
+                                if(!inGame){
+                                    break;
+                                }
                                 cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
                                 cop.setRenderY(rd.getYPosition(i) - vp.getViewportY());
                                 cop.setX(rd.getXPosition(i));
@@ -726,6 +774,9 @@ public class PathXLevel {
                                     Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 
+                            }
+                            if(!inGame){
+                                break;
                             }
                             cont = false;
                             prevNode = id;
@@ -740,6 +791,9 @@ public class PathXLevel {
                                 if(paused){
                                     i--;
                                 }
+                                if(!inGame){
+                                    break;
+                                }
                                 cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
                                 cop.setRenderY(rd.getYPosition(i) - vp.getViewportY());
                                 cop.setX(rd.getXPosition(i));
@@ -750,6 +804,9 @@ public class PathXLevel {
                                     Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                                 }
                                 
+                            }
+                            if(!inGame){
+                                break;
                             }
                             cont = false;
                             prevNode = id;
@@ -794,6 +851,9 @@ public class PathXLevel {
                             Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                         }       
                 }//end for loop
+                if(!inGame){
+                    break;
+                }
             }//end while loop
         }//end run method
         

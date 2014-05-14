@@ -70,6 +70,8 @@ public class PathXDataModel extends MiniGameDataModel{
     
     public static String CURRENT_VIEWPORT_IMG;
     
+    private boolean triggered;
+    
     public PathXDataModel(MiniGame initMiniGame)
     {
         // KEEP THE GAME FOR LATER
@@ -87,6 +89,7 @@ public class PathXDataModel extends MiniGameDataModel{
         prevMoves = new Stack();
         levels = new ArrayList<PathXLevel>();
         balance = 1000;  
+        triggered = false;
         viewports = new TreeMap<String, Viewport>();
     }
     
@@ -97,6 +100,8 @@ public class PathXDataModel extends MiniGameDataModel{
     }
     
     public void unlockNextLevel(int levelJustCompleted){
+        if(levelJustCompleted + 1 == levels.size())
+            return;
         levels.get(levelJustCompleted + 1).setState(PathXLevelState.AVAILABLE_STATE.toString());
         balance += levels.get(levelJustCompleted).getReward();
         levels.get(levelJustCompleted).setReward(0);
@@ -118,10 +123,24 @@ public class PathXDataModel extends MiniGameDataModel{
         
     }
     
+    public void zombieCollision(){
+        miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_ZOMBIE.toString(), false);
+        levels.get(currentLevelint).respondToZombieCollision();
+    }
+    
     @Override
     public void endGameAsLoss(){
         levels.get(currentLevelint).endGameAsLoss();
+        miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_LOSS.toString(), false);
+        balance = balance - (int)(balance * .1);
+    }
+    
+    public void policeCollision(){
         miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_POLICE.toString(), false);
+        if(!triggered){
+            endGameAsLoss();
+            triggered = true;
+        }
     }
     
     public void initGameplayViewPort(){

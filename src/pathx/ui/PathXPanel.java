@@ -289,7 +289,8 @@ public class PathXPanel extends JPanel {
             int px = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
             int py = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
             if((x == px && y == py) || (zx == px && zy == py)){
-                data.endGameAsLoss();
+                data.policeCollision();
+//                data.endGameAsLoss();
                 
             }
             //System.out.println("(" + x + ", " + y + ")");
@@ -312,6 +313,14 @@ public class PathXPanel extends JPanel {
             p.lockData();
             int x = p.getRenderX();
             int y = p.getRenderY();
+            int zx = p.getX();
+            int zy = p.getY();
+            int px = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
+            int py = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
+            if((x == px && y == py) || (zx == px && zy == py)){
+                data.zombieCollision();
+                
+            }
             //System.out.println("(" + x + ", " + y + ")");
         
             Sprite s = ((PathXMiniGame)game).getGuiEntities().get(ZOMBIE_TYPE);
@@ -594,29 +603,44 @@ public class PathXPanel extends JPanel {
         //used for rendering the level description dialog
         //renderLevelDescription(false, text);
         if(((PathXMiniGame)game).isCurrentScreenState(GAMEPLAY_SCREEN_STATE)){
+            
+            if(((PathXDataModel)data).getLevel(((PathXDataModel)data).getCurrentLevelInt()).showEndDialog()){
+//                game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
+//                
+//                
+//                game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setState(VISIBLE_STATE);
+//                game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setEnabled(true);
+//                renderSprite(g, game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE));
+//                
+//                
+//                game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setState(VISIBLE_STATE);
+//                game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setEnabled(true);
+//                renderSprite(g, game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE));
+                if(((PathXDataModel)data).getLevel(((PathXDataModel)data).getCurrentLevelInt()).wonLevel()){
+                    text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription() + "\nYou Win! You got away with $" + data.getLevel(data.getCurrentLevelInt()).getReward());
+                    this.add(text);
+                } else {
+                    text.setText("Bad News!\nYou you have been caught. The legal Bills will cost you $" + (data.getBalance() * .1));
+                    this.add(text);
+                }
+                text.setLocation(200, 150);
+                ((PathXMiniGame)game).showWinDialog();
+            } else {
             if(game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
+                text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription() + "\nPolice: " + data.getLevel(data.getCurrentLevelInt()).getNumPolice());
+                this.add(text);
+                text.setLocation(200, 150);
                 g.setFont(FONT_BALANCE);
                 g.drawString(((PathXDataModel)game.getDataModel()).getCurrentLevel(), LEVEL_NAME_DIALOG_X, LEVEL_NAME_DIALOG_Y);
                 
             }
-            
-            if(((PathXDataModel)data).getLevel(((PathXDataModel)data).getCurrentLevelInt()).wonLevel()){
-                game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
-                
-                
-                game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setState(VISIBLE_STATE);
-                game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setEnabled(true);
-                renderSprite(g, game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE));
-                
-                
-                game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setState(VISIBLE_STATE);
-                game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setEnabled(true);
-                renderSprite(g, game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE));
             }
             
-            renderLevelDescription(((PathXMiniGame)game).renderDescription(), text);
+            
+            //if(((PathXMiniGame)game).renderDescription())
+                //renderLevelDescription(((PathXMiniGame)game).renderDescription(), text);
         }
-        
+        renderLevelDescription(((PathXMiniGame)game).renderDescription(), text);
     }
     
     /**
@@ -642,9 +666,9 @@ public class PathXPanel extends JPanel {
     {
         // ONLY RENDER THE VISIBLE ONES
 
-                text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription() + "\nPolice: " + data.getLevel(data.getCurrentLevelInt()).getNumPolice());
-                this.add(text);
-                text.setLocation(200, 150);
+//                text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription() + "\nPolice: " + data.getLevel(data.getCurrentLevelInt()).getNumPolice());
+//                this.add(text);
+//                text.setLocation(200, 150);
                 if(enable && !text.isVisible())
                     text.setVisible(true);
                 else 

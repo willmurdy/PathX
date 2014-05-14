@@ -76,7 +76,7 @@ public class PathXMiniGame extends MiniGame{
             // LOAD ALL THE AUDIO
             loadAudioCue(PathXPropertyType.AUDIO_CUE_POLICE);
             loadAudioCue(PathXPropertyType.AUDIO_CUE_LOSS);
-//            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_GOOD_MOVE);
+            loadAudioCue(PathXPropertyType.AUDIO_CUE_ZOMBIE);
 //            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_BAD_MOVE);
 //            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_CHEAT);
 //            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_UNDO);
@@ -235,6 +235,8 @@ public class PathXMiniGame extends MiniGame{
        ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(LEVEL_SCREEN_STATE);
        
+       guiDialogs.get(END_DIALOG_TYPE).setState(INVISIBLE_STATE);
+       
 //       guiDecor.get(INTERSECTION_TYPE).setState(INVISIBLE_STATE);
        BufferedImage img;
         float x, y;
@@ -274,6 +276,8 @@ public class PathXMiniGame extends MiniGame{
        }
        
        currentScreenState = LEVEL_SELECT_SCREEN_STATE;
+       
+       renderDescription = false;
         
     }
     
@@ -454,6 +458,20 @@ public class PathXMiniGame extends MiniGame{
        
        currentScreenState = GAMEPLAY_SCREEN_STATE;
         
+    }
+    
+    public void showWinDialog(){
+                 guiDialogs.get(END_DIALOG_TYPE).setState(VISIBLE_STATE);
+                
+                
+                guiButtons.get(TRY_AGAIN_BUTTON_TYPE).setState(VISIBLE_STATE);
+                guiButtons.get(TRY_AGAIN_BUTTON_TYPE).setEnabled(true);
+                
+                
+                guiButtons.get(LEAVE_TOWN_BUTTON_TYPE).setState(VISIBLE_STATE);
+                guiButtons.get(LEAVE_TOWN_BUTTON_TYPE).setEnabled(true);
+                
+                renderDescription = true;
     }
 
     @Override
@@ -780,6 +798,13 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(VISIBLE_STATE, img);
         s = new Sprite(sT, LEVEL_DIALOG_X, LEVEL_DIALOG_Y, 0, 0, INVISIBLE_STATE);
         guiDialogs.put(LEVEL_DIALOG_TYPE, s);
+        
+        sT = new SpriteType(END_DIALOG_TYPE);
+        String endDialog = props.getProperty(PathXPropertyType.IMAGE_DIALOG_END);
+        img = loadImageWithColorKey(imgPath + endDialog, COLOR_KEY);
+        sT.addState(VISIBLE_STATE, img);
+        s = new Sprite(sT, LEVEL_DIALOG_X, LEVEL_DIALOG_Y, 0, 0, INVISIBLE_STATE);
+        guiDialogs.put(END_DIALOG_TYPE, s);
 
      }
 

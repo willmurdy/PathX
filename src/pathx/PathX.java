@@ -93,6 +93,7 @@ public class PathX {
         IMAGE_LEVEL_LOCKED_MOUSE_OVER,
         
         IMAGE_DIALOG_LEVEL,
+        IMAGE_DIALOG_END,
         
         IMAGE_BUTTON_NEW,
         IMAGE_BUTTON_NEW_MOUSE_OVER,
@@ -182,7 +183,7 @@ public class PathX {
         /* AUDIO CUES */
         AUDIO_CUE_POLICE,
         AUDIO_CUE_LOSS,
-        AUDIO_CUE_DESELECT_TILE,
+        AUDIO_CUE_ZOMBIE,
         AUDIO_CUE_GOOD_MOVE,
         AUDIO_CUE_SELECT_TILE,
         AUDIO_CUE_UNDO,

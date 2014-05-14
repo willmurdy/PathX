@@ -85,6 +85,7 @@ public class PathXConstants {
     public static final String WIN_DIALOG_TYPE = "WIN_DIALOG_TYPE";
     public static final String STATS_DIALOG_TYPE = "STATS_DIALOG_TYPE";
     public static final String LEVEL_DIALOG_TYPE = "LEVEL_DIALOG_TYPE";
+    public static final String END_DIALOG_TYPE = "END_DIALOG_TYPE";
     
     // WE'LL USE THESE STATES TO CONTROL SWITCHING BETWEEN THE TWO
     public static final String MENU_SCREEN_STATE = "MENU_SCREEN_STATE";

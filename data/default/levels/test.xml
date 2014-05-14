@@ -27,9 +27,9 @@
      <start_intersection id="0" image="StartingLocation.png"/>
      <destination_intersection id="1" image="EndLocation.png"/>
      <money amount="0"/>
-     <police num="0"/>
+     <police num="1"/>
      <bandits num="0"/>
-     <zombies num="0"/>
+     <zombies num="1"/>
      <x num="500"/>
      <y num="250"/>
 </level>

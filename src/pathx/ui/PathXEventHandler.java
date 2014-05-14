@@ -141,6 +141,7 @@ public class PathXEventHandler {
             data.unlockNextLevel(data.getCurrentLevelInt());
         }
         data.getLevel(data.getCurrentLevelInt()).setIngame(false);
+        data.getLevel(data.getCurrentLevelInt()).resetLevel();
         data.setViewportState(LEVEL_SELECT_SCREEN_STATE);
         data.setCurrentLevel(-1);
         respondToCloseRequest();
