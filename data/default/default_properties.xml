@@ -64,6 +64,11 @@
         <property name="PAUSE_BUTTON_IMAGE_NAME"        value="./default/ButtonPause.png"></property>
         <property name="PAUSE_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPauseMouseOver.png"></property>
         
+        <property name="TRY_AGAIN_BUTTON_IMAGE_NAME"        value="./default/ButtonTryAgain.png"></property>
+        <property name="TRY_AGAIN_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonTryAgainMouseOver.png"></property>
+        <property name="LEAVE_TOWN_BUTTON_IMAGE_NAME"        value="./default/ButtonLeaveTown.png"></property>
+        <property name="LEAVE_TOWN_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonLeaveTownMouseOver.png"></property>
+        
  
         <property name="IMAGE_SPECIALS_REDLIGHT"             value="./default/UpgradeRedLight.png"></property>
         <property name="IMAGE_SPECIALS_REDLIGHT_MOUSE_OVER"             value="./default/UpgradeRedLightMouseOver.png"></property>
@@ -102,8 +107,8 @@
         	An error has occurred"></property>                
         
         <!-- AUDIO FILES -->
-        <property name="AUDIO_CUE_BAD_MOVE"                 value="./default/BadMove.wav"></property>
-        <property name="AUDIO_CUE_CHEAT"                    value="./default/Cheat.wav"></property>
+        <property name="AUDIO_CUE_POLICE"                 value="./default/AudioPolice.wav"></property>
+        <property name="AUDIO_CUE_LOSS"                    value="./default/AudioLose.wav"></property>
         <property name="AUDIO_CUE_DESELECT_TILE"            value="./default/DeselectTile.wav"></property>
         <property name="AUDIO_CUE_GOOD_MOVE"                value="./default/GoodMove.wav"></property>
         <property name="AUDIO_CUE_SELECT_TILE"              value="./default/SelectTile.wav"></property>
@@ -127,6 +132,8 @@
             <option>level4.xml</option>
             <option>new.xml</option>
             <option>12.xml</option>
+            <option>Salt Lake City.xml</option>
+            <option>test123.xml</option>
         </property_options>
     </property_options_list>
 </properties>

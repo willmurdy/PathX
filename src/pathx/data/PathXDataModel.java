@@ -19,6 +19,7 @@ import mini_game.Viewport;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
+import pathx.PathX;
 import static pathx.PathX.PathXPropertyType.LEVEL_IMG_PATH;
 import static pathx.PathX.PathXPropertyType.LEVEL_OPTIONS_FILES;
 import static pathx.PathX.PathXPropertyType.LEVEL_PATH;
@@ -95,6 +96,12 @@ public class PathXDataModel extends MiniGameDataModel{
         return true;
     }
     
+    public void unlockNextLevel(int levelJustCompleted){
+        levels.get(levelJustCompleted + 1).setState(PathXLevelState.AVAILABLE_STATE.toString());
+        balance += levels.get(levelJustCompleted).getReward();
+        levels.get(levelJustCompleted).setReward(0);
+    }
+    
     public void initLevelSelectionViewport(){
         
         Viewport vp = new Viewport();
@@ -109,6 +116,12 @@ public class PathXDataModel extends MiniGameDataModel{
         
         viewports.put(LEVEL_SCREEN_STATE, vp);
         
+    }
+    
+    @Override
+    public void endGameAsLoss(){
+        levels.get(currentLevelint).endGameAsLoss();
+        miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_POLICE.toString(), false);
     }
     
     public void initGameplayViewPort(){
@@ -220,7 +233,7 @@ public class PathXDataModel extends MiniGameDataModel{
 
                 }
                 
-                this.initRoadCoords();
+//                this.initRoadCoords();
                 
                 
                 
@@ -276,15 +289,13 @@ public class PathXDataModel extends MiniGameDataModel{
                 
                 
                 
-//                if(aval){
+                if(i == 0){
                     newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString());
-//                    newLevel.setLocation(305, 405);
-//                    aval = false;
-//                }
-//                else{
-//                   newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString()); 
-//                   newLevel.setLocation(400 + i, 505 + i);
-//                }
+                    //i++;
+                }
+                else{
+                   newLevel.setState(PathXLevelState.LOCKED_STATE.toString()); 
+                }
                 
                 newLevel.setLevelDescription("TEST");
             
@@ -297,7 +308,7 @@ public class PathXDataModel extends MiniGameDataModel{
                 newLevel.intiZombies();
                 //newLevel.initZombiePath();
                 newLevel.intiBandits();
-               // newLevel.initPlayerLocation();
+//               newLevel.initPlayerLocation();
                 
                 
                 levels.add(newLevel);
@@ -309,6 +320,8 @@ public class PathXDataModel extends MiniGameDataModel{
             }
             
         }
+        
+        this.initRoadCoords();
     }
     
     

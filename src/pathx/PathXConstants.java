@@ -55,6 +55,8 @@ public class PathXConstants {
     public static final String VIEW_HELP_BUTTON_TYPE = "VIEW_HELP_BUTTON_TYPE";
     public static final String QUIT_GAME_BUTTON_TYPE = "QUIT_GAME_BUTTON_TYPE";
     public static final String CLOSE_BUTTON_TYPE = "CLOSE_BUTTON_TYPE";
+    public static final String TRY_AGAIN_BUTTON_TYPE = "TRY_AGAIN_BUTTON_TYPE";
+    public static final String LEAVE_TOWN_BUTTON_TYPE = "LEAVE_TOWN_BUTTON_TYPE";
     
     public static final String HOME_BUTTON_TYPE = "HOME_BUTTON_TYPE";
     public static final String RIGHT_BUTTON_TYPE = "RIGHT_BUTTON_TYPE";
@@ -181,6 +183,10 @@ public class PathXConstants {
     public static final int CLOSE_BUTTON_Y = LEVEL_DIALOG_Y + 375;
     public static final int JTEXTAREA_X = LEVEL_NAME_DIALOG_X;          //changed
     public static final int JTEXTAREA_Y = LEVEL_NAME_DIALOG_Y + 150;
+    public static final int TRY_AGAIN_BUTTON_X = LEVEL_DIALOG_X + 35;          //changed
+    public static final int TRY_AGAIN_BUTTON_Y = LEVEL_DIALOG_Y + 375;
+    public static final int LEAVE_TOWN_BUTTON_X = TRY_AGAIN_BUTTON_X + 230;          //changed
+    public static final int LEAVE_TOWN_BUTTON_Y = TRY_AGAIN_BUTTON_Y;
     
     public static final int LEVEL_NAME_X = 600;          //changed
     public static final int LEVEL_NAME_Y = 600;

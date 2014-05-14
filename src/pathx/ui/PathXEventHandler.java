@@ -126,15 +126,25 @@ public class PathXEventHandler {
     {
         game.getGUIButtons().get(CLOSE_BUTTON_TYPE).setState(INVISIBLE_STATE);
         game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).setState(INVISIBLE_STATE);
+        game.setRenderDescription(false);
+    }
+    
+    public void respondToStartRequest(){
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.getLevel(data.getCurrentLevelInt()).startGame();
     }
     
     public void respondToBackRequest()
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
+        if(data.getLevel(data.getCurrentLevelInt()).wonLevel()){
+            data.unlockNextLevel(data.getCurrentLevelInt());
+        }
         data.getLevel(data.getCurrentLevelInt()).setIngame(false);
         data.setViewportState(LEVEL_SELECT_SCREEN_STATE);
         data.setCurrentLevel(-1);
         respondToCloseRequest();
+        game.setRenderDescription(false);
         game.switchToLevelSelectScreen();
     }
     
@@ -152,6 +162,12 @@ public class PathXEventHandler {
     public void respondToIntersectionRequest(int id){
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.getLevel(data.getCurrentLevelInt()).movePlayerToIntersection(id);
+    }
+    
+    public void respondToTryAgainRequest(){
+    }
+    
+    public void respondToLeaveTownRequest(){
     }
     
     /**

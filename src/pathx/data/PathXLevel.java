@@ -16,6 +16,7 @@ import mini_game.Viewport;
 import static pathx.PathXConstants.NORTH_PANEL_HEIGHT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_LEFT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_TOP;
+import static pathx.data.PathXLevelState.COMPLETED_STATE;
 
 /**
  *
@@ -69,6 +70,9 @@ public class PathXLevel {
     private int numBandits;
     
     private boolean unlocked;
+    private boolean started;
+    
+    MovePolice move;
 
     
     public PathXLevel(int xPos, int yPos, Viewport gameViewport, String state, String name,
@@ -103,6 +107,8 @@ public class PathXLevel {
         
         paused = false;
         
+        started = false;
+        
     }
     
     public PathXLevel(){
@@ -121,6 +127,8 @@ public class PathXLevel {
         won = false;
         
         paused = false;
+        
+        started = false;
     }
     
     public void setLocation(int xPos, int yPos){
@@ -145,7 +153,7 @@ public class PathXLevel {
         PathXRoad roadToTravel = new PathXRoad();
         boolean found = false;
         boolean forward = true;
-        if(!player.inMotion()){
+        if(!player.inMotion() && started){
             intersectionId = player.getIntersection();
             intersection = intersections.get(intersectionId);
             roads = intersection.getRoads();
@@ -241,13 +249,20 @@ public class PathXLevel {
         
         }
         
-        if(player.getIntersection() == 1){
-            won = true;
-        }
     }
     
     public void endGameAsWin(){
         System.out.println("YOU WIN!");
+        won = true;
+        this.setState(PathXLevelState.COMPLETED_STATE.toString());
+        inGame = false;
+    }
+    
+    public void endGameAsLoss(){
+        System.out.println("YOU LOSE");
+        won = false;
+        inGame = false;
+        
     }
     
     public void updateIntersectionLocations(){
@@ -330,17 +345,18 @@ public class PathXLevel {
             }
         }
     }
+    
+    public void startGame(){
+        started = true;
+        this.startPolicePathing();
+        this.startZombiePathing();
+    }
         
     public void setStartingImage(BufferedImage img){ startingImage = img; }  
     public BufferedImage getStartingImage(){ return startingImage; }
     public void setDestinationImage(BufferedImage img){ destinationImage = img; }
     public BufferedImage getDestinationImage(){ return destinationImage; }
-    public void setIngame(boolean in){ inGame = in;
-        if(inGame){
-            this.startPolicePathing();
-            this.startZombiePathing();
-        }
-    }
+    public void setIngame(boolean in){ inGame = in; }
     public boolean inGame(){ return inGame; }
     public void setViewport(Viewport view){ vp = view; }  
     public void setState(String state){ currentState = state; }
@@ -369,6 +385,7 @@ public class PathXLevel {
     public int getNumZombies(){ return numZombies; }
     public void setUnlocked(boolean un){ unlocked = un; }
     public boolean unlocked(){ return unlocked; }
+    public boolean wonLevel(){ return won; }
     
     public void addIntersection(PathXIntersection newIntersection){
         newIntersection.setId(intersections.size());
@@ -612,7 +629,7 @@ public class PathXLevel {
     }        
     
     public void startPolicePathing(){
-        MovePolice move;
+        
         for(PathXCar cp : police){
             move = new MovePolice(cp);
             move.start();
@@ -675,6 +692,9 @@ public class PathXLevel {
                                 cop.setRenderY(rd.getYPosition(i) - vp.getViewportY());
                                 cop.setX(rd.getXPosition(i));
                                 cop.setY(rd.getYPosition(i));
+                                if(cop.getX() == player.getX() && cop.getY() == player.getY()){
+                                    
+                                }
                                 try {
                                     Thread.sleep(wait);
                                 } catch (InterruptedException ex) {
@@ -762,6 +782,8 @@ public class PathXLevel {
                 for(int i = 0; i < path.size() - 2; i += 2){
                     if(paused)
                         i -= 2;
+                    if(!inGame)
+                        break;
                     zombie.setRenderX(path.get(i) - vp.getViewportX());
                     zombie.setRenderY(path.get(i+1) - vp.getViewportY());
                     zombie.setX(path.get(i));

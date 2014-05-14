@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="7">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="9">
         <file>
             <url>src/pathx/ui/PathXPanel.java</url>
             <bookmark id="3">
                 <name/>
-                <line>266</line>
+                <line>243</line>
                 <key/>
             </bookmark>
         </file>
@@ -13,7 +13,7 @@
             <url>src/pathx/ui/PathXMiniGame.java</url>
             <bookmark id="7">
                 <name/>
-                <line>444</line>
+                <line>528</line>
                 <key/>
             </bookmark>
         </file>
@@ -21,22 +21,17 @@
             <url>src/pathx/data/PathXDataModel.java</url>
             <bookmark id="1">
                 <name/>
-                <line>87</line>
+                <line>88</line>
                 <key/>
             </bookmark>
             <bookmark id="2">
                 <name/>
-                <line>93</line>
+                <line>94</line>
                 <key/>
             </bookmark>
-            <bookmark id="5">
+            <bookmark id="9">
                 <name/>
-                <line>276</line>
-                <key/>
-            </bookmark>
-            <bookmark id="6">
-                <name/>
-                <line>310</line>
+                <line>293</line>
                 <key/>
             </bookmark>
         </file>

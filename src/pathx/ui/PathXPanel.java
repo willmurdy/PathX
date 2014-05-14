@@ -172,29 +172,6 @@ public class PathXPanel extends JPanel {
 
             if(((PathXMiniGame)game).isCurrentScreenState(HELP_SCREEN_STATE))
                     renderHelp(g);
-            // ONLY RENDER THIS STUFF IF WE'RE ACTUALLY IN-GAME
-            if (!data.notStarted())
-            {
-                // RENDER THE SNAKE
-//                if (!data.won())
-//                    renderSnake(g);
-                
-                // AND THE TILES
-                renderTiles(g);
-                
-                // AND THE DIALOGS, IF THERE ARE ANY
-                
-                                
-                // RENDERING THE GRID WHERE ALL THE TILES GO CAN BE HELPFUL
-                // DURING DEBUGGIN TO BETTER UNDERSTAND HOW THEY RE LAID OUT
-                renderGrid(g);
-                
-                // RENDER THE ALGORITHM NAME
-                renderHeader(g);
-               
-            }
-            
-            
             
             renderStats(g);
             // AND THE BUTTONS AND DECOR
@@ -289,6 +266,7 @@ public class PathXPanel extends JPanel {
     }
     
     public void renderPlayer(Graphics g){
+        
         int x = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
         int y = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
         
@@ -303,6 +281,7 @@ public class PathXPanel extends JPanel {
     public void renderPolice(Graphics g){
         ArrayList<PathXCar> police = data.getLevel(data.getCurrentLevelInt()).getPolice();
         for(PathXCar p : police){
+            p.lockData();
             int x = p.getRenderX();
             int y = p.getRenderY();
             int zx = p.getX();
@@ -310,7 +289,8 @@ public class PathXPanel extends JPanel {
             int px = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
             int py = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
             if((x == px && y == py) || (zx == px && zy == py)){
-                System.out.println("Collision!");
+                data.endGameAsLoss();
+                
             }
             //System.out.println("(" + x + ", " + y + ")");
         
@@ -322,12 +302,14 @@ public class PathXPanel extends JPanel {
             s.setState(VISIBLE_STATE);
         
             renderSprite(g, s);
+            p.unlockData();
         }
     }
     
     public void renderZombies(Graphics g){
         ArrayList<PathXCar> zombies = data.getLevel(data.getCurrentLevelInt()).getZombies();
         for(PathXCar p : zombies){
+            p.lockData();
             int x = p.getRenderX();
             int y = p.getRenderY();
             //System.out.println("(" + x + ", " + y + ")");
@@ -340,6 +322,7 @@ public class PathXPanel extends JPanel {
             s.setState(VISIBLE_STATE);
         
             renderSprite(g, s);
+            p.unlockData();
         }
     }
     
@@ -366,6 +349,8 @@ public class PathXPanel extends JPanel {
         int x = data.getLevelSprite(s.getID()).getX();
         int y = data.getLevelSprite(s.getID()).getY();
 
+      //  if(data.getLevelSprite(s.getID()).wonLevel())
+      //      s.setState(PATH_DATA);
         
         s.setX(x);
         s.setY(y);  
@@ -433,37 +418,6 @@ public class PathXPanel extends JPanel {
                     }
                 
                 renderSprite(g, s);
-//                if(i == 0){
-//                    SpriteType sprite = new SpriteType("START");
-//                    sprite.addState("START", data.getLevel(data.getCurrentLevelInt()).getStartingImage());
-//                    s1 = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
-//                    renderSprite(g, s);
-//                } else
-//                    if(i == 1){
-//                        SpriteType sprite = new SpriteType("START");
-//                        sprite.addState("START", data.getLevel(data.getCurrentLevelInt()).getDestinationImage());
-//                        s1 = new Sprite(sprite, x - 12, y - 12, 0, 0, "START");
-//                        renderSprite(g, s);
-//                    } else
-//                        if(intersections.get(i).open()){
-//                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
-//                                s.setState(OPEN_MOUSE_OVER_STATE);
-//                            else
-//                                s.setState(OPEN_STATE);
-//                            renderSprite(g, s);
-//                        }
-//                        else{
-//                            if(s.containsPoint(data.getLastMouseX(), data.getLastMouseY()))
-//                                s.setState(CLOSED_MOUSE_OVER_STATE);
-//                            else
-//                                s.setState(CLOSED_STATE);
-//                            renderSprite(g, s);
-//                        }
-
-//                    renderSprite(g, s);
-            //} else {
-              //  s.setState(INVISIBLE_STATE);
-            //}
             
         }
                 
@@ -589,13 +543,6 @@ public class PathXPanel extends JPanel {
      */
     public void renderStats(Graphics g)
     {
-//        // RENDER THE GAME TIME AND THE TILES LEFT FOR IN-GAME
-//        if (((SortingHatMiniGame)game).isCurrentScreenState(GAME_SCREEN_STATE) 
-//                && data.inProgress() || data.isPaused())
-//        {
-//            // RENDER THE TILES LEFT
-//            g.setFont(FONT_TEXT_DISPLAY);
-//            g.setColor(Color.BLACK);
         
         if(((PathXMiniGame)game).isCurrentScreenState(LEVEL_SELECT_SCREEN_STATE)){
             String balance = "Balance: $" + data.getBalance();
@@ -624,68 +571,6 @@ public class PathXPanel extends JPanel {
         }
      
     }
-        
-    /**
-     * Renders all the game tiles, doing so carefully such
-     * that they are rendered in the proper order.
-     * 
-     * @param g the Graphics context of this panel.
-     */
-    public void renderTiles(Graphics g)
-    {
-//        // DRAW THE GRID
-//        ArrayList<SortingHatTile> tilesToSort = data.getTilesToSort();
-//        for (int i = 0; i < tilesToSort.size(); i++)
-//        {
-//            SortingHatTile tile = tilesToSort.get(i);
-//            if (tile != null)
-//                renderTile(g, tile);
-//        }
-//        
-//        // THEN DRAW ALL THE MOVING TILES
-//        Iterator<SortingHatTile> movingTiles = data.getMovingTiles();
-//        while (movingTiles.hasNext())
-//        {
-//            SortingHatTile tile = movingTiles.next();
-//            renderTile(g, tile);
-//        }
-//        
-//        // AND THE SELECTED TILE, IF THERE IS ONE
-//        SortingHatTile selectedTile = data.getSelectedTile();
-//        if (selectedTile != null)
-//            renderTile(g, selectedTile);
-    }
-
-    /**
-     * Helper method for rendering the tiles that are currently moving.
-     * 
-     * @param g Rendering context for this panel.
-     * 
-     * @param tileToRender Tile to render to this panel.
-     */
-//    public void renderTile(Graphics g, SortingHatTile tileToRender)
-//    {
-//        // ONLY RENDER VISIBLE TILES
-//        if (!tileToRender.getState().equals(SortingHatTileState.INVISIBLE_STATE.toString()))
-//        {
-//            Viewport viewport = data.getViewport();
-//            int correctedTileX = (int)(tileToRender.getX());
-//            int correctedTileY = (int)(tileToRender.getY());
-//
-//            // THEN THE TILE IMAGE
-//            if(tileToRender.equals(data.getSelectedTile())){     //Added to get the 
-//                tileToRender.setState(SortingHatTileState.SELECTED_STATE.toString());     //mouse over working
-//            } else {
-//                tileToRender.setState(SortingHatTileState.VISIBLE_STATE.toString());
-//            }
-//            SpriteType bgST = tileToRender.getSpriteType();
-//            Image img = bgST.getStateImage(tileToRender.getState());
-//            g.drawImage(img,    correctedTileX, 
-//                                correctedTileY, 
-//                                bgST.getWidth(), bgST.getHeight(), null); 
-//            
-//        }
-//    }
     
     /**
      * Renders the game dialog boxes.
@@ -712,10 +597,24 @@ public class PathXPanel extends JPanel {
             if(game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
                 g.setFont(FONT_BALANCE);
                 g.drawString(((PathXDataModel)game.getDataModel()).getCurrentLevel(), LEVEL_NAME_DIALOG_X, LEVEL_NAME_DIALOG_Y);
-                renderLevelDescription(true, text);
-            } else {
-                renderLevelDescription(false, text);
+                
             }
+            
+            if(((PathXDataModel)data).getLevel(((PathXDataModel)data).getCurrentLevelInt()).wonLevel()){
+                game.getGUIDialogs().get(LEVEL_DIALOG_TYPE).setState(VISIBLE_STATE);
+                
+                
+                game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setState(VISIBLE_STATE);
+                game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setEnabled(true);
+                renderSprite(g, game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE));
+                
+                
+                game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setState(VISIBLE_STATE);
+                game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setEnabled(true);
+                renderSprite(g, game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE));
+            }
+            
+            renderLevelDescription(((PathXMiniGame)game).renderDescription(), text);
         }
         
     }

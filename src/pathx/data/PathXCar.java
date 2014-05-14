@@ -7,6 +7,10 @@
 package pathx.data;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,6 +32,8 @@ public class PathXCar {
     
     private ArrayList<Integer> path;
     
+    protected ReentrantLock dataLock;
+    
     public PathXCar(String carType, int id){
         
         type = carType;
@@ -37,6 +43,8 @@ public class PathXCar {
         inMotion = false;
         
         path = new ArrayList<>();
+        
+        dataLock = new ReentrantLock();
         
         
     }
@@ -64,5 +72,14 @@ public class PathXCar {
     public ArrayList<Integer> getPath(){
             return path;
     }
+    
+    public void lockData(){
+        dataLock.lock();
+    }
+    
+    public void unlockData(){
+        dataLock.unlock();
+    }
+
     
 }
