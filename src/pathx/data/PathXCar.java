@@ -34,6 +34,8 @@ public class PathXCar {
     
     protected ReentrantLock dataLock;
     
+    public boolean render;
+    
     public PathXCar(String carType, int id){
         
         type = carType;
@@ -46,6 +48,7 @@ public class PathXCar {
         
         dataLock = new ReentrantLock();
         
+        render = true;
         
     }
     
@@ -71,6 +74,16 @@ public class PathXCar {
     
     public ArrayList<Integer> getPath(){
             return path;
+    }
+    
+    public boolean render(){
+        return render;
+    }
+    
+    public void setRender(boolean re){
+        render = re;
+        renderX = 0;
+        renderY = 0;
     }
     
     public void lockData(){

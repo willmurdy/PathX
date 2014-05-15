@@ -25,6 +25,7 @@ import static pathx.PathX.PathXPropertyType.LEVEL_OPTIONS_FILES;
 import static pathx.PathX.PathXPropertyType.LEVEL_PATH;
 import static pathx.PathX.PathXPropertyType.LEVEL_SCHEMA;
 import static pathx.PathXConstants.*;
+import pathx.ui.PathXMiniGame;
 import properties_manager.PropertiesManager;
 import xml_utilities.InvalidXMLFileFormatException;
 import xml_utilities.XMLUtilities;
@@ -65,6 +66,8 @@ public class PathXDataModel extends MiniGameDataModel{
     private Stack prevMoves;
     
     private int balance;
+    
+    private int lost;
     
     private TreeMap<String, Viewport> viewports;
     
@@ -124,23 +127,42 @@ public class PathXDataModel extends MiniGameDataModel{
     }
     
     public void zombieCollision(){
-        miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_ZOMBIE.toString(), false);
-        levels.get(currentLevelint).respondToZombieCollision();
+        if(!levels.get(currentLevelint).intangable()){
+            miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_ZOMBIE.toString(), false);
+            levels.get(currentLevelint).respondToZombieCollision();
+        }
     }
     
     @Override
     public void endGameAsLoss(){
         levels.get(currentLevelint).endGameAsLoss();
-        miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_LOSS.toString(), false);
-        balance = balance - (int)(balance * .1);
+        if(!((PathXMiniGame)miniGame).mute())
+            miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_LOSS.toString(), false);
+        
     }
     
-    public void policeCollision(){
-        miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_POLICE.toString(), false);
-        if(!triggered){
-            endGameAsLoss();
-            triggered = true;
+    public void policeCollision(int i){
+        if(levels.get(currentLevelint).invincible()){
+            levels.get(currentLevelint).killPolice(i);
+            return;
         }
+        if(!levels.get(currentLevelint).intangable())
+            if(!triggered){
+                if(!((PathXMiniGame)miniGame).mute())
+                    miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_POLICE.toString(), false);
+                endGameAsLoss();
+                lost =(int)(balance * .1);
+                balance = balance - (int)(balance * .1);
+                triggered = true;
+            }
+    }
+    
+    public int getAmountLost(){
+        return lost;
+    }
+    
+    public void setTriggered(boolean trig){
+        triggered = trig;
     }
     
     public void initGameplayViewPort(){
@@ -159,6 +181,20 @@ public class PathXDataModel extends MiniGameDataModel{
         viewports.put(GAMEPLAY_SCREEN_STATE, vp);
         
         
+    }
+    
+    public void makePlayerIntangable(){
+        if(balance > 30 && !levels.get(currentLevelint).intangable()){
+            balance = balance - 30;
+            levels.get(currentLevelint).makeIntangable();
+        }
+    }
+    
+    public void makePlayerInvincible(){
+        if(balance > 40){
+            balance -= 40;
+            levels.get(currentLevelint).makeInvincible();
+        }
     }
     
     public void setViewportState(String state){

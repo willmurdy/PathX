@@ -68,10 +68,13 @@ public class PathXConstants {
     public static final String START_BUTTON_TYPE = "START_BUTTON_TYPE";
     public static final String BACK_BUTTON_TYPE = "BACK_BUTTON_TYPE";
     
+    public static final String MUTE_BUTTON_TYPE = "MUTE_BUTTON_TYPE";
+    
     public static final String SPECIALS_REDLIGHT_TYPE = "SPECIALS_REDLIGHT_TYPE";
     public static final String SPECIALS_REDLIGHT_TYPE1 = "SPECIALS_REDLIGHT_TYPE1";
-    public static final String SPECIALS_REDLIGHT_TYPE2 = "SPECIALS_REDLIGHT_TYPE2";
-    public static final String SPECIALS_REDLIGHT_TYPE3 = "SPECIALS_REDLIGHT_TYPE3";
+    public static final String SPECIALS_FLAT_TIRE_TYPE = "SPECIALS_FLAT_TIRE_TYPE";
+    public static final String SPECIALS_INTANGABLE_TYPE = "SPECIALS_INTANGABLE_TYPE";
+    public static final String SPECIALS_INVINCIBILITY_TYPE = "SPECIALS_INVINCIBILITY_TYPE";
 
     public static final String INTERSECTION_TYPE = "INTERSECTION_TYPE";
     public static final String OPEN_STATE = "OPEN_STATE";
@@ -155,6 +158,9 @@ public class PathXConstants {
     public static final int UP_BUTTON_Y = 510;
     public static final int DOWN_BUTTON_X = 50;          //changed
     public static final int DOWN_BUTTON_Y = 585;
+    
+    public static final int MUTE_BUTTON_X = 400;          //changed
+    public static final int MUTE_BUTTON_Y = 325;          //changed
     
     public static final int SPECIALS_X = 20;          //changed
     public static final int SPECIALS_Y = 340;

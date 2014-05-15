@@ -65,6 +65,8 @@ public class PathXMiniGame extends MiniGame{
     private TreeMap<Integer, Sprite> guiIntersections;
     
     private boolean renderDescription;
+    
+    private boolean mute = false;
 
     @Override
     public void initAudioContent() {
@@ -77,7 +79,7 @@ public class PathXMiniGame extends MiniGame{
             loadAudioCue(PathXPropertyType.AUDIO_CUE_POLICE);
             loadAudioCue(PathXPropertyType.AUDIO_CUE_LOSS);
             loadAudioCue(PathXPropertyType.AUDIO_CUE_ZOMBIE);
-//            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_BAD_MOVE);
+            loadAudioCue(PathXPropertyType.AUDIO_CUE_HOME);
 //            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_CHEAT);
 //            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_UNDO);
 //            loadAudioCue(SortingHatPropertyType.AUDIO_CUE_WIN);
@@ -85,7 +87,7 @@ public class PathXMiniGame extends MiniGame{
 //            loadAudioCue(SortingHatPropertyType.SONG_CUE_GAME_SCREEN);
 
             // PLAY THE WELCOME SCREEN SONG
-//            audio.play(SortingHatPropertyType.SONG_CUE_MENU_SCREEN.toString(), true);
+            audio.play(PathXPropertyType.AUDIO_CUE_HOME.toString(), true);
         }
         catch(UnsupportedAudioFileException | IOException | LineUnavailableException | InvalidMidiDataException | MidiUnavailableException e)
         {
@@ -123,6 +125,7 @@ public class PathXMiniGame extends MiniGame{
         guiIntersections = new TreeMap<Integer, Sprite>();
         
         renderDescription = false;
+        
     }
     
     public void switchToHomeScreen(){
@@ -162,6 +165,14 @@ public class PathXMiniGame extends MiniGame{
        
        guiButtons.get(LEAVE_TOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(LEAVE_TOWN_BUTTON_TYPE).setEnabled(false);
+       
+       guiButtons.get(MUTE_BUTTON_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(MUTE_BUTTON_TYPE).setEnabled(false);
+       
+       ((PathXDataModel)data).setTriggered(false);
+       
+       if(!mute && !audio.isPlaying(PathXPropertyType.AUDIO_CUE_HOME.toString()))
+        audio.play(PathXPropertyType.AUDIO_CUE_HOME.toString(), true);
        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
@@ -225,6 +236,12 @@ public class PathXMiniGame extends MiniGame{
        
        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setEnabled(false);
+       guiButtons.get(SPECIALS_FLAT_TIRE_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(SPECIALS_FLAT_TIRE_TYPE).setEnabled(false);
+       guiButtons.get(SPECIALS_INTANGABLE_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(SPECIALS_INTANGABLE_TYPE).setEnabled(false);
+       guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setEnabled(false);
        
        guiButtons.get(TRY_AGAIN_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(TRY_AGAIN_BUTTON_TYPE).setEnabled(false);
@@ -234,6 +251,8 @@ public class PathXMiniGame extends MiniGame{
        
        ((PathXDataModel)data).setViewportState(LEVEL_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(LEVEL_SCREEN_STATE);
+       
+       ((PathXDataModel)data).setTriggered(false);
        
        guiDialogs.get(END_DIALOG_TYPE).setState(INVISIBLE_STATE);
        
@@ -300,6 +319,9 @@ public class PathXMiniGame extends MiniGame{
        
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setX(QUIT_BUTTON_X);
        guiButtons.get(QUIT_GAME_BUTTON_TYPE).setY(QUIT_BUTTON_Y);
+       
+       guiButtons.get(MUTE_BUTTON_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(MUTE_BUTTON_TYPE).setEnabled(true);
        
        currentScreenState = SETTINGS_SCREEN_STATE;
         
@@ -381,11 +403,14 @@ public class PathXMiniGame extends MiniGame{
        
        
        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setState(VISIBLE_STATE);
-//       guiButtons.get(SPECIALS_REDLIGHT_TYPE1).setState(VISIBLE_STATE);
-//       guiButtons.get(SPECIALS_REDLIGHT_TYPE2).setState(VISIBLE_STATE);
-//       guiButtons.get(SPECIALS_REDLIGHT_TYPE3).setState(VISIBLE_STATE);
        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setEnabled(true);
-    
+       
+       guiButtons.get(SPECIALS_FLAT_TIRE_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_FLAT_TIRE_TYPE).setEnabled(true);
+       guiButtons.get(SPECIALS_INTANGABLE_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_INTANGABLE_TYPE).setEnabled(true);
+       guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setEnabled(true);
        
        //((PathXDataModel)data).setViewportState(GAMEPLAY_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
@@ -394,7 +419,12 @@ public class PathXMiniGame extends MiniGame{
        guiEntities.get(ZOMBIE_TYPE).setState(VISIBLE_STATE);
        guiEntities.get(BANDIT_TYPE).setState(VISIBLE_STATE);
        
+       ((PathXDataModel)data).setTriggered(false);
+       
        renderDescription = true;
+       
+       if(!mute)
+            audio.stop(PathXPropertyType.AUDIO_CUE_HOME.toString());
        
        int currentLevel = ((PathXDataModel)data).getCurrentLevelInt();
        
@@ -461,6 +491,7 @@ public class PathXMiniGame extends MiniGame{
     }
     
     public void showWinDialog(){
+        if(!guiDialogs.get(END_DIALOG_TYPE).getState().equals(VISIBLE_STATE)){
                  guiDialogs.get(END_DIALOG_TYPE).setState(VISIBLE_STATE);
                 
                 
@@ -472,6 +503,7 @@ public class PathXMiniGame extends MiniGame{
                 guiButtons.get(LEAVE_TOWN_BUTTON_TYPE).setEnabled(true);
                 
                 renderDescription = true;
+        }
     }
 
     @Override
@@ -746,6 +778,16 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, PAUSE_BUTTON_GAME_X, PAUSE_BUTTON_GAME_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(PAUSE_BUTTON_TYPE, s);
         
+        String muteButton = props.getProperty(PathXPropertyType.MUTE_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(MUTE_BUTTON_TYPE);
+	img = loadImage(imgPath + muteButton);
+        sT.addState(VISIBLE_STATE, img);
+        String muteMouseOverButton = props.getProperty(PathXPropertyType.MUTE_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = loadImage(imgPath + muteMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, MUTE_BUTTON_X, MUTE_BUTTON_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(MUTE_BUTTON_TYPE, s);
+        
         //add the HOME button to the home screen
         String redButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_REDLIGHT);
         sT = new SpriteType(SPECIALS_REDLIGHT_TYPE);
@@ -756,6 +798,36 @@ public class PathXMiniGame extends MiniGame{
         sT.addState(MOUSE_OVER_STATE, img);
         s = new Sprite(sT, SPECIALS_X, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(SPECIALS_REDLIGHT_TYPE, s);
+        
+        redButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_FLAT_TIRE);
+        sT = new SpriteType(SPECIALS_FLAT_TIRE_TYPE);
+	img = loadImage(imgPath + redButton);
+        sT.addState(VISIBLE_STATE, img);
+        redMouseOverButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_FLAT_TIRE_MOUSE_OVER);
+        img = loadImage(imgPath + redMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, SPECIALS_X + 40, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_FLAT_TIRE_TYPE, s);
+        
+        redButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_INTANGABLE);
+        sT = new SpriteType(SPECIALS_INTANGABLE_TYPE);
+	img = loadImage(imgPath + redButton);
+        sT.addState(VISIBLE_STATE, img);
+        redMouseOverButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_INTANGABLE_MOUSE_OVER);
+        img = loadImage(imgPath + redMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, SPECIALS_X + 80, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_INTANGABLE_TYPE, s);
+        
+        redButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_INVINCIBILITY);
+        sT = new SpriteType(SPECIALS_INVINCIBILITY_TYPE);
+	img = loadImage(imgPath + redButton);
+        sT.addState(VISIBLE_STATE, img);
+        redMouseOverButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_INVINCIBILITY_MOUSE_OVER);
+        img = loadImage(imgPath + redMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, SPECIALS_X + 120, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_INVINCIBILITY_TYPE, s);
         
         ((PathXDataModel)data).initLevels();
         for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
@@ -897,6 +969,11 @@ public class PathXMiniGame extends MiniGame{
             {   eventHandler.respondToStartRequest();    }
         });
         
+        guiButtons.get(MUTE_BUTTON_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToMuteRequest();    }
+        });
+        
        for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
        {
            PathXLevel level = ((PathXDataModel)data).getLevel(i);
@@ -931,6 +1008,16 @@ public class PathXMiniGame extends MiniGame{
         guiButtons.get(PAUSE_BUTTON_TYPE).setActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae)
             {   eventHandler.respondToPauseRequest();    }
+        });
+        
+        guiButtons.get(SPECIALS_INTANGABLE_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToIntangableRequest();    }
+        });
+        
+        guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToInvincibilityRequest();    }
         });
         
                 // Home BUTTON EVENT HANDLER
@@ -1010,7 +1097,7 @@ public class PathXMiniGame extends MiniGame{
     }
     
     public TreeMap<String, Sprite> getGuiEntities(){
-        return (TreeMap<String, Sprite>)guiEntities.clone();
+        return guiEntities;
     }
     
     public TreeMap<Integer, Sprite> getGuiIntersections(){
@@ -1049,7 +1136,21 @@ public class PathXMiniGame extends MiniGame{
                     return true;
                 }
             }
-        }
+        } 
+            for (Sprite s : guiEntities.values())
+            {
+                // THIS METHOD WILL INVOKE actionPeformed WHEN NEEDED
+                buttonClickPerformed = s.testForClick(this, x, y);
+
+                // ONLY EXECUTE THE FIRST ONE, SINCE BUTTONS
+                // SHOULD NOT OVERLAP
+                if (buttonClickPerformed)
+                {
+                    System.out.println("IT WORKS!");
+                    return true;
+                }
+            }
+        
         return false;
     }
     
@@ -1059,6 +1160,17 @@ public class PathXMiniGame extends MiniGame{
     
     public boolean renderDescription(){
         return renderDescription;
+    }
+    
+    public boolean mute(){
+        return mute;
+    }
+    
+    public void toggleMute(){
+        mute = !mute;
+        if(mute){
+            audio.stop(PathXPropertyType.AUDIO_CUE_HOME.toString());
+        }
     }
     
 }

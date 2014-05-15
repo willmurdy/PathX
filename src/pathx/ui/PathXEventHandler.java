@@ -7,16 +7,13 @@
 package pathx.ui;
 
 import java.awt.event.KeyEvent;
-import static pathx.PathXConstants.CLOSE_BUTTON_TYPE;
-import static pathx.PathXConstants.GAMEPLAY_SCREEN_STATE;
-import static pathx.PathXConstants.INVISIBLE_STATE;
-import static pathx.PathXConstants.LEVEL_DIALOG_TYPE;
-import static pathx.PathXConstants.LEVEL_SELECT_SCREEN_STATE;
-import static pathx.PathXConstants.MOUSE_OVER_STATE;
-import static pathx.PathXConstants.PAUSE_BUTTON_TYPE;
-import static pathx.PathXConstants.VIEWPORT_INC;
-import static pathx.PathXConstants.VISIBLE_STATE;
+import java.awt.image.BufferedImage;
+import mini_game.Sprite;
+import mini_game.SpriteType;
+import pathx.PathX;
+import static pathx.PathXConstants.*;
 import pathx.data.PathXDataModel;
+import properties_manager.PropertiesManager;
 
 /**
  *
@@ -107,6 +104,37 @@ public class PathXEventHandler {
         game.switchToSettingsScreen();
     }
     
+    public void respondToMuteRequest(){
+        BufferedImage img;
+        float x, y;
+        SpriteType sT;
+        Sprite s;
+        PropertiesManager props = PropertiesManager.getPropertiesManager();
+        String imgPath = props.getProperty("IMG_PATH");
+        
+        game.toggleMute();
+        
+        if(game.mute()){
+            String muteButton = props.getProperty(PathX.PathXPropertyType.MUTE_SELECTED_BUTTON_IMAGE_NAME);
+            sT = new SpriteType(MUTE_BUTTON_TYPE);
+            img = game.loadImage(imgPath + muteButton);
+            sT.addState(VISIBLE_STATE, img);
+            String muteMouseOverButton = props.getProperty(PathX.PathXPropertyType.MUTE_SELECTED_MOUSE_OVER_BUTTON_IMAGE_NAME);
+            img = game.loadImage(imgPath + muteMouseOverButton);
+            sT.addState(MOUSE_OVER_STATE, img);
+        } else {
+            String muteButton = props.getProperty(PathX.PathXPropertyType.MUTE_BUTTON_IMAGE_NAME);
+        sT = new SpriteType(MUTE_BUTTON_TYPE);
+	img = game.loadImage(imgPath + muteButton);
+        sT.addState(VISIBLE_STATE, img);
+        String muteMouseOverButton = props.getProperty(PathX.PathXPropertyType.MUTE_MOUSE_OVER_BUTTON_IMAGE_NAME);
+        img = game.loadImage(imgPath + muteMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        }
+        game.getGUIButtons().get(MUTE_BUTTON_TYPE).setSpriteType(sT);
+        
+    }
+    
     public void respondToLevelSelectRequest(int level)
     {
         PathXDataModel data = (PathXDataModel)game.getDataModel();
@@ -160,12 +188,35 @@ public class PathXEventHandler {
         }
     }
     
+    public void respondToIntangableRequest(){
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.makePlayerIntangable();
+    }
+    
+    public void respondToInvincibilityRequest(){
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.makePlayerInvincible();
+    }
+    
     public void respondToIntersectionRequest(int id){
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         data.getLevel(data.getCurrentLevelInt()).movePlayerToIntersection(id);
     }
     
     public void respondToTryAgainRequest(){
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        game.getGUIDialogs().get(END_DIALOG_TYPE).setState(INVISIBLE_STATE);
+        
+        game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setState(INVISIBLE_STATE);
+        game.getGUIButtons().get(LEAVE_TOWN_BUTTON_TYPE).setEnabled(false);
+        game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setState(INVISIBLE_STATE);
+        game.getGUIButtons().get(TRY_AGAIN_BUTTON_TYPE).setEnabled(false);
+        
+        data.getLevel(data.getCurrentLevelInt()).setIngame(false);
+        data.getLevel(data.getCurrentLevelInt()).resetLevel();
+        game.setRenderDescription(false);
+        respondToCloseRequest();
+        game.switchToGamePlayScreen();
     }
     
     public void respondToLeaveTownRequest(){

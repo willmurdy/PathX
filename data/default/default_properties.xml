@@ -65,6 +65,11 @@
         <property name="PAUSE_BUTTON_IMAGE_NAME"        value="./default/ButtonPause.png"></property>
         <property name="PAUSE_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonPauseMouseOver.png"></property>
         
+        <property name="MUTE_BUTTON_IMAGE_NAME"        value="./default/ButtonSettingsMute.png"></property>
+        <property name="MUTE_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonSettingsMuteMouseOver.png"></property>
+        <property name="MUTE_SELECTED_BUTTON_IMAGE_NAME"        value="./default/ButtonSettingsMuteSelected.png"></property>
+        <property name="MUTE_SELECTED_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonSettingsMuteSelectedMouseOver.png"></property>
+        
         <property name="TRY_AGAIN_BUTTON_IMAGE_NAME"        value="./default/ButtonTryAgain.png"></property>
         <property name="TRY_AGAIN_MOUSE_OVER_BUTTON_IMAGE_NAME" 	value="./default/ButtonTryAgainMouseOver.png"></property>
         <property name="LEAVE_TOWN_BUTTON_IMAGE_NAME"        value="./default/ButtonLeaveTown.png"></property>
@@ -73,6 +78,12 @@
  
         <property name="IMAGE_SPECIALS_REDLIGHT"             value="./default/UpgradeRedLight.png"></property>
         <property name="IMAGE_SPECIALS_REDLIGHT_MOUSE_OVER"             value="./default/UpgradeRedLightMouseOver.png"></property>
+        <property name="IMAGE_SPECIALS_FLAT_TIRE"             value="./default/UpgradeFlatTire.png"></property>
+        <property name="IMAGE_SPECIALS_FLAT_TIRE_MOUSE_OVER"             value="./default/UpgradeFlatTireMouseOver.png"></property>
+        <property name="IMAGE_SPECIALS_INTANGABLE"             value="./default/UpgradeIntangable.png"></property>
+        <property name="IMAGE_SPECIALS_INTANGABLE_MOUSE_OVER"             value="./default/UpgradeIntangableMouseOver.png"></property>
+        <property name="IMAGE_SPECIALS_INVINCIBILITY"             value="./default/UpgradeInvincibility.png"></property>
+        <property name="IMAGE_SPECIALS_INVINCIBILITY_MOUSE_OVER"             value="./default/UpgradeInvincibilityMouseOver.png"></property>
         
         <property name="IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER"  value="./default/ButtonTempTileMouseOver.png"></property>
         <property name="IMAGE_CURSOR_ARROW"                  value="./default/CursorArrow.png"></property>
@@ -111,7 +122,7 @@
         <property name="AUDIO_CUE_POLICE"                 value="./default/AudioPolice.wav"></property>
         <property name="AUDIO_CUE_LOSS"                    value="./default/AudioLose.wav"></property>
         <property name="AUDIO_CUE_ZOMBIE"            value="./default/AudioZomjongSelectTile.wav"></property>
-        <property name="AUDIO_CUE_GOOD_MOVE"                value="./default/GoodMove.wav"></property>
+        <property name="AUDIO_CUE_HOME"                value="./default/AudioHome.wav"></property>
         <property name="AUDIO_CUE_SELECT_TILE"              value="./default/SelectTile.wav"></property>
         <property name="AUDIO_CUE_UNDO"                     value="./default/Undo.wav"></property>
         <property name="AUDIO_CUE_WIN"                      value="./default/Win.mid"></property>

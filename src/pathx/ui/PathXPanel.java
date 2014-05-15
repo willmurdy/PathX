@@ -280,6 +280,7 @@ public class PathXPanel extends JPanel {
     
     public void renderPolice(Graphics g){
         ArrayList<PathXCar> police = data.getLevel(data.getCurrentLevelInt()).getPolice();
+        int i = 0;
         for(PathXCar p : police){
             p.lockData();
             int x = p.getRenderX();
@@ -289,11 +290,12 @@ public class PathXPanel extends JPanel {
             int px = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
             int py = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
             if((x == px && y == py) || (zx == px && zy == py)){
-                data.policeCollision();
+                data.policeCollision(i);
 //                data.endGameAsLoss();
                 
             }
             //System.out.println("(" + x + ", " + y + ")");
+            i++;
         
             Sprite s = ((PathXMiniGame)game).getGuiEntities().get(POLICE_TYPE);
         
@@ -620,7 +622,7 @@ public class PathXPanel extends JPanel {
                     text.setText(((PathXDataModel)game.getDataModel()).getCurrentLevelDescription() + "\nYou Win! You got away with $" + data.getLevel(data.getCurrentLevelInt()).getReward());
                     this.add(text);
                 } else {
-                    text.setText("Bad News!\nYou you have been caught. The legal Bills will cost you $" + (data.getBalance() * .1));
+                    text.setText("Bad News!\nYou you have been caught. The legal Bills will cost you $" + data.getAmountLost());
                     this.add(text);
                 }
                 text.setLocation(200, 150);

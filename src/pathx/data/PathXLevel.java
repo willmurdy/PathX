@@ -9,14 +9,14 @@ package pathx.data;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mini_game.Viewport;
 import static pathx.PathXConstants.NORTH_PANEL_HEIGHT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_LEFT;
 import static pathx.PathXConstants.VIEWPORT_MARGIN_TOP;
-import static pathx.data.PathXLevelState.COMPLETED_STATE;
 
 /**
  *
@@ -71,6 +71,8 @@ public class PathXLevel {
     
     private boolean unlocked;
     private boolean started;
+    private boolean intangable;
+    private boolean invincible;
     
     MovePolice move;
     
@@ -138,6 +140,10 @@ public class PathXLevel {
         
         playerSpeed = 1.0;
         
+        intangable = false;
+        
+        invincible = false;
+        
     }
     
     public void setLocation(int xPos, int yPos){
@@ -154,6 +160,53 @@ public class PathXLevel {
         //initPlayerLocation();
     }
     
+    //Spaecials
+    
+    public void makeIntangable(){
+        class Intangable extends Thread{
+            @Override
+            public void run(){
+                intangable = true;
+                try {
+                    this.wait(10000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                intangable = false;
+            }
+        }
+        Intangable in = new Intangable();
+        in.start();
+    }
+    
+    public boolean intangable(){
+        return intangable;
+    }
+    
+    public void makeInvincible(){
+        class Invincible extends Thread{
+            public void run(){
+                invincible = true;
+                try {
+                    this.wait(10000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                invincible = false;
+            }
+        }
+        Invincible in = new Invincible();
+        in.start();
+    }
+    
+    public boolean invincible(){
+        return invincible;
+    }
+    
+    public void killPolice(int i){
+        police.get(i).setRender(false);
+    }
+    
     public void movePlayerToIntersection(int id){
         int intersectionId;
         PathXIntersection intersection;
@@ -162,6 +215,9 @@ public class PathXLevel {
         PathXRoad roadToTravel = new PathXRoad();
         boolean found = false;
         boolean forward = true;
+       // ArrayList<Integer> path = this.calculatePath(player.getIntersection(), destinationId);
+        //path.remove(0);
+        //for(Integer id : path){
         if(!player.inMotion() && started){
             intersectionId = player.getIntersection();
             intersection = intersections.get(intersectionId);
@@ -257,10 +313,8 @@ public class PathXLevel {
                 p.start();
             }
         
-        
-        
-        
         }
+        //}
         
     }
     
@@ -295,6 +349,7 @@ public class PathXLevel {
         this.intiPolice();
         //this.intiBandits();
         //this.intiBandits();
+        inGame = false;
         showEndDialog = false;
     }
     
@@ -347,7 +402,7 @@ public class PathXLevel {
         return paused;
     }
     
-    public void calculatePath(int id1, int id2){
+    public ArrayList<Integer> calculatePath(int id1, int id2){
 //1  function Dijkstra(Graph, source):
 //2      dist[source] := 0                     // Initializations
 //3      for each vertex v in Graph:           
@@ -371,22 +426,50 @@ public class PathXLevel {
 //21         end for
 //22     end while
 //23     return previous[]
-        PriorityQueue<PathXCar> queue;
-        int distance[] = new int[intersections.size()];
-        int previous[] = new int[intersections.size()];
-        distance[id1] = 0;
-        for(PathXIntersection inter : intersections){
-            if(inter.getId() != id1){
-                distance[inter.getId()] = 9999999;
-                previous[inter.getId()] = -1;
-            }
-        }
-    }
+//        PriorityQueue<PathXCar> queue;
+//        int distance[] = new int[intersections.size()];
+//        int previous[] = new int[intersections.size()];
+//        distance[id1] = 0;
+//        for(PathXIntersection inter : intersections){
+//            if(inter.getId() != id1){
+//                distance[inter.getId()] = 9999999;
+//                previous[inter.getId()] = -1;
+//            }
+//        }
+        
+        LinkedList<PathXIntersection> que = new LinkedList<>();
+        ArrayList<Integer> path = new ArrayList<>();
+        que.add(intersections.get(id1));
+        path.add(id1);
+        while(!que.isEmpty()){
+            PathXIntersection temp = que.pop();
+            if(temp.getId() == id2)
+                return path;
+            for(PathXRoad rd : temp.getRoads()){
+                if(rd.getId1() == temp.getId()){ //id2 is the adjacent node
+                    if(!path.contains(rd.getId2())){
+                        path.add(rd.getId2());
+                        que.add(intersections.get(rd.getId2()));
+                    }
+                } else {
+                    if(!path.contains(rd.getId1())){
+                        path.add(rd.getId1());
+                        que.add(intersections.get(rd.getId1()));
+                    }//end if
+                }//end else
+            }//end for loop
+        }//end while loop
+        return path;
+    }//end method
     
     public void startGame(){
         started = true;
         this.startPolicePathing();
         this.startZombiePathing();
+        Iterator i = this.calculatePath(0, 1).iterator();
+        while(i.hasNext()){
+            System.out.println(i.next().toString());
+        }
     }
         
     public void setStartingImage(BufferedImage img){ startingImage = img; }  
@@ -615,13 +698,12 @@ public class PathXLevel {
             }//end int i for loop
             
         }//end for loop
-        System.out.println("T");
     }
     
     public void intiBandits(){
         int temp;
         PathXCar ban;
-        for(int i = 0; i < numZombies; i++){
+        for(int i = 0; i < numBandits; i++){
             
             temp = (int)((Math.random()) * intersections.size()) ;
             ban = new PathXCar(PathXCarType.BANDIT_TYPE.toString(), temp);
@@ -698,7 +780,7 @@ public class PathXLevel {
             ArrayList<Integer> x;
             ArrayList<Integer> y;
             boolean cont = true, look = true;
-            while(inGame){
+            while(inGame && cop.render){
                 id = cop.getIntersection();
                 inter = intersections.get(id);
                 adjacent = inter.getAdjacentNodes();
@@ -727,7 +809,7 @@ public class PathXLevel {
                                 if(paused){
                                     i--;
                                 }
-                                if(!inGame){
+                                if(!inGame || !cop.render()){
                                     break;
                                 }
                                 cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
@@ -744,7 +826,7 @@ public class PathXLevel {
                                 }
                                 
                             }
-                            if(!inGame){
+                            if(!inGame || !cop.render){
                                 break;
                             }
                             cont = false;
@@ -761,7 +843,7 @@ public class PathXLevel {
                                 if(paused){
                                     i++;
                                 }
-                                if(!inGame){
+                                if(!inGame || !cop.render){
                                     break;
                                 }
                                 cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
@@ -775,7 +857,7 @@ public class PathXLevel {
                                 }
                                 
                             }
-                            if(!inGame){
+                            if(!inGame || !cop.render){
                                 break;
                             }
                             cont = false;
@@ -791,7 +873,7 @@ public class PathXLevel {
                                 if(paused){
                                     i--;
                                 }
-                                if(!inGame){
+                                if(!inGame || !cop.render){
                                     break;
                                 }
                                 cop.setRenderX(rd.getXPosition(i) - vp.getViewportX());
@@ -805,7 +887,8 @@ public class PathXLevel {
                                 }
                                 
                             }
-                            if(!inGame){
+                            if(!inGame || !cop.render){
+                                
                                 break;
                             }
                             cont = false;
