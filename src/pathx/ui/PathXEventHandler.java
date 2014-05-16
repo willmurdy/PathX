@@ -203,6 +203,16 @@ public class PathXEventHandler {
         data.getLevel(data.getCurrentLevelInt()).movePlayerToIntersection(id);
     }
     
+    public void respondToSpeedRequest(){
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.getLevel(data.getCurrentLevelInt()).increasePlayerSpeed();
+    }
+    
+    public void respondToFlyRequest(){
+        PathXDataModel data = (PathXDataModel)game.getDataModel();
+        data.getLevel(data.getCurrentLevelInt()).setFlyToNext();
+    }
+    
     public void respondToTryAgainRequest(){
         PathXDataModel data = (PathXDataModel)game.getDataModel();
         game.getGUIDialogs().get(END_DIALOG_TYPE).setState(INVISIBLE_STATE);
@@ -222,6 +232,10 @@ public class PathXEventHandler {
     public void respondToLeaveTownRequest(){
     }
     
+    public void respondToRedlightRequest(){
+        
+    }
+    
     /**
      * Called when the user presses a key on the keyboard.
      */    
@@ -239,6 +253,24 @@ public class PathXEventHandler {
         }
         if(keyCode == KeyEvent.VK_RIGHT){
             respondToScrollRequest(VIEWPORT_INC, 0);
+        }
+        if(keyCode == KeyEvent.VK_U){
+            data.unlockAllLevels();
+        }
+        if(keyCode == KeyEvent.VK_B){
+            this.respondToIntangableRequest();
+        }
+        if(keyCode == KeyEvent.VK_B){
+            this.respondToIntangableRequest();
+        }
+        if(keyCode == KeyEvent.VK_P){
+            this.respondToSpeedRequest();
+        }
+        if(keyCode == KeyEvent.VK_V){
+            this.respondToInvincibilityRequest();
+        }
+        if(keyCode == KeyEvent.VK_Y){
+            this.respondToFlyRequest();
         }
 
     }

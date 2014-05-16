@@ -84,6 +84,12 @@
         <property name="IMAGE_SPECIALS_INTANGABLE_MOUSE_OVER"             value="./default/UpgradeIntangableMouseOver.png"></property>
         <property name="IMAGE_SPECIALS_INVINCIBILITY"             value="./default/UpgradeInvincibility.png"></property>
         <property name="IMAGE_SPECIALS_INVINCIBILITY_MOUSE_OVER"             value="./default/UpgradeInvincibilityMouseOver.png"></property>
+        <property name="IMAGE_SPECIALS_SPEED"             value="./default/UpgradeSpeed.png"></property>
+        <property name="IMAGE_SPECIALS_SPEED_MOUSE_OVER"             value="./default/UpgradeSpeedMouseOver.png"></property>
+        <property name="IMAGE_SPECIALS_FLY"             value="./default/UpgradeFly.png"></property>
+        <property name="IMAGE_SPECIALS_FLY_MOUSE_OVER"             value="./default/UpgradeFlyMouseOver.png"></property>
+        <property name="IMAGE_SPECIALS_STEAL"             value="./default/UpgradeSteal.png"></property>
+        <property name="IMAGE_SPECIALS_STEAL_MOUSE_OVER"             value="./default/UpgradeStealMouseOver.png"></property>
         
         <property name="IMAGE_BUTTON_TEMP_TILE_MOUSE_OVER"  value="./default/ButtonTempTileMouseOver.png"></property>
         <property name="IMAGE_CURSOR_ARROW"                  value="./default/CursorArrow.png"></property>

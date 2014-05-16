@@ -311,6 +311,7 @@ public class PathXPanel extends JPanel {
     
     public void renderZombies(Graphics g){
         ArrayList<PathXCar> zombies = data.getLevel(data.getCurrentLevelInt()).getZombies();
+        int i = 0;
         for(PathXCar p : zombies){
             p.lockData();
             int x = p.getRenderX();
@@ -320,9 +321,10 @@ public class PathXPanel extends JPanel {
             int px = data.getLevel(data.getCurrentLevelInt()).getPlayerX();
             int py = data.getLevel(data.getCurrentLevelInt()).getPlayerY();
             if((x == px && y == py) || (zx == px && zy == py)){
-                data.zombieCollision();
+                data.zombieCollision(i);
                 
             }
+            i++;
             //System.out.println("(" + x + ", " + y + ")");
         
             Sprite s = ((PathXMiniGame)game).getGuiEntities().get(ZOMBIE_TYPE);

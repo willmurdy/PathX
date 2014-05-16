@@ -75,6 +75,8 @@ public class PathXConstants {
     public static final String SPECIALS_FLAT_TIRE_TYPE = "SPECIALS_FLAT_TIRE_TYPE";
     public static final String SPECIALS_INTANGABLE_TYPE = "SPECIALS_INTANGABLE_TYPE";
     public static final String SPECIALS_INVINCIBILITY_TYPE = "SPECIALS_INVINCIBILITY_TYPE";
+    public static final String SPECIALS_SPEED_TYPE = "SPECIALS_SPEED_TYPE";
+    public static final String SPECIALS_FLY_TYPE = "SPECIALS_FLY_TYPE";
 
     public static final String INTERSECTION_TYPE = "INTERSECTION_TYPE";
     public static final String OPEN_STATE = "OPEN_STATE";

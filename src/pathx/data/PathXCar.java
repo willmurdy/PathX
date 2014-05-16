@@ -36,6 +36,8 @@ public class PathXCar {
     
     public boolean render;
     
+    private double speed;
+    
     public PathXCar(String carType, int id){
         
         type = carType;
@@ -49,6 +51,8 @@ public class PathXCar {
         dataLock = new ReentrantLock();
         
         render = true;
+        
+        speed = 1.0;
         
     }
     
@@ -92,6 +96,22 @@ public class PathXCar {
     
     public void unlockData(){
         dataLock.unlock();
+    }
+    
+    public boolean increaseSpeed(){
+        if(!(speed < 0.3)){
+            speed -= 0.2;
+            return true;
+        }
+        return false;
+    }
+    
+    public void decreaseSpeed(){
+        speed += 0.1;
+    }
+    
+    public double getSpeed(){
+        return speed;
     }
 
     

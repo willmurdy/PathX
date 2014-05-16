@@ -242,6 +242,10 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(SPECIALS_INTANGABLE_TYPE).setEnabled(false);
        guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setEnabled(false);
+       guiButtons.get(SPECIALS_SPEED_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(SPECIALS_SPEED_TYPE).setEnabled(false);
+       guiButtons.get(SPECIALS_FLY_TYPE).setState(INVISIBLE_STATE);
+       guiButtons.get(SPECIALS_FLY_TYPE).setEnabled(false);
        
        guiButtons.get(TRY_AGAIN_BUTTON_TYPE).setState(INVISIBLE_STATE);
        guiButtons.get(TRY_AGAIN_BUTTON_TYPE).setEnabled(false);
@@ -411,6 +415,10 @@ public class PathXMiniGame extends MiniGame{
        guiButtons.get(SPECIALS_INTANGABLE_TYPE).setEnabled(true);
        guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setState(VISIBLE_STATE);
        guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setEnabled(true);
+       guiButtons.get(SPECIALS_SPEED_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_SPEED_TYPE).setEnabled(true);
+       guiButtons.get(SPECIALS_FLY_TYPE).setState(VISIBLE_STATE);
+       guiButtons.get(SPECIALS_FLY_TYPE).setEnabled(true);
        
        //((PathXDataModel)data).setViewportState(GAMEPLAY_SCREEN_STATE);
        guiDecor.get(MAP_TYPE).setState(GAMEPLAY_SCREEN_STATE);
@@ -829,6 +837,26 @@ public class PathXMiniGame extends MiniGame{
         s = new Sprite(sT, SPECIALS_X + 120, SPECIALS_Y, 0, 0, INVISIBLE_STATE);
         guiButtons.put(SPECIALS_INVINCIBILITY_TYPE, s);
         
+        redButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_SPEED);
+        sT = new SpriteType(SPECIALS_SPEED_TYPE);
+	img = loadImage(imgPath + redButton);
+        sT.addState(VISIBLE_STATE, img);
+        redMouseOverButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_SPEED_MOUSE_OVER);
+        img = loadImage(imgPath + redMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, SPECIALS_X, SPECIALS_Y + 40, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_SPEED_TYPE, s);
+        
+        redButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_FLY);
+        sT = new SpriteType(SPECIALS_FLY_TYPE);
+	img = loadImage(imgPath + redButton);
+        sT.addState(VISIBLE_STATE, img);
+        redMouseOverButton = props.getProperty(PathXPropertyType.IMAGE_SPECIALS_FLY_MOUSE_OVER);
+        img = loadImage(imgPath + redMouseOverButton);
+        sT.addState(MOUSE_OVER_STATE, img);
+        s = new Sprite(sT, SPECIALS_X + 40, SPECIALS_Y + 40, 0, 0, INVISIBLE_STATE);
+        guiButtons.put(SPECIALS_FLY_TYPE, s);
+        
         ((PathXDataModel)data).initLevels();
         for (int i = 0; i < ((PathXDataModel)data).getNumLevels(); i++)
         {
@@ -1018,6 +1046,21 @@ public class PathXMiniGame extends MiniGame{
         guiButtons.get(SPECIALS_INVINCIBILITY_TYPE).setActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent ae)
             {   eventHandler.respondToInvincibilityRequest();    }
+        });
+        
+        guiButtons.get(SPECIALS_SPEED_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToSpeedRequest();    }
+        });
+        
+        guiButtons.get(SPECIALS_FLY_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToFlyRequest();    }
+        });
+        
+        guiButtons.get(SPECIALS_REDLIGHT_TYPE).setActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent ae)
+            {   eventHandler.respondToRedlightRequest();    }
         });
         
                 // Home BUTTON EVENT HANDLER

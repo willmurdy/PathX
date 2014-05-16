@@ -73,6 +73,7 @@ public class PathXLevel {
     private boolean started;
     private boolean intangable;
     private boolean invincible;
+    private boolean flyToNext;
     
     MovePolice move;
     
@@ -144,6 +145,8 @@ public class PathXLevel {
         
         invincible = false;
         
+        flyToNext = false;
+        
     }
     
     public void setLocation(int xPos, int yPos){
@@ -160,6 +163,11 @@ public class PathXLevel {
         //initPlayerLocation();
     }
     
+    public void setFlyToNext(){
+        if(!flyToNext)
+            flyToNext = true;
+    }
+    
     //Spaecials
     
     public void makeIntangable(){
@@ -168,7 +176,7 @@ public class PathXLevel {
             public void run(){
                 intangable = true;
                 try {
-                    this.wait(10000);
+                    this.sleep(10000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -188,7 +196,7 @@ public class PathXLevel {
             public void run(){
                 invincible = true;
                 try {
-                    this.wait(10000);
+                    this.sleep(10000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -207,7 +215,15 @@ public class PathXLevel {
         police.get(i).setRender(false);
     }
     
+    public void killZombie(int i){
+        zombies.get(i).setRender(false);
+    }
+    
     public void movePlayerToIntersection(int id){
+        if(flyToNext){
+            this.flyToNode(id);
+            return;
+        }
         int intersectionId;
         PathXIntersection intersection;
         ArrayList<PathXRoad> roads;
@@ -246,68 +262,6 @@ public class PathXLevel {
                 }
             }
             if(found){
-                class MovePlayer extends Thread {
-                
-                    PathXRoad road;
-                    boolean forward;
-                    long wait;
-                
-                    public MovePlayer(PathXRoad rd, boolean forward){ 
-                        road = rd; 
-                        wait = (long)((110 -road.getSpeedLimit()) * playerSpeed);// * 100;
-                        this.forward = forward;
-                    }
-                
-                    public void run() {
-                        ArrayList<Integer> x = road.getXList();
-                        ArrayList<Integer> y = road.getYList();
-                        player.setInMotion(true);
-                        if(forward){
-                            for(int i = 0; i < x.size(); i++){
-                                if(paused){
-                                    i--;
-                                }
-                                if(!inGame)
-                                    break;
-                                player.setRenderX(road.getXPosition(i) - vp.getViewportX());
-                                player.setRenderY(road.getYPosition(i) - vp.getViewportY());
-                                player.setX(road.getXPosition(i));
-                                player.setY(road.getYPosition(i));
-                                wait = (long)((110 -road.getSpeedLimit()) * playerSpeed);
-                                try {
-                                    Thread.sleep(wait);
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                
-                            }
-                            player.setIntersectionId(road.getId2());
-                        } else { 
-                            for(int i = x.size() - 1; i > 0; i--){
-                                if(!inGame)
-                                    break;
-                                player.setRenderX(road.getXPosition(i) - vp.getViewportX());
-                                player.setRenderY(road.getYPosition(i) - vp.getViewportY());
-                                player.setX(road.getXPosition(i));
-                                player.setY(road.getYPosition(i));
-                                try {
-                                    Thread.sleep(wait);
-                                } catch (InterruptedException ex) {
-                                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
-                                }
-                                if(paused){
-                                    i++;
-                                }
-                            }
-                            player.setIntersectionId(road.getId1());
-                        }
-                        player.setInMotion(false);
-                        if(player.getIntersection() == 1)
-                            endGameAsWin();
-                    }
-                    
-
-                }
                 
                 MovePlayer p = new MovePlayer(roadToTravel, forward);
                 p.start();
@@ -318,11 +272,64 @@ public class PathXLevel {
         
     }
     
+    public void flyToNode(int id){
+//        int id1x = intersections.get(player.getIntersection()).getX();
+//        int id1y = intersections.get(player.getIntersection()).getY();
+//        int id2x = intersections.get(id).getX();
+//        int id2y = intersections.get(id).getY();
+//        ArrayList<Integer> pathx = new ArrayList<>();
+//        ArrayList<Integer> pathy = new ArrayList<>();
+//        int deltaX = Math.abs(id2x - id1x);
+//        int deltaY = Math.abs(id2y - id1y);
+//        int sx;
+//        int sy;
+//        if(id1x < id2x)
+//            sx = 1;
+//        else
+//            sx = -1;
+//        if(id1y < id2y)
+//            sy = 1;
+//        else 
+//            sy = -1;
+//        int error = deltaX - deltaY;
+//        int x = id1x;
+//        int y = id1y;
+//        int e2;
+//        while(x != id2x && y != id2y){
+//            pathx.add(x);
+//            pathy.add(y);
+//            if(x == id2x && y == id2y)
+//                break;
+//            e2 = 2 * error;
+//            if(e2 > -deltaY){
+//                error = error - deltaY;
+//                x += sx;
+//            }
+//            if(e2 < deltaX){
+//                error = error + deltaX;
+//                y += sy;
+//            }
+//        }
+        PathXRoad temp = new PathXRoad(player.getIntersection(), id, 70, false);
+        temp.setId1Coords(player.getX(), player.getY());
+        PathXIntersection inter = intersections.get(id);
+        temp.setId2Coords(inter.getRenderX() - vp.getViewportX(), inter.getRenderY() - vp.getViewportY());
+        temp.calculateLength();
+        MovePlayer pl = new MovePlayer(temp, true);
+        pl.start();
+        flyToNext = false;
+    }
+    
     public void respondToZombieCollision(){
-        playerSpeed = playerSpeed - 0.1;
-        if(playerSpeed == 0){
-            endGameAsLoss();
-        }
+        player.decreaseSpeed();
+    }
+    
+    public boolean increasePlayerSpeed(){
+        return player.increaseSpeed();
+    }
+    
+    public void decreasePlayerSpeed(){
+        player.decreaseSpeed();
     }
     
     public void endGameAsWin(){
@@ -941,7 +948,70 @@ public class PathXLevel {
         }//end run method
         
     }//end thread class
-    
+ 
+    class MovePlayer extends Thread {
+                
+                    PathXRoad road;
+                    boolean forward;
+                    long wait;
+                
+                    public MovePlayer(PathXRoad rd, boolean forward){ 
+                        road = rd; 
+                        wait = (long)((110 -road.getSpeedLimit()) * player.getSpeed());// * 100;
+                        this.forward = forward;
+                    }
+                
+                    public void run() {
+                        ArrayList<Integer> x = road.getXList();
+                        ArrayList<Integer> y = road.getYList();
+                        player.setInMotion(true);
+                        if(forward){
+                            for(int i = 0; i < x.size(); i++){
+                                if(paused){
+                                    i--;
+                                }
+                                if(!inGame)
+                                    return;
+                                player.setRenderX(road.getXPosition(i) - vp.getViewportX());
+                                player.setRenderY(road.getYPosition(i) - vp.getViewportY());
+                                player.setX(road.getXPosition(i));
+                                player.setY(road.getYPosition(i));
+                                wait = (long)((110 -road.getSpeedLimit()) * player.getSpeed());
+                                try {
+                                    Thread.sleep(wait);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                
+                            }
+                            player.setIntersectionId(road.getId2());
+                        } else { 
+                            for(int i = x.size() - 1; i > 0; i--){
+                                if(!inGame)
+                                    return;
+                                player.setRenderX(road.getXPosition(i) - vp.getViewportX());
+                                player.setRenderY(road.getYPosition(i) - vp.getViewportY());
+                                player.setX(road.getXPosition(i));
+                                player.setY(road.getYPosition(i));
+                                wait = (long)((110 -road.getSpeedLimit()) * player.getSpeed());
+                                try {
+                                    Thread.sleep(wait);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(PathXLevel.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                                if(paused){
+                                    i++;
+                                }
+                            }
+                            player.setIntersectionId(road.getId1());
+                        }
+                        player.setInMotion(false);
+                        if(player.getIntersection() == 1)
+                            endGameAsWin();
+                    }
+                    
+
+                }
 }
 
 //class MovePolice extends Thread {

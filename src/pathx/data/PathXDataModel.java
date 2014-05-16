@@ -110,6 +110,12 @@ public class PathXDataModel extends MiniGameDataModel{
         levels.get(levelJustCompleted).setReward(0);
     }
     
+    public void unlockAllLevels(){
+        for(PathXLevel lev : levels){
+            lev.setState(PathXLevelState.AVAILABLE_STATE.toString());
+        }
+    }
+    
     public void initLevelSelectionViewport(){
         
         Viewport vp = new Viewport();
@@ -126,7 +132,12 @@ public class PathXDataModel extends MiniGameDataModel{
         
     }
     
-    public void zombieCollision(){
+    public void zombieCollision(int i){
+        if(levels.get(currentLevelint).invincible()){
+            levels.get(currentLevelint).killZombie(i);
+            return;
+        }
+        
         if(!levels.get(currentLevelint).intangable()){
             miniGame.getAudio().play(PathX.PathXPropertyType.AUDIO_CUE_ZOMBIE.toString(), false);
             levels.get(currentLevelint).respondToZombieCollision();
@@ -346,7 +357,7 @@ public class PathXDataModel extends MiniGameDataModel{
                 
                 if(i == 0){
                     newLevel.setState(PathXLevelState.AVAILABLE_STATE.toString());
-                    //i++;
+                    i++;
                 }
                 else{
                    newLevel.setState(PathXLevelState.LOCKED_STATE.toString()); 
@@ -455,6 +466,17 @@ public class PathXDataModel extends MiniGameDataModel{
             }
             lev.initPlayerLocation();
         }
+    }
+    
+    public void increasePlayerSpeed(){
+        if(balance >= 20){
+            if(levels.get(currentLevelint).increasePlayerSpeed())
+                balance -= 20;
+        }
+    }
+    
+    public void decreasePlayerSpeed(){
+        levels.get(currentLevelint).decreasePlayerSpeed();
     }
 
     @Override
